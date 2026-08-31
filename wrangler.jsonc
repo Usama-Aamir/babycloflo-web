@@ -1,20 +1,27 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "babycloflo-web",
-  "main": ".open-next/worker.js",
-  "compatibility_date": "2026-08-31",
-  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
-  "assets": {
-    "directory": ".open-next/assets",
-    "binding": "ASSETS"
-  },
-  "services": [
-    {
-      "binding": "WORKER_SELF_REFERENCE",
-      "service": "babycloflo-web"
-    }
-  ],
-  "images": {
-    "binding": "IMAGES"
-  }
+    "$schema":  "node_modules/wrangler/config-schema.json",
+    "name":  "babycloflo-web",
+    "main":  ".open-next/worker.js",
+    "compatibility_date":  "2026-08-31",
+    "compatibility_flags":  [
+                                "nodejs_compat",
+                                "global_fetch_strictly_public"
+                            ],
+    "assets":  {
+                   "directory":  ".open-next/assets",
+                   "binding":  "ASSETS"
+               },
+    "services":  [
+                     {
+                         "binding":  "WORKER_SELF_REFERENCE",
+                         "service":  "babycloflo-web"
+                     }
+                 ],
+    "images":  {
+                   "binding":  "IMAGES"
+               },
+    "vars":  {
+                 "NEXT_PUBLIC_SUPABASE_URL":  "https://qgnjgzmrakmzxhwjurta.supabase.co/rest/v1/",
+                 "NEXT_PUBLIC_SUPABASE_ANON_KEY":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFnbmpnem1yYWttenhod2p1cnRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxNjkyNDMsImV4cCI6MjEwMzc0NTI0M30.e_wHRsSoFEnICJwjMbIZ-M0rBhRQYCoubnaUW3a8OLI"
+             }
 }
