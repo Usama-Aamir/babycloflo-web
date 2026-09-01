@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import type { ProductDetail } from "./storefront.types";
+import { useCart } from "./cart-context";
 
 const priceFormatter = new Intl.NumberFormat("en-PK", {
   maximumFractionDigits: 2,
@@ -19,7 +20,10 @@ export function ProductDetailView({
 }) {
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
   const [selectedColorId, setSelectedColorId] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState(1);
   const [toast, setToast] = useState("");
+  const { addItem } = useCart();
+
   const selectedVariant = product.product_variants.find(
     ({ id }) => id === selectedVariantId,
   );
@@ -40,9 +44,32 @@ export function ProductDetailView({
     return `https://wa.me/${cleanWhatsAppNumber}?text=${encodeURIComponent(details.join("\n"))}`;
   }, [cleanWhatsAppNumber, product.name, selectedColor, selectedVariant]);
 
-  function showCartMessage() {
-    setToast("Cart coming soon");
+  function handleAddToCart() {
+    if (!selectedVariant) return;
+
+    addItem({
+      product_id: product.id,
+      product_name: product.name,
+      product_image: product.base_images?.[0] ?? null,
+      variant_id: selectedVariant.id,
+      size: selectedVariant.size,
+      finish: selectedVariant.finish,
+      color_id: selectedColor?.id ?? null,
+      color_name: selectedColor?.color_name ?? null,
+      price: Number(selectedVariant.price),
+      quantity,
+    });
+
+    setToast("Added to cart");
     window.setTimeout(() => setToast(""), 2500);
+  }
+
+  function increment() {
+    setQuantity((q) => q + 1);
+  }
+
+  function decrement() {
+    setQuantity((q) => (q > 1 ? q - 1 : 1));
   }
 
   const images = product.base_images ?? [];
@@ -150,6 +177,33 @@ export function ProductDetailView({
             </p>
           ) : null}
 
+          {selectedVariant ? (
+            <div className="mt-7 flex items-center gap-4">
+              <span className="text-base font-semibold text-zinc-700">Quantity</span>
+              <div className="flex items-center overflow-hidden rounded-xl border border-zinc-200 bg-white">
+                <button
+                  aria-label="Decrease quantity"
+                  className="flex h-12 w-12 items-center justify-center text-lg font-semibold hover:bg-zinc-50"
+                  onClick={decrement}
+                  type="button"
+                >
+                  −
+                </button>
+                <span className="flex h-12 w-14 items-center justify-center text-lg font-semibold">
+                  {quantity}
+                </span>
+                <button
+                  aria-label="Increase quantity"
+                  className="flex h-12 w-12 items-center justify-center text-lg font-semibold hover:bg-zinc-50"
+                  onClick={increment}
+                  type="button"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          ) : null}
+
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             {whatsappUrl ? (
               <a className="inline-flex min-h-16 items-center justify-center rounded-2xl bg-green-600 px-5 text-center text-lg font-bold text-white hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-200" href={whatsappUrl} rel="noreferrer" target="_blank">
@@ -163,7 +217,7 @@ export function ProductDetailView({
             <button
               className="min-h-16 rounded-2xl bg-rose-600 px-5 text-lg font-bold text-white hover:bg-rose-700 focus:outline-none focus:ring-4 focus:ring-rose-200 disabled:cursor-not-allowed disabled:opacity-45"
               disabled={!selectedVariant}
-              onClick={showCartMessage}
+              onClick={handleAddToCart}
               type="button"
             >
               Add to Cart

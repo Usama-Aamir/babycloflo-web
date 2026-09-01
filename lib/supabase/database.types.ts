@@ -103,6 +103,7 @@ export type Database = {
           address: string;
           city: string;
           created_at: string;
+          customer_id: string | null;
           customer_name: string;
           delivery_charge: number;
           gift_note: string | null;
@@ -118,6 +119,7 @@ export type Database = {
           address: string;
           city: string;
           created_at?: string;
+          customer_id?: string | null;
           customer_name: string;
           delivery_charge?: number;
           gift_note?: string | null;
@@ -133,6 +135,7 @@ export type Database = {
           address?: string;
           city?: string;
           created_at?: string;
+          customer_id?: string | null;
           customer_name?: string;
           delivery_charge?: number;
           gift_note?: string | null;
