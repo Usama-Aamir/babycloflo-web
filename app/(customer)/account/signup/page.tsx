@@ -133,7 +133,7 @@ export default function SignUpPage() {
           ) : null}
 
           <button
-            className="min-h-14 w-full rounded-xl bg-rose-600 px-5 text-lg font-semibold text-white hover:bg-rose-700 disabled:cursor-not-allowed disabled:opacity-60"
+            className="min-h-14 w-full rounded-xl bg-brand-primary px-5 text-lg font-semibold text-white hover:bg-brand-primary-dark disabled:cursor-not-allowed disabled:opacity-60"
             disabled={isLoading}
             type="submit"
           >
@@ -143,7 +143,7 @@ export default function SignUpPage() {
 
         <p className="mt-6 text-center text-zinc-600">
           Already have an account?{" "}
-          <Link className="font-semibold text-rose-700 hover:underline" href="/account/login">
+          <Link className="font-semibold text-brand-primary-dark hover:underline" href="/account/login">
             Log in
           </Link>
         </p>

@@ -30,13 +30,13 @@ function CheckoutSuccessContent() {
           We received your order{orderId ? ` (#${orderId.slice(0, 8)})` : ""} and will contact you soon to confirm delivery details.
         </p>
 
-        <p className="mt-6 text-2xl font-bold text-rose-700">
+        <p className="mt-6 text-2xl font-bold text-brand-primary-dark">
           {Number.isFinite(total) && total > 0 ? priceFormatter.format(total) : "Total confirmed"}
         </p>
 
         <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <Link
-            className="inline-flex min-h-12 items-center justify-center rounded-xl bg-rose-600 px-6 font-semibold text-white hover:bg-rose-700"
+            className="inline-flex min-h-12 items-center justify-center rounded-xl bg-brand-primary px-6 font-semibold text-white hover:bg-brand-primary-dark"
             href="/"
           >
             Continue shopping

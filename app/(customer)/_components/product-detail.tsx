@@ -86,13 +86,13 @@ export function ProductDetailView({
           {images.length > 0 ? (
             <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 sm:px-0">
               {images.map((image, index) => (
-                <div className="relative aspect-square w-[88vw] max-w-xl shrink-0 snap-center overflow-hidden rounded-2xl bg-rose-50 sm:w-[75vw] lg:w-full" key={`${image}-${index}`}>
+                <div className="relative aspect-square w-[88vw] max-w-xl shrink-0 snap-center overflow-hidden rounded-2xl bg-brand-primary-light sm:w-[75vw] lg:w-full" key={`${image}-${index}`}>
                   <Image alt={`${product.name}, photo ${index + 1}`} className="object-cover" fill priority={index === 0} sizes="(max-width: 1024px) 88vw, 55vw" src={image} unoptimized />
                 </div>
               ))}
             </div>
           ) : (
-            <div className="mx-4 flex aspect-square items-center justify-center rounded-2xl bg-rose-50 text-rose-300 sm:mx-0" aria-label="No product photo available">
+            <div className="mx-4 flex aspect-square items-center justify-center rounded-2xl bg-brand-primary-light text-brand-primary/40 sm:mx-0" aria-label="No product photo available">
               <svg aria-hidden="true" fill="none" height="72" viewBox="0 0 24 24" width="72">
                 <path d="M4 6h16v14H4V6Zm4 0a4 4 0 0 1 8 0M8 14l2.5-2.5 2 2L15 11l3 3" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.4" />
               </svg>
@@ -105,7 +105,7 @@ export function ProductDetailView({
 
         <section className="px-4 sm:px-0 lg:sticky lg:top-24">
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{product.name}</h1>
-          <p className="mt-4 text-3xl font-bold text-rose-700">
+          <p className="mt-4 text-3xl font-bold text-brand-primary-dark">
             {selectedVariant
               ? `Rs ${priceFormatter.format(Number(selectedVariant.price))}`
               : "Choose a size"}
@@ -125,7 +125,7 @@ export function ProductDetailView({
                 const outOfStock = variant.stock_status === "out_of_stock";
                 return (
                   <button
-                    className={`min-h-14 rounded-xl border-2 px-5 text-left font-semibold ${selected ? "border-rose-600 bg-rose-50 text-rose-800" : "border-zinc-200 bg-white"} disabled:cursor-not-allowed disabled:opacity-45`}
+                    className={`min-h-14 rounded-xl border-2 px-5 text-left font-semibold ${selected ? "border-brand-primary bg-brand-primary-light text-brand-primary-dark" : "border-zinc-200 bg-white"} disabled:cursor-not-allowed disabled:opacity-45`}
                     disabled={outOfStock}
                     key={variant.id}
                     onClick={() => {
@@ -149,7 +149,7 @@ export function ProductDetailView({
               <div className="mt-3 flex flex-wrap gap-3">
                 {selectedVariant.variant_colors.map((color) => (
                   <button
-                    className={`flex min-h-14 items-center gap-3 rounded-xl border-2 px-4 font-semibold ${selectedColorId === color.id ? "border-rose-600 bg-rose-50" : "border-zinc-200 bg-white"}`}
+                    className={`flex min-h-14 items-center gap-3 rounded-xl border-2 px-4 font-semibold ${selectedColorId === color.id ? "border-brand-primary bg-brand-primary-light" : "border-zinc-200 bg-white"}`}
                     key={color.id}
                     onClick={() => setSelectedColorId(color.id)}
                     type="button"
@@ -216,7 +216,7 @@ export function ProductDetailView({
               </button>
             )}
             <button
-              className="min-h-16 rounded-2xl bg-rose-600 px-5 text-lg font-bold text-white hover:bg-rose-700 focus:outline-none focus:ring-4 focus:ring-rose-200 disabled:cursor-not-allowed disabled:opacity-45"
+              className="min-h-16 rounded-2xl bg-brand-primary px-5 text-lg font-bold text-white hover:bg-brand-primary-dark focus:outline-none focus:ring-4 focus:ring-brand-primary-light disabled:cursor-not-allowed disabled:opacity-45"
               disabled={!selectedVariant}
               onClick={handleAddToCart}
               type="button"

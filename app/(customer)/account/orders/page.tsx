@@ -93,7 +93,7 @@ export default function OrdersPage() {
         <div className="mt-8 rounded-3xl bg-white px-6 py-16 text-center shadow-sm">
           <p className="text-lg text-zinc-600">You haven’t placed any orders yet.</p>
           <Link
-            className="mt-4 inline-flex min-h-12 items-center justify-center rounded-xl bg-rose-600 px-6 font-semibold text-white hover:bg-rose-700"
+            className="mt-4 inline-flex min-h-12 items-center justify-center rounded-xl bg-brand-primary px-6 font-semibold text-white hover:bg-brand-primary-dark"
             href="/"
           >
             Start shopping

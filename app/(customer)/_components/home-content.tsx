@@ -32,7 +32,7 @@ export function HomeContent({
             <path d="m16 16 5 5" stroke="currentColor" strokeLinecap="round" strokeWidth="1.8" />
           </svg>
           <input
-            className="min-h-16 w-full rounded-2xl border border-rose-100 bg-white pl-14 pr-4 text-lg shadow-sm outline-none placeholder:text-zinc-500 focus:border-rose-400 focus:ring-4 focus:ring-rose-100"
+            className="min-h-16 w-full rounded-2xl border border-brand-primary-light bg-white pl-14 pr-4 text-lg shadow-sm outline-none placeholder:text-zinc-500 focus:border-brand-primary focus:ring-4 focus:ring-brand-primary-light"
             id="product-search"
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Search products"
@@ -44,12 +44,12 @@ export function HomeContent({
 
       <section className="mt-6">
         <Link
-          className="group flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-rose-600 to-pink-600 p-5 text-white shadow-sm transition hover:shadow-md"
+          className="group flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-brand-primary to-brand-accent p-5 text-white shadow-sm transition hover:shadow-md"
           href="/gift-box"
         >
           <div>
             <h2 className="text-xl font-bold">Build a Gift Box</h2>
-            <p className="mt-1 text-sm font-medium text-rose-50">
+            <p className="mt-1 text-sm font-medium text-white/90">
               Pick 3–5 items and we&apos;ll wrap them beautifully.
             </p>
           </div>
@@ -66,15 +66,15 @@ export function HomeContent({
         <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {categories.map((category) => (
             <Link
-              className="group overflow-hidden rounded-2xl border border-rose-100 bg-white shadow-sm focus:outline-none focus:ring-4 focus:ring-rose-200"
+              className="group overflow-hidden rounded-2xl border border-brand-primary-light bg-white shadow-sm focus:outline-none focus:ring-4 focus:ring-brand-primary-light"
               href={`/category/${category.slug}`}
               key={category.id}
             >
-              <div className="relative aspect-[4/3] bg-rose-50">
+              <div className="relative aspect-[4/3] bg-brand-primary-light">
                 {category.image_url ? (
                   <Image alt={category.name} className="object-cover transition duration-300 group-hover:scale-[1.03]" fill sizes="(max-width: 640px) 50vw, 25vw" src={category.image_url} unoptimized />
                 ) : (
-                  <div className="flex h-full items-center justify-center text-rose-300" aria-hidden="true">
+                  <div className="flex h-full items-center justify-center text-brand-primary/40" aria-hidden="true">
                     <svg fill="none" height="56" viewBox="0 0 24 24" width="56">
                       <path d="M5 7h14v13H5V7Zm3 0a4 4 0 0 1 8 0M8 12h8" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
                     </svg>

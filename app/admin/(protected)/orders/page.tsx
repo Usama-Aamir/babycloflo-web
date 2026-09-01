@@ -394,7 +394,7 @@ function AdminOrdersContent() {
                         {statusLabel(order.status)}
                       </span>
                       {order.is_gift_box ? (
-                        <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-xs font-semibold text-rose-800">
+                        <span className="rounded-full bg-brand-primary-light px-2.5 py-0.5 text-xs font-semibold text-brand-primary-dark">
                           Gift Box
                         </span>
                       ) : null}

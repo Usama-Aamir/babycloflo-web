@@ -179,7 +179,7 @@ export default function CheckoutPage() {
         <h1 className="text-3xl font-bold">Checkout</h1>
         <p className="mt-4 text-zinc-600">Your cart is empty.</p>
         <Link
-          className="mt-6 inline-flex min-h-12 items-center justify-center rounded-xl bg-rose-600 px-6 font-semibold text-white hover:bg-rose-700"
+          className="mt-6 inline-flex min-h-12 items-center justify-center rounded-xl bg-brand-primary px-6 font-semibold text-white hover:bg-brand-primary-dark"
           href="/"
         >
           Continue shopping
@@ -195,7 +195,7 @@ export default function CheckoutPage() {
       {!session ? (
         <div className="mt-4 rounded-xl bg-zinc-50 px-4 py-3 text-sm text-zinc-700">
           Checking out as a guest.{" "}
-          <Link className="font-semibold text-rose-700 hover:underline" href="/account/login?redirect=/checkout">
+          <Link className="font-semibold text-brand-primary-dark hover:underline" href="/account/login?redirect=/checkout">
             Log in
           </Link>{" "}
           if you have an account — it’s optional.
@@ -328,7 +328,7 @@ export default function CheckoutPage() {
         ) : null}
 
         <button
-          className="min-h-16 w-full rounded-2xl bg-rose-600 px-5 text-lg font-bold text-white hover:bg-rose-700 disabled:cursor-not-allowed disabled:opacity-60"
+          className="min-h-16 w-full rounded-2xl bg-brand-primary px-5 text-lg font-bold text-white hover:bg-brand-primary-dark disabled:cursor-not-allowed disabled:opacity-60"
           disabled={isBusy}
           type="submit"
         >

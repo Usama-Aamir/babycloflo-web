@@ -145,9 +145,9 @@ export function GiftBoxBuilder({
             return (
               <button
                 aria-pressed={selected}
-                className={`group relative block overflow-hidden rounded-2xl border text-left shadow-sm transition focus:outline-none focus:ring-4 focus:ring-rose-200 ${
+                className={`group relative block overflow-hidden rounded-2xl border text-left shadow-sm transition focus:outline-none focus:ring-4 focus:ring-brand-primary-light ${
                   selected
-                    ? "border-rose-600 bg-rose-50 ring-2 ring-rose-600"
+                    ? "border-brand-primary bg-brand-primary-light ring-2 ring-brand-primary"
                     : disabled
                       ? "border-zinc-200 bg-white opacity-50"
                       : "border-zinc-200 bg-white hover:-translate-y-0.5 hover:shadow-md"
@@ -157,7 +157,7 @@ export function GiftBoxBuilder({
                 onClick={() => toggleProduct(product.id)}
                 type="button"
               >
-                <div className="relative aspect-square bg-rose-50">
+                <div className="relative aspect-square bg-brand-primary-light">
                   {product.base_images?.[0] ? (
                     <Image
                       alt={product.name}
@@ -168,14 +168,14 @@ export function GiftBoxBuilder({
                       unoptimized
                     />
                   ) : (
-                    <div className="flex h-full items-center justify-center text-rose-300" aria-hidden="true">
+                    <div className="flex h-full items-center justify-center text-brand-primary/40" aria-hidden="true">
                       <svg fill="none" height="56" viewBox="0 0 24 24" width="56">
                         <path d="M4 6h16v14H4V6Zm4 0a4 4 0 0 1 8 0M8 14l2.5-2.5 2 2L15 11l3 3" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
                       </svg>
                     </div>
                   )}
                   {selected ? (
-                    <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-rose-600 text-white shadow">
+                    <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-brand-primary text-white shadow">
                       <svg aria-hidden="true" fill="none" height="18" viewBox="0 0 24 24" width="18">
                         <path d="M5 12l5 5L20 7" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" />
                       </svg>
@@ -186,7 +186,7 @@ export function GiftBoxBuilder({
                   <h3 className="line-clamp-2 min-h-12 text-base font-semibold leading-6 text-zinc-900 sm:text-lg">
                     {product.name}
                   </h3>
-                  <p className="mt-2 text-xl font-bold text-rose-700">
+                  <p className="mt-2 text-xl font-bold text-brand-primary-dark">
                     {startingPrice === null ? "—" : priceFormatter.format(startingPrice)}
                   </p>
                 </div>
@@ -197,7 +197,7 @@ export function GiftBoxBuilder({
       )}
 
       {count >= MIN_GIFT_ITEMS ? (
-        <div className="mt-8 rounded-2xl border border-rose-100 bg-white p-5 shadow-sm sm:p-8">
+        <div className="mt-8 rounded-2xl border border-brand-primary-light bg-white p-5 shadow-sm sm:p-8">
           <h2 className="text-xl font-bold">Your gift box</h2>
           <ul className="mt-4 space-y-3">
             {contents.map((item) => (
@@ -233,7 +233,7 @@ export function GiftBoxBuilder({
 
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
             <button
-              className="min-h-14 flex-1 rounded-xl bg-rose-600 px-6 text-lg font-bold text-white hover:bg-rose-700 disabled:cursor-not-allowed disabled:opacity-50"
+              className="min-h-14 flex-1 rounded-xl bg-brand-primary px-6 text-lg font-bold text-white hover:bg-brand-primary-dark disabled:cursor-not-allowed disabled:opacity-50"
               disabled={!canAdd}
               onClick={handleAddToCart}
               type="button"

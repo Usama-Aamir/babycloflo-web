@@ -27,7 +27,7 @@ function ProductCartRow({
   const key = `${item.variant_id}:${item.color_id ?? "no-color"}`;
   return (
     <li className="flex gap-4 rounded-2xl bg-white p-4 shadow-sm" key={key}>
-      <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-rose-50">
+      <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-brand-primary-light">
         {item.product_image ? (
           <Image alt={item.product_name} className="object-cover" fill sizes="96px" src={item.product_image} unoptimized />
         ) : (
@@ -75,7 +75,7 @@ function ProductCartRow({
             <p className="font-semibold text-zinc-900">{priceFormatter.format(item.price * item.quantity)}</p>
             <button
               aria-label={`Remove ${item.product_name}`}
-              className="text-sm font-medium text-rose-600 hover:text-rose-700"
+              className="text-sm font-medium text-brand-accent hover:text-brand-accent-dark"
               onClick={() => onRemove(key)}
               type="button"
             >
@@ -93,7 +93,7 @@ function GiftBoxCartRow({ item, onRemove }: { item: GiftBoxCartItem; onRemove: (
     <li className="rounded-2xl bg-white p-4 shadow-sm" key={item.id}>
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-rose-50 text-rose-600">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-primary-light text-brand-primary">
             <svg aria-hidden="true" fill="none" height="24" viewBox="0 0 24 24" width="24">
               <path d="M4 9h16v12H4V9Zm-1-4h18v4H3V5Zm9 0v16M12 5c-1-3-5-3-5-1 0 1 2 1 5 1Zm0 0c1-3 5-3 5-1 0 1-2 1-5 1Z" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.6" />
             </svg>
@@ -107,7 +107,7 @@ function GiftBoxCartRow({ item, onRemove }: { item: GiftBoxCartItem; onRemove: (
           <p className="font-semibold text-zinc-900">{priceFormatter.format(item.price)}</p>
           <button
             aria-label="Remove gift box"
-            className="text-sm font-medium text-rose-600 hover:text-rose-700"
+            className="text-sm font-medium text-brand-accent hover:text-brand-accent-dark"
             onClick={() => onRemove(item.id)}
             type="button"
           >
@@ -139,7 +139,7 @@ function GiftBoxCartRow({ item, onRemove }: { item: GiftBoxCartItem; onRemove: (
       </div>
 
       {item.gift_note ? (
-        <p className="mt-3 rounded-lg bg-rose-50 px-3 py-2 text-sm italic text-zinc-700">
+        <p className="mt-3 rounded-lg bg-brand-accent-light px-3 py-2 text-sm italic text-zinc-700">
           “{item.gift_note}”
         </p>
       ) : null}
@@ -184,7 +184,7 @@ export default function CartPage() {
           <p className="text-lg text-zinc-600">Your cart is empty.</p>
           <p className="mt-2 text-zinc-500">Browse products and add something you love.</p>
           <Link
-            className="mt-6 inline-flex min-h-12 items-center justify-center rounded-xl bg-rose-600 px-6 font-semibold text-white hover:bg-rose-700"
+            className="mt-6 inline-flex min-h-12 items-center justify-center rounded-xl bg-brand-primary px-6 font-semibold text-white hover:bg-brand-primary-dark"
             href="/"
           >
             Continue shopping
@@ -227,7 +227,7 @@ export default function CartPage() {
             </div>
 
             <button
-              className="mt-6 min-h-14 w-full rounded-xl bg-rose-600 px-5 text-lg font-bold text-white hover:bg-rose-700 disabled:cursor-not-allowed disabled:opacity-50"
+              className="mt-6 min-h-14 w-full rounded-xl bg-brand-primary px-5 text-lg font-bold text-white hover:bg-brand-primary-dark disabled:cursor-not-allowed disabled:opacity-50"
               disabled={items.length === 0}
               onClick={() => router.push("/checkout")}
               type="button"

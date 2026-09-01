@@ -22,7 +22,7 @@ export function CategoryProducts({ products }: { products: ProductSummary[] }) {
       {sizes.length > 1 ? (
         <div className="mt-6 flex gap-2 overflow-x-auto pb-2" aria-label="Filter by size">
           <button
-            className={`min-h-12 shrink-0 rounded-full px-5 font-semibold ${selectedSize === "all" ? "bg-rose-600 text-white" : "border border-zinc-300 bg-white"}`}
+            className={`min-h-12 shrink-0 rounded-full px-5 font-semibold ${selectedSize === "all" ? "bg-brand-primary text-white" : "border border-zinc-300 bg-white"}`}
             onClick={() => setSelectedSize("all")}
             type="button"
           >
@@ -30,7 +30,7 @@ export function CategoryProducts({ products }: { products: ProductSummary[] }) {
           </button>
           {sizes.map((size) => (
             <button
-              className={`min-h-12 shrink-0 rounded-full px-5 font-semibold ${selectedSize === size ? "bg-rose-600 text-white" : "border border-zinc-300 bg-white"}`}
+              className={`min-h-12 shrink-0 rounded-full px-5 font-semibold ${selectedSize === size ? "bg-brand-primary text-white" : "border border-zinc-300 bg-white"}`}
               key={size}
               onClick={() => setSelectedSize(size)}
               type="button"

@@ -76,7 +76,7 @@ export function AccountNav() {
             Log in
           </Link>
           <Link
-            className="rounded-lg bg-rose-50 px-3 py-1.5 font-medium text-rose-700 hover:bg-rose-100"
+            className="rounded-lg bg-brand-primary-light px-3 py-1.5 font-medium text-brand-primary-dark hover:bg-brand-primary/10"
             href="/account/signup"
           >
             Sign up
