@@ -21,7 +21,7 @@ export default function CustomerLayout({
                 className="object-contain object-left"
                 fill
                 priority
-                src="/babycloflo-logo-horizontal.png"
+                src="/icons/babycloflo-logo-horizontal.png"
                 unoptimized
               />
             </Link>
