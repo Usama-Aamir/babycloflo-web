@@ -42,6 +42,25 @@ export function HomeContent({
         </label>
       </section>
 
+      <section className="mt-6">
+        <Link
+          className="group flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-rose-600 to-pink-600 p-5 text-white shadow-sm transition hover:shadow-md"
+          href="/gift-box"
+        >
+          <div>
+            <h2 className="text-xl font-bold">Build a Gift Box</h2>
+            <p className="mt-1 text-sm font-medium text-rose-50">
+              Pick 3–5 items and we&apos;ll wrap them beautifully.
+            </p>
+          </div>
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 transition group-hover:bg-white/30">
+            <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 24 24" width="20">
+              <path d="M5 12h14m0 0-7-7m7 7-7 7" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+            </svg>
+          </span>
+        </Link>
+      </section>
+
       <section className="mt-9">
         <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Shop by category</h1>
         <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-4">

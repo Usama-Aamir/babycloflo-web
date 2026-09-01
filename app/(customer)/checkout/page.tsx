@@ -30,6 +30,7 @@ export default function CheckoutPage() {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
 
+  const hasGiftBox = items.some((item) => item.kind === "gift-box");
   const total = subtotal + deliveryCharge;
 
   useEffect(() => {
@@ -48,15 +49,26 @@ export default function CheckoutPage() {
       });
   }, [supabase]);
 
-  const cartSummary = useMemo(
+  const cartOrderItems = useMemo(
     () =>
-      items.map((item) => ({
-        product_id: item.product_id,
-        variant_id: item.variant_id,
-        color_id: item.color_id,
-        quantity: item.quantity,
-        price_at_purchase: item.price,
-      })),
+      items.flatMap((item) => {
+        if (item.kind === "gift-box") {
+          return item.gift_contents.map((content) => ({
+            product_id: content.product_id,
+            variant_id: content.variant_id,
+            color_id: content.color_id,
+            quantity: 1,
+            price_at_purchase: content.price,
+          }));
+        }
+        return {
+          product_id: item.product_id,
+          variant_id: item.variant_id,
+          color_id: item.color_id,
+          quantity: item.quantity,
+          price_at_purchase: item.price,
+        };
+      }),
     [items],
   );
 
@@ -102,6 +114,10 @@ export default function CheckoutPage() {
 
     setIsBusy(true);
 
+    const giftBoxItems = items.filter((item) => item.kind === "gift-box");
+    const orderGiftWrapFee = giftBoxItems.reduce((sum, item) => sum + item.gift_wrap_fee, 0);
+    const orderGiftNote = giftBoxItems.map((item) => item.gift_note).filter(Boolean).join("\n\n") || null;
+
     const orderPayload = {
       order_type: "website" as const,
       customer_name: name.trim(),
@@ -109,6 +125,9 @@ export default function CheckoutPage() {
       address: address.trim(),
       city: city.trim(),
       delivery_charge: deliveryCharge,
+      gift_wrap_fee: orderGiftWrapFee,
+      is_gift_box: hasGiftBox,
+      gift_note: orderGiftNote,
       status: "pending" as const,
       customer_id: session?.user.id ?? null,
     };
@@ -125,7 +144,7 @@ export default function CheckoutPage() {
       return;
     }
 
-    const orderItems = cartSummary.map((item) => ({
+    const orderItems = cartOrderItems.map((item) => ({
       order_id: order.id,
       product_id: item.product_id,
       variant_id: item.variant_id,
@@ -198,14 +217,21 @@ export default function CheckoutPage() {
       <div className="mt-6 rounded-2xl bg-white p-5 shadow-sm">
         <h2 className="text-lg font-bold">Order summary</h2>
         <ul className="mt-3 space-y-2 text-sm text-zinc-700">
-          {items.map((item) => (
-            <li className="flex justify-between" key={`${item.variant_id}:${item.color_id ?? "no-color"}`}>
-              <span>
-                {item.product_name} × {item.quantity}
-              </span>
-              <span className="font-medium">{priceFormatter.format(item.price * item.quantity)}</span>
-            </li>
-          ))}
+          {items.map((item) =>
+            item.kind === "gift-box" ? (
+              <li className="flex justify-between" key={item.id}>
+                <span>Gift Box ({item.gift_contents.length} items)</span>
+                <span className="font-medium">{priceFormatter.format(item.price)}</span>
+              </li>
+            ) : (
+              <li className="flex justify-between" key={`${item.variant_id}:${item.color_id ?? "no-color"}`}>
+                <span>
+                  {item.product_name} × {item.quantity}
+                </span>
+                <span className="font-medium">{priceFormatter.format(item.price * item.quantity)}</span>
+              </li>
+            ),
+          )}
         </ul>
         <div className="mt-4 border-t border-zinc-100 pt-3">
           <div className="flex justify-between text-zinc-700">

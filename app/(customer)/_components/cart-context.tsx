@@ -9,7 +9,8 @@ import {
   useState,
 } from "react";
 
-export type CartItem = {
+export type ProductCartItem = {
+  kind: "product";
   product_id: string;
   product_name: string;
   product_image: string | null;
@@ -22,11 +23,44 @@ export type CartItem = {
   quantity: number;
 };
 
+export type GiftBoxContent = {
+  product_id: string;
+  product_name: string;
+  product_image: string | null;
+  variant_id: string;
+  size: string;
+  finish: string | null;
+  color_id: string | null;
+  color_name: string | null;
+  price: number;
+};
+
+export type GiftBoxCartItem = {
+  kind: "gift-box";
+  id: string;
+  gift_contents: GiftBoxContent[];
+  gift_wrap_fee: number;
+  gift_note: string | null;
+  price: number;
+  quantity: 1;
+};
+
+export type CartItem = ProductCartItem | GiftBoxCartItem;
+
+function productKey(variantId: string, colorId: string | null) {
+  return `${variantId}:${colorId ?? "no-color"}`;
+}
+
+function giftBoxId() {
+  return `gift-box-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+}
+
 type CartContextValue = {
   items: CartItem[];
   isLoaded: boolean;
-  addItem: (item: CartItem) => void;
-  removeItem: (variantId: string, colorId?: string | null) => void;
+  addItem: (item: ProductCartItem) => void;
+  addGiftBox: (contents: GiftBoxContent[], giftWrapFee: number, giftNote: string | null) => void;
+  removeItem: (key: string) => void;
   updateQuantity: (variantId: string, colorId: string | null, quantity: number) => void;
   clearCart: () => void;
   totalItems: number;
@@ -36,10 +70,6 @@ type CartContextValue = {
 const CartContext = createContext<CartContextValue | null>(null);
 
 const STORAGE_KEY = "babycloflo-cart";
-
-function itemKey(variantId: string, colorId: string | null) {
-  return `${variantId}:${colorId ?? "no-color"}`;
-}
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
@@ -65,26 +95,46 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [items, isLoaded]);
 
-  const addItem = useCallback((item: CartItem) => {
+  const addItem = useCallback((item: ProductCartItem) => {
     setItems((prev) => {
       const existingIndex = prev.findIndex(
-        (i) => i.variant_id === item.variant_id && i.color_id === item.color_id,
+        (i) => i.kind === "product" && productKey(i.variant_id, i.color_id) === productKey(item.variant_id, item.color_id),
       );
       if (existingIndex >= 0) {
         const next = [...prev];
-        next[existingIndex] = {
-          ...next[existingIndex],
-          quantity: next[existingIndex].quantity + item.quantity,
-        };
+        const existing = next[existingIndex] as ProductCartItem;
+        next[existingIndex] = { ...existing, quantity: existing.quantity + item.quantity };
         return next;
       }
       return [...prev, item];
     });
   }, []);
 
-  const removeItem = useCallback((variantId: string, colorId?: string | null) => {
+  const addGiftBox = useCallback(
+    (contents: GiftBoxContent[], giftWrapFee: number, giftNote: string | null) => {
+      const contentsTotal = contents.reduce((sum, item) => sum + item.price, 0);
+      const giftBox: GiftBoxCartItem = {
+        kind: "gift-box",
+        id: giftBoxId(),
+        gift_contents: contents,
+        gift_wrap_fee: giftWrapFee,
+        gift_note: giftNote,
+        price: contentsTotal + giftWrapFee,
+        quantity: 1,
+      };
+      setItems((prev) => [...prev, giftBox]);
+    },
+    [],
+  );
+
+  const removeItem = useCallback((key: string) => {
     setItems((prev) =>
-      prev.filter((i) => itemKey(i.variant_id, i.color_id) !== itemKey(variantId, colorId ?? null)),
+      prev.filter((item) => {
+        if (item.kind === "product") {
+          return productKey(item.variant_id, item.color_id) !== key;
+        }
+        return item.id !== key;
+      }),
     );
   }, []);
 
@@ -93,14 +143,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       setItems((prev) => {
         if (quantity <= 0) {
           return prev.filter(
-            (i) => itemKey(i.variant_id, i.color_id) !== itemKey(variantId, colorId),
+            (item) => !(item.kind === "product" && productKey(item.variant_id, item.color_id) === productKey(variantId, colorId)),
           );
         }
-        return prev.map((i) =>
-          itemKey(i.variant_id, i.color_id) === itemKey(variantId, colorId)
-            ? { ...i, quantity }
-            : i,
-        );
+        return prev.map((item) => {
+          if (item.kind === "product" && productKey(item.variant_id, item.color_id) === productKey(variantId, colorId)) {
+            return { ...item, quantity };
+          }
+          return item;
+        });
       });
     },
     [],
@@ -123,13 +174,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       items,
       isLoaded,
       addItem,
+      addGiftBox,
       removeItem,
       updateQuantity,
       clearCart,
       totalItems,
       subtotal,
     }),
-    [items, isLoaded, addItem, removeItem, updateQuantity, clearCart, totalItems, subtotal],
+    [items, isLoaded, addItem, addGiftBox, removeItem, updateQuantity, clearCart, totalItems, subtotal],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
