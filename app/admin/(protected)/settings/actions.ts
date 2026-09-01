@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
+import { isValidEmail, isValidPakistaniPhone } from "@/lib/validation";
 
 export async function saveSettings(formData: FormData) {
   const deliveryCharge = Number(formData.get("delivery_charge"));
@@ -18,6 +19,18 @@ export async function saveSettings(formData: FormData) {
     redirect("/admin/settings?error=invalid");
   }
 
+  const whatsappNumber = String(formData.get("whatsapp_number") ?? "").trim() || null;
+  const storeContactEmail =
+    String(formData.get("store_contact_email") ?? "").trim() || null;
+
+  if (whatsappNumber && !isValidPakistaniPhone(whatsappNumber)) {
+    redirect("/admin/settings?error=validation");
+  }
+
+  if (storeContactEmail && !isValidEmail(storeContactEmail)) {
+    redirect("/admin/settings?error=validation");
+  }
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -27,9 +40,8 @@ export async function saveSettings(formData: FormData) {
   const values = {
     delivery_charge: deliveryCharge,
     gift_wrap_fee: giftWrapFee,
-    whatsapp_number: String(formData.get("whatsapp_number") ?? "").trim() || null,
-    store_contact_email:
-      String(formData.get("store_contact_email") ?? "").trim() || null,
+    whatsapp_number: whatsappNumber,
+    store_contact_email: storeContactEmail,
     store_address: String(formData.get("store_address") ?? "").trim() || null,
   };
 

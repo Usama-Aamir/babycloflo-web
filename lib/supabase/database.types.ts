@@ -190,6 +190,24 @@ export type Database = {
           },
         ];
       };
+      profiles: {
+        Row: {
+          created_at: string;
+          id: string;
+          is_admin: boolean;
+        };
+        Insert: {
+          created_at?: string;
+          id: string;
+          is_admin?: boolean;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          is_admin?: boolean;
+        };
+        Relationships: [];
+      };
       products: {
         Row: {
           base_images: string[] | null;

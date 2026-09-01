@@ -1,9 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
 import type { Database } from "@/lib/supabase/database.types";
+import { isValidPakistaniPhone } from "@/lib/validation";
 
 const priceFormatter = new Intl.NumberFormat("en-PK", {
   style: "currency",
@@ -76,11 +78,18 @@ function buildWhatsAppMessage(order: PopulatedOrder) {
 
 type Filter = "all" | "website" | "whatsapp";
 
-export default function AdminOrdersPage() {
+function validFilter(value: string | null): Filter {
+  return value === "website" || value === "whatsapp" ? value : "all";
+}
+
+function AdminOrdersContent() {
+  const searchParams = useSearchParams();
+  const initialFilter = validFilter(searchParams.get("filter"));
+
   const [orders, setOrders] = useState<PopulatedOrder[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filter, setFilter] = useState<Filter>("all");
+  const [filter, setFilter] = useState<Filter>(initialFilter);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [isLogging, setIsLogging] = useState(false);
   const [deliveryCharge, setDeliveryCharge] = useState(0);
@@ -92,6 +101,7 @@ export default function AdminOrdersPage() {
   const [logAddress, setLogAddress] = useState("");
   const [logNotes, setLogNotes] = useState("");
   const [logError, setLogError] = useState<string | null>(null);
+  const [logPhoneError, setLogPhoneError] = useState<string | null>(null);
 
   const loadOrders = useCallback(async () => {
     setIsLoading(true);
@@ -160,12 +170,29 @@ export default function AdminOrdersPage() {
     );
   }
 
+  function validateLogPhone(value = logPhone) {
+    if (!value.trim()) {
+      setLogPhoneError("Please enter a phone number.");
+      return false;
+    }
+    if (!isValidPakistaniPhone(value)) {
+      setLogPhoneError("Please enter a valid Pakistani phone number, like 03001234567");
+      return false;
+    }
+    setLogPhoneError(null);
+    return true;
+  }
+
   async function handleLogOrder(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLogError(null);
 
     if (!logName.trim() || !logPhone.trim() || !logCity.trim() || !logAddress.trim()) {
       setLogError("Please fill in name, phone, address, and city.");
+      return;
+    }
+
+    if (!validateLogPhone()) {
       return;
     }
 
@@ -246,11 +273,15 @@ export default function AdminOrdersPage() {
                 className="min-h-12 w-full rounded-xl border border-zinc-300 px-4 outline-none focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10"
                 id="logPhone"
                 inputMode="tel"
+                onBlur={() => validateLogPhone()}
                 onChange={(e) => setLogPhone(e.target.value)}
                 required
                 type="tel"
                 value={logPhone}
               />
+              {logPhoneError ? (
+                <p className="mt-2 text-sm text-red-600">{logPhoneError}</p>
+              ) : null}
             </div>
             <div>
               <label className="mb-2 block text-sm font-medium" htmlFor="logCity">
@@ -481,5 +512,19 @@ export default function AdminOrdersPage() {
         </div>
       )}
     </main>
+  );
+}
+
+export default function AdminOrdersPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="mx-auto w-full max-w-6xl px-5 py-8 sm:px-8 sm:py-12">
+          <p className="text-center text-zinc-500">Loading orders…</p>
+        </main>
+      }
+    >
+      <AdminOrdersContent />
+    </Suspense>
   );
 }

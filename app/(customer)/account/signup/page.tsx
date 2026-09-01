@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
+import { isValidEmail } from "@/lib/validation";
 
 function plainError(message: string) {
   const lowered = message.toLowerCase();
@@ -24,14 +25,28 @@ export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const supabase = createClient();
 
+  function validateEmail(value = email) {
+    if (!value.trim() || isValidEmail(value)) {
+      setEmailError(null);
+      return true;
+    }
+    setEmailError("Please enter a valid email address");
+    return false;
+  }
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
+    if (!validateEmail()) {
+      setIsLoading(false);
+      return;
+    }
     setIsLoading(true);
 
     const { data, error: signUpError } = await supabase.auth.signUp({
@@ -73,11 +88,15 @@ export default function SignUpPage() {
               className="min-h-14 w-full rounded-xl border border-zinc-300 bg-white px-4 text-lg outline-none focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10"
               id="email"
               name="email"
+              onBlur={() => validateEmail()}
               onChange={(e) => setEmail(e.target.value)}
               required
               type="email"
               value={email}
             />
+            {emailError ? (
+              <p className="mt-2 text-sm text-red-600">{emailError}</p>
+            ) : null}
           </div>
 
           <div>

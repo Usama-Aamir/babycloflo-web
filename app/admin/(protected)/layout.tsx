@@ -25,6 +25,16 @@ export default async function ProtectedAdminLayout({
     redirect("/admin/login");
   }
 
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("is_admin")
+    .eq("id", user.id)
+    .single();
+
+  if (!profile?.is_admin) {
+    redirect("/admin/login?error=unauthorized");
+  }
+
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-950">
       <header className="sticky top-0 z-10 flex min-h-16 flex-wrap items-center justify-between gap-3 border-b border-zinc-200 bg-white px-5 py-2">

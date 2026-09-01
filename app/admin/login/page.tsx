@@ -14,11 +14,22 @@ async function login(formData: FormData) {
   }
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
     console.error("Supabase sign-in error:", error);
     redirect("/admin/login?error=invalid");
+  }
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("is_admin")
+    .eq("id", data.user.id)
+    .single();
+
+  if (!profile?.is_admin) {
+    await supabase.auth.signOut();
+    redirect("/admin/login?error=unauthorized");
   }
 
   redirect("/admin");
@@ -66,7 +77,9 @@ export default async function AdminLoginPage({
 
           {error ? (
             <p className="rounded-lg bg-red-50 px-4 py-3 text-base text-red-700" role="alert">
-              That email or password isn&apos;t right
+              {error === "unauthorized"
+                ? "This account doesn’t have admin access"
+                : "That email or password isn&apos;t right"}
             </p>
           ) : null}
 

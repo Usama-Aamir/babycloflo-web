@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
+import { isValidPakistaniPhone } from "@/lib/validation";
 import { useCart } from "../_components/cart-context";
 
 const priceFormatter = new Intl.NumberFormat("en-PK", {
@@ -59,12 +60,33 @@ export default function CheckoutPage() {
     [items],
   );
 
+  function validatePhone(value = phone) {
+    if (!value.trim()) {
+      setErrors((prev) => ({ ...prev, phone: "Please enter a phone number." }));
+      return false;
+    }
+    if (!isValidPakistaniPhone(value)) {
+      setErrors((prev) => ({
+        ...prev,
+        phone: "Please enter a valid Pakistani phone number, like 03001234567",
+      }));
+      return false;
+    }
+    setErrors((prev) => {
+      const next = { ...prev };
+      delete next.phone;
+      return next;
+    });
+    return true;
+  }
+
   function validate() {
     const next: Record<string, string> = {};
     if (!name.trim()) next.name = "Please enter your full name.";
-    if (!phone.trim()) next.phone = "Please enter a phone number.";
-    else if (!/^\+?[\d\s\-()]{7,}$/.test(phone.trim())) {
-      next.phone = "Please enter a valid phone number.";
+    if (!phone.trim()) {
+      next.phone = "Please enter a phone number.";
+    } else if (!isValidPakistaniPhone(phone)) {
+      next.phone = "Please enter a valid Pakistani phone number, like 03001234567";
     }
     if (!address.trim()) next.address = "Please enter your delivery address.";
     if (!city.trim()) next.city = "Please enter your city.";
@@ -231,6 +253,7 @@ export default function CheckoutPage() {
             id="phone"
             inputMode="tel"
             name="phone"
+            onBlur={() => validatePhone()}
             onChange={(e) => setPhone(e.target.value)}
             required
             type="tel"
