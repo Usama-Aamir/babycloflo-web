@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -38,7 +39,19 @@ export default async function ProtectedAdminLayout({
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-950">
       <header className="sticky top-0 z-10 flex min-h-16 flex-wrap items-center justify-between gap-3 border-b border-zinc-200 bg-white px-5 py-2">
-        <nav className="flex min-h-11 items-center gap-1 overflow-x-auto" aria-label="Admin navigation">
+        <div className="flex min-h-11 items-center gap-4 overflow-x-auto">
+          <Link className="relative inline-block h-8 w-32 shrink-0" href="/admin">
+            <span className="sr-only">BabyCloFlo Admin</span>
+            <Image
+              alt="BabyCloFlo"
+              className="object-contain object-left"
+              fill
+              priority
+              src="/babycloflo-logo-horizontal.png"
+              unoptimized
+            />
+          </Link>
+          <nav className="flex min-h-11 items-center gap-1" aria-label="Admin navigation">
           <Link className="rounded-lg px-3 py-3 font-medium hover:bg-zinc-100" href="/admin">
             Dashboard
           </Link>
@@ -52,6 +65,7 @@ export default async function ProtectedAdminLayout({
             Settings
           </Link>
         </nav>
+        </div>
         <form action={logout}>
           <button
             className="min-h-11 rounded-lg border border-zinc-300 bg-white px-5 text-base font-medium hover:bg-zinc-100 focus:outline-none focus:ring-4 focus:ring-zinc-300"

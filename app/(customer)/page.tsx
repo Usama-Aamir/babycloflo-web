@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
+
 import { createClient } from "@/lib/supabase/server";
 import { HomeContent } from "./_components/home-content";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "BabyCloFlo — Baby Feeders, Nipples & More",
+  },
+};
 
 export default async function HomePage() {
   const supabase = await createClient();

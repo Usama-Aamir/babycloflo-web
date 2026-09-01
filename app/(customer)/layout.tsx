@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { AccountNav } from "./_components/account-nav";
@@ -13,8 +14,16 @@ export default function CustomerLayout({
       <div className="min-h-screen bg-[#fffaf7] text-zinc-950">
         <header className="sticky top-0 z-20 border-b border-rose-100 bg-white/95 backdrop-blur">
           <div className="mx-auto flex min-h-16 max-w-6xl items-center justify-between gap-4 px-4">
-            <Link className="text-xl font-bold tracking-tight text-rose-700" href="/">
-              Baby Clo Flo
+            <Link className="relative inline-block h-10 w-40" href="/">
+              <span className="sr-only">BabyCloFlo</span>
+              <Image
+                alt="BabyCloFlo"
+                className="object-contain object-left"
+                fill
+                priority
+                src="/babycloflo-logo-horizontal.png"
+                unoptimized
+              />
             </Link>
             <nav className="flex items-center gap-1" aria-label="Store navigation">
               <Link className="flex min-h-12 min-w-14 flex-col items-center justify-center rounded-xl px-2 text-xs font-medium hover:bg-rose-50" href="/">

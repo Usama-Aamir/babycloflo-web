@@ -1,7 +1,27 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
 import { ProductDetailView } from "../../_components/product-detail";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const supabase = await createClient();
+  const { data: product } = await supabase
+    .from("products")
+    .select("name")
+    .eq("id", id)
+    .eq("status", "active")
+    .single();
+
+  return {
+    title: product?.name ?? "Product",
+  };
+}
 
 export default async function ProductPage({
   params,

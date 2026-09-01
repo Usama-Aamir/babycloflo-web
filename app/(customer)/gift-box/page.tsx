@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
+
 import { createClient } from "@/lib/supabase/server";
 import { GiftBoxBuilder } from "./gift-box-builder";
+
+export const metadata: Metadata = {
+  title: "Build a Gift Box",
+};
 
 export default async function GiftBoxPage() {
   const supabase = await createClient();

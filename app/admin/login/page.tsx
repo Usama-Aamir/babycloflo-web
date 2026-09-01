@@ -1,7 +1,12 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
 import { PasswordInput } from "./password-input";
+
+export const metadata: Metadata = {
+  title: "Admin Login",
+};
 
 async function login(formData: FormData) {
   "use server";

@@ -1,8 +1,27 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
 import { CategoryProducts } from "../../_components/category-products";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const supabase = await createClient();
+  const { data: category } = await supabase
+    .from("categories")
+    .select("name")
+    .eq("slug", slug)
+    .single();
+
+  return {
+    title: category?.name ?? "Category",
+  };
+}
 
 export default async function CategoryPage({
   params,
