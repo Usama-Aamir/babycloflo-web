@@ -69,14 +69,33 @@ export function ProductWizard({
   const [isPending, startTransition] = useTransition();
 
   async function uploadImage(file: File, folder: string) {
+    console.log("Starting product image upload", {
+      name: file.name,
+      size: file.size,
+      type: file.type,
+    });
+
     const supabase = createClient();
     const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
     const path = `${folder}/${crypto.randomUUID()}.${extension}`;
-    const { error: uploadError } = await supabase.storage
-      .from("product-images")
-      .upload(path, file, { contentType: file.type, upsert: false });
+    console.log("Calling Supabase Storage upload", { bucket: "product-images", path });
 
-    if (uploadError) throw uploadError;
+    let result;
+    try {
+      result = await supabase.storage
+        .from("product-images")
+        .upload(path, file, { contentType: file.type, upsert: false });
+    } catch (uploadError) {
+      console.error("Supabase Storage upload threw an error", uploadError);
+      throw uploadError;
+    }
+
+    if (result.error) {
+      console.error("Supabase Storage upload returned an error", result.error);
+      throw result.error;
+    }
+
+    console.log("Supabase Storage upload succeeded", result.data);
     return {
       path,
       url: supabase.storage.from("product-images").getPublicUrl(path).data.publicUrl,
