@@ -46,12 +46,17 @@ export default async function CategoryPage({
     .order("created_at", { ascending: false });
 
   return (
-    <main className="mx-auto w-full max-w-6xl px-4 pb-14 pt-6 sm:px-6 sm:pt-10">
-      <Link className="inline-flex min-h-12 items-center gap-2 rounded-xl pr-4 font-semibold text-zinc-700" href="/">
+    <div className="mx-auto w-full max-w-6xl py-6 sm:py-8">
+      <Link
+        className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-medium text-zinc-600 transition hover:bg-brand-primary-light"
+        href="/"
+      >
         <span aria-hidden="true">←</span> Back
       </Link>
-      <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{category.name}</h1>
+      <h1 className="mt-3 text-2xl font-semibold tracking-tight text-zinc-900 sm:mt-4 sm:text-3xl">
+        {category.name}
+      </h1>
       <CategoryProducts products={products ?? []} />
-    </main>
+    </div>
   );
 }

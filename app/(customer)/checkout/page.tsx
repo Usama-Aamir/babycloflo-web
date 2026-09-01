@@ -167,16 +167,16 @@ export default function CheckoutPage() {
 
   if (!isLoaded) {
     return (
-      <main className="mx-auto max-w-3xl px-4 py-10">
+      <div className="mx-auto flex min-h-[60vh] max-w-3xl items-center justify-center py-10">
         <p className="text-center text-zinc-500">Loading checkout…</p>
-      </main>
+      </div>
     );
   }
 
   if (items.length === 0) {
     return (
-      <main className="mx-auto max-w-2xl px-4 py-16 text-center">
-        <h1 className="text-3xl font-bold">Checkout</h1>
+      <div className="mx-auto max-w-2xl py-16 text-center">
+        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Checkout</h1>
         <p className="mt-4 text-zinc-600">Your cart is empty.</p>
         <Link
           className="mt-6 inline-flex min-h-12 items-center justify-center rounded-xl bg-brand-primary px-6 font-semibold text-white hover:bg-brand-primary-dark"
@@ -184,13 +184,13 @@ export default function CheckoutPage() {
         >
           Continue shopping
         </Link>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-8">
-      <h1 className="text-3xl font-bold tracking-tight">Checkout</h1>
+    <div className="mx-auto max-w-3xl py-6 sm:py-8">
+      <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Checkout</h1>
 
       {!session ? (
         <div className="mt-4 rounded-xl bg-zinc-50 px-4 py-3 text-sm text-zinc-700">
@@ -214,9 +214,9 @@ export default function CheckoutPage() {
         </div>
       )}
 
-      <div className="mt-6 rounded-2xl bg-white p-5 shadow-sm">
-        <h2 className="text-lg font-bold">Order summary</h2>
-        <ul className="mt-3 space-y-2 text-sm text-zinc-700">
+      <div className="mt-6 rounded-2xl bg-white p-4 shadow-sm sm:p-5">
+        <h2 className="text-base font-semibold text-zinc-900 sm:text-lg">Order summary</h2>
+        <ul className="mt-3 space-y-2 text-sm text-zinc-700 sm:text-base">
           {items.map((item) =>
             item.kind === "gift-box" ? (
               <li className="flex justify-between" key={item.id}>
@@ -234,11 +234,11 @@ export default function CheckoutPage() {
           )}
         </ul>
         <div className="mt-4 border-t border-zinc-100 pt-3">
-          <div className="flex justify-between text-zinc-700">
+          <div className="flex justify-between text-sm text-zinc-700 sm:text-base">
             <span>Subtotal</span>
             <span className="font-medium">{priceFormatter.format(subtotal)}</span>
           </div>
-          <div className="flex justify-between text-zinc-700">
+          <div className="flex justify-between text-sm text-zinc-700 sm:text-base">
             <span>Delivery</span>
             <span className="font-medium">
               {deliveryCharge ? priceFormatter.format(deliveryCharge) : "Free"}
@@ -251,14 +251,14 @@ export default function CheckoutPage() {
         </div>
       </div>
 
-      <form className="mt-6 space-y-5" onSubmit={handleSubmit}>
+      <form className="mt-6 space-y-4 sm:space-y-5" onSubmit={handleSubmit}>
         <div>
-          <label className="mb-2 block text-base font-medium" htmlFor="name">
+          <label className="mb-1.5 block text-sm font-medium text-zinc-800 sm:text-base" htmlFor="name">
             Full name
           </label>
           <input
             autoComplete="name"
-            className="min-h-14 w-full rounded-xl border border-zinc-300 bg-white px-4 text-lg outline-none focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10"
+            className="h-12 w-full rounded-xl border border-zinc-300 bg-white px-4 text-base outline-none transition focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10 sm:h-14 sm:text-lg"
             id="name"
             name="name"
             onChange={(e) => setName(e.target.value)}
@@ -270,12 +270,12 @@ export default function CheckoutPage() {
         </div>
 
         <div>
-          <label className="mb-2 block text-base font-medium" htmlFor="phone">
+          <label className="mb-1.5 block text-sm font-medium text-zinc-800 sm:text-base" htmlFor="phone">
             Phone number
           </label>
           <input
             autoComplete="tel"
-            className="min-h-14 w-full rounded-xl border border-zinc-300 bg-white px-4 text-lg outline-none focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10"
+            className="h-12 w-full rounded-xl border border-zinc-300 bg-white px-4 text-base outline-none transition focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10 sm:h-14 sm:text-lg"
             id="phone"
             inputMode="tel"
             name="phone"
@@ -289,12 +289,12 @@ export default function CheckoutPage() {
         </div>
 
         <div>
-          <label className="mb-2 block text-base font-medium" htmlFor="address">
+          <label className="mb-1.5 block text-sm font-medium text-zinc-800 sm:text-base" htmlFor="address">
             Delivery address
           </label>
           <textarea
             autoComplete="street-address"
-            className="min-h-24 w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-lg outline-none focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10"
+            className="min-h-24 w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-base outline-none transition focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10 sm:text-lg"
             id="address"
             name="address"
             onChange={(e) => setAddress(e.target.value)}
@@ -305,12 +305,12 @@ export default function CheckoutPage() {
         </div>
 
         <div>
-          <label className="mb-2 block text-base font-medium" htmlFor="city">
+          <label className="mb-1.5 block text-sm font-medium text-zinc-800 sm:text-base" htmlFor="city">
             City
           </label>
           <input
             autoComplete="address-level2"
-            className="min-h-14 w-full rounded-xl border border-zinc-300 bg-white px-4 text-lg outline-none focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10"
+            className="h-12 w-full rounded-xl border border-zinc-300 bg-white px-4 text-base outline-none transition focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10 sm:h-14 sm:text-lg"
             id="city"
             name="city"
             onChange={(e) => setCity(e.target.value)}
@@ -328,7 +328,7 @@ export default function CheckoutPage() {
         ) : null}
 
         <button
-          className="min-h-16 w-full rounded-2xl bg-brand-primary px-5 text-lg font-bold text-white hover:bg-brand-primary-dark disabled:cursor-not-allowed disabled:opacity-60"
+          className="h-14 w-full rounded-2xl bg-brand-primary px-5 text-base font-bold text-white transition hover:bg-brand-primary-dark disabled:cursor-not-allowed disabled:opacity-60 sm:h-16 sm:text-lg"
           disabled={isBusy}
           type="submit"
         >
@@ -339,6 +339,6 @@ export default function CheckoutPage() {
           By placing this order you agree to our terms. No account required.
         </p>
       </form>
-    </main>
+    </div>
   );
 }

@@ -101,16 +101,18 @@ export function GiftBoxBuilder({
   }
 
   return (
-    <main className="mx-auto w-full max-w-6xl px-4 pb-14 pt-6 sm:px-6 sm:pt-10">
+    <div className="mx-auto w-full max-w-6xl py-6 sm:py-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Build a Gift Box</h1>
-          <p className="mt-2 text-zinc-600">
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
+            Build a Gift Box
+          </h1>
+          <p className="mt-1.5 text-sm text-zinc-600 sm:text-base">
             Choose {MIN_GIFT_ITEMS}–{MAX_GIFT_ITEMS} items for a beautifully wrapped baby gift.
           </p>
         </div>
         <Link
-          className="inline-flex min-h-12 items-center justify-center rounded-xl border border-zinc-200 bg-white px-5 font-medium text-zinc-700 hover:bg-zinc-50"
+          className="inline-flex h-11 items-center justify-center rounded-xl border border-zinc-200 bg-white px-5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
           href="/"
         >
           Back to shop
@@ -118,7 +120,7 @@ export function GiftBoxBuilder({
       </div>
 
       <div
-        className={`mt-6 rounded-2xl px-5 py-4 text-center font-semibold ${
+        className={`mt-6 rounded-2xl px-4 py-3 text-center text-sm font-semibold sm:px-5 sm:py-4 sm:text-base ${
           count >= MIN_GIFT_ITEMS && count <= MAX_GIFT_ITEMS
             ? "bg-green-50 text-green-800"
             : "bg-amber-50 text-amber-800"
@@ -128,12 +130,12 @@ export function GiftBoxBuilder({
       </div>
 
       {products.length === 0 ? (
-        <div className="mt-8 rounded-2xl border border-dashed border-zinc-300 bg-white px-6 py-16 text-center">
-          <p className="text-lg text-zinc-600">No giftable products yet.</p>
-          <p className="mt-2 text-zinc-500">Check back soon for curated gift items.</p>
+        <div className="mt-8 rounded-2xl border border-dashed border-zinc-300 bg-white px-5 py-14 text-center sm:px-6 sm:py-16">
+          <p className="text-base text-zinc-600 sm:text-lg">No giftable products yet.</p>
+          <p className="mt-2 text-sm text-zinc-500 sm:text-base">Check back soon for curated gift items.</p>
         </div>
       ) : (
-        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
           {products.map((product) => {
             const selected = selectedIds.has(product.id);
             const startingPrice =
@@ -157,7 +159,7 @@ export function GiftBoxBuilder({
                 onClick={() => toggleProduct(product.id)}
                 type="button"
               >
-                <div className="relative aspect-square bg-brand-primary-light">
+                <div className="relative aspect-[4/3] bg-brand-primary-light sm:aspect-square">
                   {product.base_images?.[0] ? (
                     <Image
                       alt={product.name}
@@ -169,24 +171,24 @@ export function GiftBoxBuilder({
                     />
                   ) : (
                     <div className="flex h-full items-center justify-center text-brand-primary/40" aria-hidden="true">
-                      <svg fill="none" height="56" viewBox="0 0 24 24" width="56">
+                      <svg fill="none" height="40" viewBox="0 0 24 24" width="40">
                         <path d="M4 6h16v14H4V6Zm4 0a4 4 0 0 1 8 0M8 14l2.5-2.5 2 2L15 11l3 3" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
                       </svg>
                     </div>
                   )}
                   {selected ? (
-                    <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-brand-primary text-white shadow">
-                      <svg aria-hidden="true" fill="none" height="18" viewBox="0 0 24 24" width="18">
+                    <div className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-brand-primary text-white shadow sm:right-3 sm:top-3 sm:h-8 sm:w-8">
+                      <svg aria-hidden="true" fill="none" height="16" viewBox="0 0 24 24" width="16">
                         <path d="M5 12l5 5L20 7" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" />
                       </svg>
                     </div>
                   ) : null}
                 </div>
-                <div className="p-4">
-                  <h3 className="line-clamp-2 min-h-12 text-base font-semibold leading-6 text-zinc-900 sm:text-lg">
+                <div className="p-3 sm:p-4">
+                  <h3 className="line-clamp-2 min-h-[2.5rem] text-sm font-medium leading-5 text-zinc-900 sm:min-h-[3rem] sm:text-base sm:leading-6">
                     {product.name}
                   </h3>
-                  <p className="mt-2 text-xl font-bold text-brand-primary-dark">
+                  <p className="mt-2 text-base font-semibold text-brand-primary-dark sm:text-lg">
                     {startingPrice === null ? "—" : priceFormatter.format(startingPrice)}
                   </p>
                 </div>
@@ -197,17 +199,17 @@ export function GiftBoxBuilder({
       )}
 
       {count >= MIN_GIFT_ITEMS ? (
-        <div className="mt-8 rounded-2xl border border-brand-primary-light bg-white p-5 shadow-sm sm:p-8">
-          <h2 className="text-xl font-bold">Your gift box</h2>
+        <div className="mt-8 rounded-2xl border border-brand-primary-light bg-white p-4 shadow-sm sm:p-6">
+          <h2 className="text-lg font-semibold text-zinc-900 sm:text-xl">Your gift box</h2>
           <ul className="mt-4 space-y-3">
             {contents.map((item) => (
-              <li className="flex items-center justify-between text-sm" key={item.product_id}>
+              <li className="flex items-center justify-between text-sm sm:text-base" key={item.product_id}>
                 <span className="text-zinc-700">{item.product_name}</span>
                 <span className="font-medium text-zinc-900">{priceFormatter.format(item.price)}</span>
               </li>
             ))}
           </ul>
-          <div className="mt-4 space-y-2 border-t border-zinc-100 pt-4 text-zinc-700">
+          <div className="mt-4 space-y-2 border-t border-zinc-100 pt-4 text-sm text-zinc-700 sm:text-base">
             <div className="flex justify-between">
               <span>Gift wrap</span>
               <span className="font-medium">{giftWrapFee ? priceFormatter.format(giftWrapFee) : "Free"}</span>
@@ -219,11 +221,11 @@ export function GiftBoxBuilder({
           </div>
 
           <div className="mt-5">
-            <label className="mb-2 block text-base font-medium" htmlFor="gift-note">
+            <label className="mb-1.5 block text-sm font-medium text-zinc-800 sm:text-base" htmlFor="gift-note">
               Add a gift note (optional)
             </label>
             <textarea
-              className="min-h-24 w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-lg outline-none focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10"
+              className="min-h-24 w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-base outline-none transition focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10 sm:text-lg"
               id="gift-note"
               onChange={(e) => setGiftNote(e.target.value)}
               placeholder="Write something sweet for the little one..."
@@ -233,7 +235,7 @@ export function GiftBoxBuilder({
 
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
             <button
-              className="min-h-14 flex-1 rounded-xl bg-brand-primary px-6 text-lg font-bold text-white hover:bg-brand-primary-dark disabled:cursor-not-allowed disabled:opacity-50"
+              className="h-12 flex-1 rounded-xl bg-brand-primary px-6 text-base font-bold text-white transition hover:bg-brand-primary-dark disabled:cursor-not-allowed disabled:opacity-50 sm:h-14 sm:text-lg"
               disabled={!canAdd}
               onClick={handleAddToCart}
               type="button"
@@ -241,7 +243,7 @@ export function GiftBoxBuilder({
               Add Gift Box to Cart
             </button>
             <button
-              className="min-h-14 rounded-xl border border-zinc-200 bg-white px-6 text-lg font-semibold text-zinc-700 hover:bg-zinc-50"
+              className="h-12 rounded-xl border border-zinc-200 bg-white px-6 text-base font-semibold text-zinc-700 transition hover:bg-zinc-50 sm:h-14 sm:text-lg"
               onClick={() => router.push("/cart")}
               type="button"
             >
@@ -252,10 +254,10 @@ export function GiftBoxBuilder({
       ) : null}
 
       {added ? (
-        <div className="fixed bottom-6 left-1/2 z-30 -translate-x-1/2 rounded-full bg-zinc-950 px-6 py-3 font-semibold text-white shadow-lg" role="status">
+        <div className="fixed bottom-6 left-1/2 z-30 -translate-x-1/2 rounded-full bg-zinc-950 px-5 py-2.5 text-sm font-semibold text-white shadow-lg sm:px-6 sm:py-3" role="status">
           Gift box added to cart
         </div>
       ) : null}
-    </main>
+    </div>
   );
 }

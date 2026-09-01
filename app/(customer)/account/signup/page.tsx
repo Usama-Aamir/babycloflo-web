@@ -71,21 +71,21 @@ export default function SignUpPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-[70vh] max-w-md items-center px-5 py-12">
+    <div className="mx-auto flex min-h-[60vh] max-w-md items-center py-12">
       <div className="w-full">
-        <h1 className="text-3xl font-semibold tracking-tight">Create account</h1>
-        <p className="mt-2 text-zinc-600">
+        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Create account</h1>
+        <p className="mt-2 text-sm text-zinc-600 sm:text-base">
           Optional — you can also check out as a guest.
         </p>
 
-        <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+        <form className="mt-7 space-y-4 sm:mt-8 sm:space-y-5" onSubmit={handleSubmit}>
           <div>
-            <label className="mb-2 block text-base font-medium" htmlFor="email">
+            <label className="mb-1.5 block text-sm font-medium text-zinc-800 sm:text-base" htmlFor="email">
               Email
             </label>
             <input
               autoComplete="email"
-              className="min-h-14 w-full rounded-xl border border-zinc-300 bg-white px-4 text-lg outline-none focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10"
+              className="h-12 w-full rounded-xl border border-zinc-300 bg-white px-4 text-base outline-none transition focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10 sm:h-14 sm:text-lg"
               id="email"
               name="email"
               onBlur={() => validateEmail()}
@@ -100,13 +100,13 @@ export default function SignUpPage() {
           </div>
 
           <div>
-            <label className="mb-2 block text-base font-medium" htmlFor="password">
+            <label className="mb-1.5 block text-sm font-medium text-zinc-800 sm:text-base" htmlFor="password">
               Password
             </label>
             <div className="relative">
               <input
                 autoComplete="new-password"
-                className="min-h-14 w-full rounded-xl border border-zinc-300 bg-white px-4 pr-14 text-lg outline-none focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10"
+                className="h-12 w-full rounded-xl border border-zinc-300 bg-white px-4 pr-14 text-base outline-none transition focus:border-zinc-900 focus:ring-2 focus:ring-zinc-900/10 sm:h-14 sm:text-lg"
                 id="password"
                 minLength={6}
                 name="password"
@@ -133,7 +133,7 @@ export default function SignUpPage() {
           ) : null}
 
           <button
-            className="min-h-14 w-full rounded-xl bg-brand-primary px-5 text-lg font-semibold text-white hover:bg-brand-primary-dark disabled:cursor-not-allowed disabled:opacity-60"
+            className="h-12 w-full rounded-xl bg-brand-primary px-5 text-base font-semibold text-white transition hover:bg-brand-primary-dark disabled:cursor-not-allowed disabled:opacity-60 sm:h-14 sm:text-lg"
             disabled={isLoading}
             type="submit"
           >
@@ -141,13 +141,13 @@ export default function SignUpPage() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-zinc-600">
+        <p className="mt-6 text-center text-sm text-zinc-600 sm:text-base">
           Already have an account?{" "}
           <Link className="font-semibold text-brand-primary-dark hover:underline" href="/account/login">
             Log in
           </Link>
         </p>
       </div>
-    </main>
+    </div>
   );
 }

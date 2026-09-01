@@ -1,8 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
-
-import { AccountNav } from "./_components/account-nav";
 import { CartProvider } from "./_components/cart-context";
+import { SiteHeader } from "./_components/site-header";
 
 export default function CustomerLayout({
   children,
@@ -11,44 +8,9 @@ export default function CustomerLayout({
 }>) {
   return (
     <CartProvider>
-      <div className="min-h-screen bg-[#fffaf7] text-zinc-950">
-        <header className="sticky top-0 z-20 border-b border-brand-primary-light bg-white/95 backdrop-blur">
-          <div className="mx-auto flex min-h-16 max-w-6xl items-center justify-between gap-4 px-4">
-            <Link className="relative inline-block h-10 w-40" href="/">
-              <span className="sr-only">BabyCloFlo</span>
-              <Image
-                alt="BabyCloFlo"
-                className="object-contain object-left"
-                fill
-                priority
-                src="/icons/babycloflo-logo-horizontal.png"
-                unoptimized
-              />
-            </Link>
-            <nav className="flex items-center gap-1" aria-label="Store navigation">
-              <Link className="flex min-h-12 min-w-14 flex-col items-center justify-center rounded-xl px-2 text-xs font-medium hover:bg-brand-primary-light" href="/">
-                <svg aria-hidden="true" fill="none" height="23" viewBox="0 0 24 24" width="23">
-                  <path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.8" />
-                </svg>
-                Home
-              </Link>
-              <Link className="flex min-h-12 min-w-14 flex-col items-center justify-center rounded-xl px-2 text-xs font-medium hover:bg-brand-primary-light" href="/gift-box">
-                <svg aria-hidden="true" fill="none" height="23" viewBox="0 0 24 24" width="23">
-                  <path d="M4 9h16v12H4V9Zm-1-4h18v4H3V5Zm9 0v16M12 5c-1-3-5-3-5-1 0 1 2 1 5 1Zm0 0c1-3 5-3 5-1 0 1-2 1-5 1Z" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.7" />
-                </svg>
-                Gifts
-              </Link>
-              <Link className="flex min-h-12 min-w-14 flex-col items-center justify-center rounded-xl px-2 text-xs font-medium hover:bg-brand-primary-light" href="/cart">
-                <svg aria-hidden="true" fill="none" height="23" viewBox="0 0 24 24" width="23">
-                  <path d="M3 4h2l2 11h11l2-8H6m3 12h.01M17 19h.01" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
-                </svg>
-                Cart
-              </Link>
-            </nav>
-            <AccountNav />
-          </div>
-        </header>
-        {children}
+      <div className="flex min-h-screen flex-col bg-[#fffaf7] text-zinc-950">
+        <SiteHeader />
+        <main className="flex-1 px-4 pb-safe sm:px-6">{children}</main>
       </div>
     </CartProvider>
   );

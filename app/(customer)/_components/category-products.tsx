@@ -20,9 +20,9 @@ export function CategoryProducts({ products }: { products: ProductSummary[] }) {
   return (
     <>
       {sizes.length > 1 ? (
-        <div className="mt-6 flex gap-2 overflow-x-auto pb-2" aria-label="Filter by size">
+        <div className="mt-4 flex gap-2 overflow-x-auto pb-2 pt-1 -mx-4 px-4 sm:-mx-0 sm:px-0 sm:pt-0" aria-label="Filter by size">
           <button
-            className={`min-h-12 shrink-0 rounded-full px-5 font-semibold ${selectedSize === "all" ? "bg-brand-primary text-white" : "border border-zinc-300 bg-white"}`}
+            className={`h-9 shrink-0 snap-start rounded-full px-4 text-sm font-medium transition ${selectedSize === "all" ? "bg-brand-primary text-white" : "border border-zinc-300 bg-white hover:border-zinc-400"}`}
             onClick={() => setSelectedSize("all")}
             type="button"
           >
@@ -30,7 +30,7 @@ export function CategoryProducts({ products }: { products: ProductSummary[] }) {
           </button>
           {sizes.map((size) => (
             <button
-              className={`min-h-12 shrink-0 rounded-full px-5 font-semibold ${selectedSize === size ? "bg-brand-primary text-white" : "border border-zinc-300 bg-white"}`}
+              className={`h-9 shrink-0 snap-start rounded-full px-4 text-sm font-medium transition ${selectedSize === size ? "bg-brand-primary text-white" : "border border-zinc-300 bg-white hover:border-zinc-400"}`}
               key={size}
               onClick={() => setSelectedSize(size)}
               type="button"
@@ -42,11 +42,11 @@ export function CategoryProducts({ products }: { products: ProductSummary[] }) {
       ) : null}
 
       {filteredProducts.length > 0 ? (
-        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
           {filteredProducts.map((product) => <ProductCard key={product.id} product={product} />)}
         </div>
       ) : (
-        <div className="mt-6 rounded-2xl border border-dashed border-zinc-300 bg-white px-5 py-14 text-center text-lg text-zinc-600">
+        <div className="mt-5 rounded-2xl border border-dashed border-zinc-300 bg-white px-5 py-12 text-center text-base text-zinc-600 sm:text-lg">
           No products in this size yet
         </div>
       )}
