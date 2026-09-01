@@ -19,7 +19,7 @@ export default async function EditProductPage({
     supabase
       .from("products")
       .select(
-        "name, category_id, description, base_images, status, is_giftable, product_variants(id, size, finish, price, stock_status, variant_colors(id, color_name, swatch_image_url))",
+        "name, category_id, description, base_images, status, product_variants(id, size, finish, price, stock_status, variant_colors(id, color_name, swatch_image_url))",
       )
       .eq("id", id)
       .single(),
@@ -35,7 +35,6 @@ export default async function EditProductPage({
         baseImages: product.base_images ?? [],
         name: product.name,
         categoryId: product.category_id,
-        isGiftable: product.is_giftable,
         description: product.description ?? "",
         status: product.status === "active" ? "active" : "draft",
         variants: product.product_variants.map((variant) => ({

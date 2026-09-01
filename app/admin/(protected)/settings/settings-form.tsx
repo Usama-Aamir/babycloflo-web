@@ -10,7 +10,6 @@ const inputClass =
 
 type Settings = {
   delivery_charge: number;
-  gift_wrap_fee: number;
   whatsapp_number: string | null;
   store_contact_email: string | null;
   store_address: string | null;
@@ -72,21 +71,6 @@ export function SettingsForm({ settings }: { settings: Settings | null }) {
             id="delivery_charge"
             min="0"
             name="delivery_charge"
-            required
-            step="0.01"
-            type="number"
-          />
-        </div>
-        <div>
-          <label className="mb-2 block text-base font-medium" htmlFor="gift_wrap_fee">
-            Gift wrap fee
-          </label>
-          <input
-            className={inputClass}
-            defaultValue={settings?.gift_wrap_fee ?? 0}
-            id="gift_wrap_fee"
-            min="0"
-            name="gift_wrap_fee"
             required
             step="0.01"
             type="number"

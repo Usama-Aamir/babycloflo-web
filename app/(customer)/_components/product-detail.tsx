@@ -48,7 +48,6 @@ export function ProductDetailView({
     if (!selectedVariant) return;
 
     addItem({
-      kind: "product",
       product_id: product.id,
       product_name: product.name,
       product_image: product.base_images?.[0] ?? null,

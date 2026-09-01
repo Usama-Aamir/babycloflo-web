@@ -153,7 +153,6 @@ export default async function AdminDashboardPage() {
                   : order.notes || "No items";
               const total =
                 order.delivery_charge +
-                order.gift_wrap_fee +
                 items.reduce((sum, item) => sum + item.quantity * item.price_at_purchase, 0);
 
               return (

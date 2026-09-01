@@ -58,7 +58,6 @@ export function ProductWizard({
       baseImages: [],
       name: "",
       categoryId: "",
-      isGiftable: false,
       description: "",
       status: "draft",
       variants: [emptyVariant()],
@@ -300,15 +299,7 @@ export function ProductWizard({
                 ))}
               </select>
             </div>
-            <label className="flex min-h-16 cursor-pointer items-center justify-between gap-4 rounded-xl border border-zinc-200 px-4">
-              <span className="text-base font-medium">Include in Gift Box Builder</span>
-              <input
-                checked={product.isGiftable}
-                className="h-6 w-6 accent-zinc-950"
-                onChange={(event) => setProduct((current) => ({ ...current, isGiftable: event.target.checked }))}
-                type="checkbox"
-              />
-            </label>
+
           </div>
         ) : null}
 

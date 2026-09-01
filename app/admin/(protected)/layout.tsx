@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
+import { Wordmark } from "@/app/_components/wordmark";
 
 async function logout() {
   "use server";
@@ -40,17 +40,7 @@ export default async function ProtectedAdminLayout({
     <div className="min-h-screen bg-zinc-50 text-zinc-950">
       <header className="sticky top-0 z-10 flex min-h-16 flex-wrap items-center justify-between gap-3 border-b border-zinc-200 bg-white px-5 py-2">
         <div className="flex min-h-11 items-center gap-4 overflow-x-auto">
-          <Link className="relative inline-block h-8 w-32 shrink-0" href="/admin">
-            <span className="sr-only">BabyCloFlo Admin</span>
-            <Image
-              alt="BabyCloFlo"
-              className="object-contain object-left"
-              fill
-              priority
-              src="/icons/babycloflo-logo-horizontal.png"
-              unoptimized
-            />
-          </Link>
+          <Wordmark className="shrink-0" href="/admin" />
           <nav className="flex min-h-11 items-center gap-1" aria-label="Admin navigation">
           <Link className="rounded-lg px-3 py-3 font-medium hover:bg-zinc-100" href="/admin">
             Dashboard

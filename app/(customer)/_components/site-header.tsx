@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
+import { Wordmark } from "@/app/_components/wordmark";
 import { useCart } from "./cart-context";
 
 function MenuIcon({ open }: { open: boolean }) {
@@ -83,24 +83,13 @@ export function SiteHeader() {
 
   const menuLinks = [
     { href: "/", label: "Home" },
-    { href: "/gift-box", label: "Gifts" },
     { href: "/cart", label: "Cart", badge: totalItems },
   ];
 
   return (
     <header className="sticky top-0 z-30 border-b border-brand-primary-light bg-white/95 shadow-sm backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
-        <Link className="relative block h-9 w-36 sm:h-10 sm:w-40" href="/">
-          <span className="sr-only">BabyCloFlo</span>
-          <Image
-            alt="BabyCloFlo"
-            className="object-contain object-left"
-            fill
-            priority
-            src="/icons/babycloflo-logo-horizontal.png"
-            unoptimized
-          />
-        </Link>
+        <Wordmark href="/" />
 
         <div className="flex items-center gap-1">
           <div className="sm:hidden">
@@ -121,9 +110,6 @@ export function SiteHeader() {
           <nav className="hidden items-center gap-1 sm:flex" aria-label="Store navigation">
             <Link className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 transition hover:bg-brand-primary-light" href="/">
               Home
-            </Link>
-            <Link className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 transition hover:bg-brand-primary-light" href="/gift-box">
-              Gifts
             </Link>
             <Link className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 transition hover:bg-brand-primary-light" href="/cart">
               Cart

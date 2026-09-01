@@ -11,7 +11,7 @@ export default async function SettingsPage({
   const { data: settings, error } = await supabase
     .from("store_settings")
     .select(
-      "delivery_charge, gift_wrap_fee, whatsapp_number, store_contact_email, store_address",
+      "delivery_charge, whatsapp_number, store_contact_email, store_address",
     )
     .limit(1)
     .maybeSingle();
@@ -21,7 +21,7 @@ export default async function SettingsPage({
       <div>
         <h1 className="text-3xl font-semibold tracking-tight">Settings</h1>
         <p className="mt-2 text-zinc-600">
-          Update delivery, gift wrapping, and store contact details.
+          Update delivery and store contact details.
         </p>
       </div>
 

@@ -373,7 +373,7 @@ function AdminOrdersContent() {
               (sum, item) => sum + item.price_at_purchase * item.quantity,
               0,
             );
-            const total = subtotal + order.delivery_charge + order.gift_wrap_fee;
+            const total = subtotal + order.delivery_charge;
             const expanded = expandedId === order.id;
             const canAdvance = order.status !== "delivered";
 
@@ -393,11 +393,6 @@ function AdminOrdersContent() {
                       >
                         {statusLabel(order.status)}
                       </span>
-                      {order.is_gift_box ? (
-                        <span className="rounded-full bg-brand-primary-light px-2.5 py-0.5 text-xs font-semibold text-brand-primary-dark">
-                          Gift Box
-                        </span>
-                      ) : null}
                       {order.customer_id ? (
                         <span className="rounded-full bg-purple-100 px-2.5 py-0.5 text-xs font-semibold text-purple-800">
                           Account
@@ -503,17 +498,6 @@ function AdminOrdersContent() {
                         <span className="font-medium">Delivery charge:</span>{" "}
                         {priceFormatter.format(order.delivery_charge)}
                       </p>
-                      {order.is_gift_box ? (
-                        <p>
-                          <span className="font-medium">Gift wrap fee:</span>{" "}
-                          {priceFormatter.format(order.gift_wrap_fee)}
-                        </p>
-                      ) : null}
-                      {order.gift_note ? (
-                        <p>
-                          <span className="font-medium">Gift note:</span> {order.gift_note}
-                        </p>
-                      ) : null}
                       {order.notes ? (
                         <p>
                           <span className="font-medium">Notes:</span> {order.notes}

@@ -21,17 +21,14 @@ export const metadata: Metadata = {
   description:
     "Shop baby feeders, nipples, bottles, and essentials at BabyCloFlo. Quality products for your little ones, delivered across Pakistan.",
   icons: {
-    icon: [
-      { url: "/icons/babycloflo-icon-192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icons/babycloflo-icon-512.png", sizes: "512x512", type: "image/png" },
-    ],
+    icon: "/favicon.svg",
     apple: "/icons/babycloflo-icon-192.png",
-    shortcut: "/icons/babycloflo-icon-192.png",
+    shortcut: "/favicon.svg",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1D9E75",
+  themeColor: "#4FA9D1",
 };
 
 export default function RootLayout({

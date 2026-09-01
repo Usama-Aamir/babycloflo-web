@@ -20,7 +20,6 @@ export type ProductDraft = {
   baseImages: string[];
   name: string;
   categoryId: string;
-  isGiftable: boolean;
   description: string;
   status: ProductStatus;
   variants: VariantDraft[];

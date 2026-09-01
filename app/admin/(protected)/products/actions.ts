@@ -105,7 +105,6 @@ export async function createProduct(product: ProductDraft): Promise<ProductFormR
     description: product.description.trim() || null,
     base_images: product.baseImages,
     status: product.status,
-    is_giftable: product.isGiftable,
   });
   if (productError) return { error: "We couldn't save this product. Please try again." };
 
@@ -167,7 +166,6 @@ export async function updateProduct(
       description: product.description.trim() || null,
       base_images: product.baseImages,
       status: product.status,
-      is_giftable: product.isGiftable,
     })
     .eq("id", productId);
 
@@ -184,7 +182,7 @@ export async function duplicateProduct(productId: string) {
   const { data: product, error } = await supabase
     .from("products")
     .select(
-      "name, category_id, description, base_images, is_giftable, product_variants(size, finish, price, stock_status, variant_colors(color_name, swatch_image_url))",
+      "name, category_id, description, base_images, product_variants(size, finish, price, stock_status, variant_colors(color_name, swatch_image_url))",
     )
     .eq("id", productId)
     .single();
@@ -195,7 +193,6 @@ export async function duplicateProduct(productId: string) {
     baseImages: product.base_images ?? [],
     name: `${product.name} (Copy)`,
     categoryId: product.category_id,
-    isGiftable: product.is_giftable,
     description: product.description ?? "",
     status: "draft",
     variants: product.product_variants.map((variant) => ({
@@ -220,7 +217,6 @@ export async function duplicateProduct(productId: string) {
     description: copy.description || null,
     base_images: copy.baseImages,
     status: "draft",
-    is_giftable: copy.isGiftable,
   });
   if (copyError) redirect("/admin/products?error=duplicate");
 

@@ -8,14 +8,8 @@ import { isValidEmail, isValidPakistaniPhone } from "@/lib/validation";
 
 export async function saveSettings(formData: FormData) {
   const deliveryCharge = Number(formData.get("delivery_charge"));
-  const giftWrapFee = Number(formData.get("gift_wrap_fee"));
 
-  if (
-    !Number.isFinite(deliveryCharge) ||
-    deliveryCharge < 0 ||
-    !Number.isFinite(giftWrapFee) ||
-    giftWrapFee < 0
-  ) {
+  if (!Number.isFinite(deliveryCharge) || deliveryCharge < 0) {
     redirect("/admin/settings?error=invalid");
   }
 
@@ -39,7 +33,6 @@ export async function saveSettings(formData: FormData) {
 
   const values = {
     delivery_charge: deliveryCharge,
-    gift_wrap_fee: giftWrapFee,
     whatsapp_number: whatsappNumber,
     store_contact_email: storeContactEmail,
     store_address: String(formData.get("store_address") ?? "").trim() || null,
