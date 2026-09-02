@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import type { ProductDetail } from "./storefront.types";
 import { useCart } from "./cart-context";
@@ -24,9 +24,24 @@ export function ProductDetailView({
   const [toast, setToast] = useState("");
   const { addItem } = useCart();
 
+  // Auto-select when there's only one variant (no meaningful choice for the customer).
+  const hasSingleVariant = product.product_variants.length === 1;
+  useEffect(() => {
+    if (hasSingleVariant && product.product_variants[0]) {
+      setSelectedVariantId(product.product_variants[0].id);
+    }
+  }, [hasSingleVariant, product.product_variants]);
+
+  // Auto-select when the selected variant has only one color.
   const selectedVariant = product.product_variants.find(
     ({ id }) => id === selectedVariantId,
   );
+  const hasSingleColor = selectedVariant?.variant_colors.length === 1;
+  useEffect(() => {
+    if (selectedVariant && hasSingleColor && selectedVariant.variant_colors[0]) {
+      setSelectedColorId(selectedVariant.variant_colors[0].id);
+    }
+  }, [selectedVariant, hasSingleColor]);
   const selectedColor = selectedVariant?.variant_colors.find(
     ({ id }) => id === selectedColorId,
   );
@@ -120,31 +135,37 @@ export function ProductDetailView({
 
           <div className="mt-8">
             <h2 className="text-base font-semibold text-zinc-900 sm:text-lg">1. Choose size and finish</h2>
-            <div className="mt-3 flex flex-wrap gap-2.5">
-              {product.product_variants.map((variant) => {
-                const selected = variant.id === selectedVariantId;
-                const outOfStock = variant.stock_status === "out_of_stock";
-                return (
-                  <button
-                    className={`min-h-[3.25rem] rounded-xl border-2 px-4 text-left text-sm font-semibold transition ${selected ? "border-brand-primary bg-brand-primary-light text-brand-primary-dark" : "border-zinc-200 bg-white hover:border-zinc-300"} disabled:cursor-not-allowed disabled:opacity-45`}
-                    disabled={outOfStock}
-                    key={variant.id}
-                    onClick={() => {
-                      setSelectedVariantId(variant.id);
-                      setSelectedColorId(null);
-                    }}
-                    type="button"
-                  >
-                    <span className="block">{variant.size}</span>
-                    {variant.finish ? <span className="block text-xs font-normal text-zinc-500">{variant.finish}</span> : null}
-                    {outOfStock ? <span className="block text-xs font-normal">Out of stock</span> : null}
-                  </button>
-                );
-              })}
-            </div>
+            {hasSingleVariant ? (
+              <p className="mt-3 text-base font-medium text-zinc-700">
+                {selectedVariant?.size}{selectedVariant?.finish ? ` · ${selectedVariant.finish}` : ""}
+              </p>
+            ) : (
+              <div className="mt-3 flex flex-wrap gap-2.5">
+                {product.product_variants.map((variant) => {
+                  const selected = variant.id === selectedVariantId;
+                  const outOfStock = variant.stock_status === "out_of_stock";
+                  return (
+                    <button
+                      className={`min-h-[3.25rem] rounded-xl border-2 px-4 text-left text-sm font-semibold transition ${selected ? "border-brand-primary bg-brand-primary-light text-brand-primary-dark" : "border-zinc-200 bg-white hover:border-zinc-300"} disabled:cursor-not-allowed disabled:opacity-45`}
+                      disabled={outOfStock}
+                      key={variant.id}
+                      onClick={() => {
+                        setSelectedVariantId(variant.id);
+                        setSelectedColorId(null);
+                      }}
+                      type="button"
+                    >
+                      <span className="block">{variant.size}</span>
+                      {variant.finish ? <span className="block text-xs font-normal text-zinc-500">{variant.finish}</span> : null}
+                      {outOfStock ? <span className="block text-xs font-normal">Out of stock</span> : null}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
-          {selectedVariant && selectedVariant.variant_colors.length > 0 ? (
+          {selectedVariant && selectedVariant.variant_colors.length > 1 ? (
             <div className="mt-6">
               <h2 className="text-base font-semibold text-zinc-900 sm:text-lg">2. Choose a color</h2>
               <div className="mt-3 flex flex-wrap gap-2.5">

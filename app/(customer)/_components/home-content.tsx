@@ -3,9 +3,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { Baby, Droplet, Scissors, Shirt, Puzzle, ShoppingBag, type LucideIcon } from "lucide-react";
 
 import { ProductCard } from "./product-card";
 import type { CategoryTileData, ProductSummary } from "./storefront.types";
+
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  feeding: Baby,
+  "bath-hygiene": Droplet,
+  "hair-care": Scissors,
+  clothing: Shirt,
+  "baby-toys": Puzzle,
+};
+
+function categoryIcon(slug: string): LucideIcon {
+  return CATEGORY_ICONS[slug] ?? ShoppingBag;
+}
 
 export function HomeContent({
   categories,
@@ -24,6 +37,11 @@ export function HomeContent({
 
   return (
     <div className="mx-auto w-full max-w-6xl py-6 sm:py-8">
+      <section className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-brand-primary to-brand-primary-light px-5 py-4 text-white sm:px-6 sm:py-5">
+        <p className="text-lg font-bold sm:text-xl">Now Open — Affordable Baby Feeders, Bottles &amp; More</p>
+        <p className="mt-1 text-sm font-medium text-white/90 sm:text-base">Quality baby essentials, delivered across Pakistan.</p>
+      </section>
+
       <section>
         <label className="relative block" htmlFor="product-search">
           <span className="sr-only">Search products</span>
@@ -57,10 +75,8 @@ export function HomeContent({
                 {category.image_url ? (
                   <Image alt={category.name} className="object-cover transition duration-300 group-hover:scale-[1.03]" fill sizes="(max-width: 640px) 50vw, 25vw" src={category.image_url} unoptimized />
                 ) : (
-                  <div className="flex h-full items-center justify-center text-brand-primary/40" aria-hidden="true">
-                    <svg fill="none" height="40" viewBox="0 0 24 24" width="40">
-                      <path d="M5 7h14v13H5V7Zm3 0a4 4 0 0 1 8 0M8 12h8" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-                    </svg>
+                  <div className="flex h-full items-center justify-center text-brand-primary/50" aria-hidden="true">
+                    {(() => { const Icon = categoryIcon(category.slug); return <Icon size={40} strokeWidth={1.5} />; })()}
                   </div>
                 )}
               </div>

@@ -307,6 +307,9 @@ export function ProductWizard({
           <div>
             <h2 className="text-2xl font-semibold">Sizes, finishes and colors</h2>
             <p className="mt-2 text-zinc-600">Add each option customers can buy.</p>
+            <p className="mt-2 rounded-lg bg-blue-50 px-4 py-2 text-sm text-blue-800">
+              If this product only comes in one option, just enter something like &ldquo;Standard&rdquo; or &ldquo;One size&rdquo; in the size field.
+            </p>
             <div className="mt-6 space-y-6">
               {product.variants.map((variant, variantIndex) => (
                 <div className="rounded-2xl border border-zinc-200 p-4 sm:p-6" key={variant.key}>
