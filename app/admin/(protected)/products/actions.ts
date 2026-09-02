@@ -230,3 +230,52 @@ export async function duplicateProduct(productId: string) {
   revalidatePath("/admin/products");
   redirect(`/admin/products/${copyId}/edit?duplicated=1`);
 }
+
+export async function deleteProduct(productId: string): Promise<{ error: string | null }> {
+  const supabase = await requireUser();
+  if (!supabase) return { error: "Your session has ended. Please log in again." };
+
+  // Load variant ids so we can cascade-delete variant_colors first.
+  const { data: variants, error: variantLoadError } = await supabase
+    .from("product_variants")
+    .select("id")
+    .eq("product_id", productId);
+
+  if (variantLoadError) return { error: "We couldn't load this product's data. Please try again." };
+
+  const variantIds = (variants ?? []).map(({ id }) => id);
+
+  // Delete variant_colors first (references product_variants via variant_id).
+  if (variantIds.length > 0) {
+    const { error: colorError } = await supabase
+      .from("variant_colors")
+      .delete()
+      .in("variant_id", variantIds);
+    if (colorError) return { error: "We couldn't delete the product's colors. Please try again." };
+  }
+
+  // Delete product_variants (references products via product_id).
+  if (variantIds.length > 0) {
+    const { error: variantDeleteError } = await supabase
+      .from("product_variants")
+      .delete()
+      .in("id", variantIds);
+    if (variantDeleteError) {
+      // This will fail if order_items still reference these variants.
+      return { error: "This product has order history and can't be deleted. Consider setting it to Draft instead." };
+    }
+  }
+
+  // Finally delete the product itself.
+  const { error: productDeleteError } = await supabase
+    .from("products")
+    .delete()
+    .eq("id", productId);
+
+  if (productDeleteError) {
+    return { error: "This product has order history and can't be deleted. Consider setting it to Draft instead." };
+  }
+
+  revalidatePath("/admin/products");
+  return { error: null };
+}

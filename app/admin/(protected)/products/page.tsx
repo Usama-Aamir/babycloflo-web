@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { createClient } from "@/lib/supabase/server";
 import { duplicateProduct } from "./actions";
+import { DeleteProductButton } from "./_components/delete-product-button";
 
 const priceFormatter = new Intl.NumberFormat("en-PK", {
   style: "currency",
@@ -36,7 +37,7 @@ export default async function AdminProductsPage({
 
       {messages.success ? (
         <p className="mt-6 rounded-xl bg-green-50 px-4 py-3 text-green-800">
-          {messages.success === "updated" ? "Product updated." : "Product added."}
+          {messages.success === "deleted" ? "Product deleted." : messages.success === "updated" ? "Product updated." : "Product added."}
         </p>
       ) : null}
       {messages.error === "duplicate" ? (
@@ -100,6 +101,7 @@ export default async function AdminProductsPage({
                     <form action={duplicateProduct.bind(null, product.id)}>
                       <button className="min-h-11 rounded-lg border border-zinc-300 px-4 font-medium hover:bg-zinc-100" type="submit">Duplicate</button>
                     </form>
+                    <DeleteProductButton productId={product.id} productName={product.name} />
                   </div>
                 </div>
               );
