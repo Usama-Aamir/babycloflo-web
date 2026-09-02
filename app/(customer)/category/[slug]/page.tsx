@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { CategoryProducts } from "../../_components/category-products";
 
+const PAGE_SIZE = 20;
+
 export async function generateMetadata({
   params,
 }: {
@@ -43,7 +45,8 @@ export default async function CategoryPage({
     .select("id, name, base_images, product_variants(price, size)")
     .eq("category_id", category.id)
     .eq("status", "active")
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .range(0, PAGE_SIZE - 1);
 
   return (
     <div className="mx-auto w-full max-w-6xl py-6 sm:py-8">
@@ -56,7 +59,11 @@ export default async function CategoryPage({
       <h1 className="mt-3 text-2xl font-semibold tracking-tight text-zinc-900 sm:mt-4 sm:text-3xl">
         {category.name}
       </h1>
-      <CategoryProducts products={products ?? []} />
+      <CategoryProducts
+        categoryId={category.id}
+        initialProducts={products ?? []}
+        pageSize={PAGE_SIZE}
+      />
     </div>
   );
 }

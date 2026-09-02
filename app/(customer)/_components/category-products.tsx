@@ -1,12 +1,26 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useTransition } from "react";
+
+import { createClient } from "@/lib/supabase/client";
 
 import { ProductCard } from "./product-card";
 import type { ProductSummary } from "./storefront.types";
 
-export function CategoryProducts({ products }: { products: ProductSummary[] }) {
+export function CategoryProducts({
+  categoryId,
+  initialProducts,
+  pageSize,
+}: {
+  categoryId: string;
+  initialProducts: ProductSummary[];
+  pageSize: number;
+}) {
+  const [products, setProducts] = useState(initialProducts);
+  const [isLoadingMore, startTransition] = useTransition();
+  const [hasMore, setHasMore] = useState(initialProducts.length === pageSize);
   const [selectedSize, setSelectedSize] = useState("all");
+
   const sizes = useMemo(
     () => Array.from(new Set(products.flatMap((product) => product.product_variants.map(({ size }) => size)))).sort(),
     [products],
@@ -16,6 +30,28 @@ export function CategoryProducts({ products }: { products: ProductSummary[] }) {
     : products.filter((product) =>
         product.product_variants.some(({ size }) => size === selectedSize),
       );
+
+  function loadMore() {
+    startTransition(async () => {
+      const supabase = createClient();
+      const from = products.length;
+      const to = from + pageSize - 1;
+      const { data: nextBatch } = await supabase
+        .from("products")
+        .select("id, name, base_images, product_variants(price, size)")
+        .eq("category_id", categoryId)
+        .eq("status", "active")
+        .order("created_at", { ascending: false })
+        .range(from, to);
+
+      if (nextBatch && nextBatch.length > 0) {
+        setProducts((current) => [...current, ...nextBatch]);
+        setHasMore(nextBatch.length === pageSize);
+      } else {
+        setHasMore(false);
+      }
+    });
+  }
 
   return (
     <>
@@ -50,6 +86,19 @@ export function CategoryProducts({ products }: { products: ProductSummary[] }) {
           No products in this size yet
         </div>
       )}
+
+      {hasMore ? (
+        <div className="mt-8 flex justify-center">
+          <button
+            className="inline-flex min-h-12 items-center justify-center rounded-xl border border-zinc-300 bg-white px-6 text-base font-semibold hover:bg-zinc-100 disabled:opacity-50"
+            disabled={isLoadingMore}
+            onClick={loadMore}
+            type="button"
+          >
+            {isLoadingMore ? "Loading…" : "Load more"}
+          </button>
+        </div>
+      ) : null}
     </>
   );
 }

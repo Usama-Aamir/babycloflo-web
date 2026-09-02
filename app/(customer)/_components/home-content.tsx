@@ -2,11 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Baby, Droplet, Scissors, Shirt, Puzzle, ShoppingBag, Heart, Star, Baby as BabyIcon, type LucideIcon } from "lucide-react";
 
+import { createClient } from "@/lib/supabase/client";
 import { ProductCard } from "./product-card";
 import type { CategoryTileData, ProductSummary } from "./storefront.types";
+
+const SEARCH_LIMIT = 20;
 
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
   feeding: Baby,
@@ -28,12 +31,36 @@ export function HomeContent({
   products: ProductSummary[];
 }) {
   const [search, setSearch] = useState("");
-  const filteredProducts = useMemo(() => {
-    const query = search.trim().toLocaleLowerCase();
-    return query
-      ? products.filter((product) => product.name.toLocaleLowerCase().includes(query))
-      : products;
-  }, [products, search]);
+  const [searchResults, setSearchResults] = useState<ProductSummary[] | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
+
+  const trimmedSearch = search.trim();
+
+  // Debounced search against the full active product catalogue.
+  useEffect(() => {
+    if (!trimmedSearch) {
+      setSearchResults(null);
+      return;
+    }
+
+    const handle = setTimeout(async () => {
+      setIsSearching(true);
+      const supabase = createClient();
+      const { data } = await supabase
+        .from("products")
+        .select("id, name, base_images, product_variants(price, size)")
+        .eq("status", "active")
+        .ilike("name", `%${trimmedSearch}%`)
+        .order("created_at", { ascending: false })
+        .range(0, SEARCH_LIMIT - 1);
+      setSearchResults(data ?? []);
+      setIsSearching(false);
+    }, 300);
+
+    return () => clearTimeout(handle);
+  }, [trimmedSearch]);
+
+  const displayProducts = searchResults ?? products;
 
   return (
     <div className="mx-auto w-full max-w-6xl py-6 sm:py-8">
@@ -97,11 +124,13 @@ export function HomeContent({
 
       <section className="mt-10">
         <h2 className="text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
-          {search ? "Search results" : "Featured products"}
+          {trimmedSearch ? "Search results" : "Featured products"}
         </h2>
-        {filteredProducts.length > 0 ? (
+        {isSearching ? (
+          <p className="mt-4 text-base text-zinc-500">Searching…</p>
+        ) : displayProducts.length > 0 ? (
           <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-            {filteredProducts.map((product) => <ProductCard key={product.id} product={product} />)}
+            {displayProducts.map((product) => <ProductCard key={product.id} product={product} />)}
           </div>
         ) : (
           <div className="mt-4 rounded-2xl border border-dashed border-zinc-300 bg-white px-5 py-12 text-center text-base text-zinc-600 sm:text-lg">
