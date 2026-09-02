@@ -1,7 +1,8 @@
--- Fix: re-ensure public insert policies for guest and customer checkout
--- The previous 0004 migration left existing create policies in place, but
--- some environments are missing them after the admin role migration. This
--- explicitly restores the INSERT permissions that the checkout page relies on.
+-- Fix: ensure public INSERT policies for guest and customer checkout.
+-- The checkout code generates the order id client-side (crypto.randomUUID())
+-- and does NOT use .select() on insert, so no SELECT policy is needed for
+-- anon/authenticated on the orders table. This avoids exposing other guests'
+-- orders to anonymous visitors.
 
 drop policy if exists "Public can create orders" on public.orders;
 create policy "Public can create orders"

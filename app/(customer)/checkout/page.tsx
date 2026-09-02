@@ -102,7 +102,10 @@ export default function CheckoutPage() {
 
     setIsBusy(true);
 
+    const orderId = crypto.randomUUID();
+
     const orderPayload = {
+      id: orderId,
       order_type: "website" as const,
       customer_name: name.trim(),
       phone: phone.trim(),
@@ -113,20 +116,18 @@ export default function CheckoutPage() {
       customer_id: session?.user.id ?? null,
     };
 
-    const { data: order, error: orderError } = await supabase
+    const { error: orderError } = await supabase
       .from("orders")
-      .insert(orderPayload)
-      .select("id")
-      .single();
+      .insert(orderPayload);
 
-    if (orderError || !order) {
+    if (orderError) {
       setIsBusy(false);
       setSubmitError("We couldn’t place your order. Please try again.");
       return;
     }
 
     const orderItems = cartOrderItems.map((item) => ({
-      order_id: order.id,
+      order_id: orderId,
       product_id: item.product_id,
       variant_id: item.variant_id,
       color_id: item.color_id,
@@ -143,7 +144,7 @@ export default function CheckoutPage() {
     }
 
     clearCart();
-    router.push(`/checkout/success?total=${total}&order=${order.id}`);
+    router.push(`/checkout/success?total=${total}&order=${orderId}`);
   }
 
   if (!isLoaded) {

@@ -73,7 +73,7 @@ test.describe("checkout flow", () => {
     await expect(page).toHaveURL(/\/checkout\/success/);
 
     await page.goto("/account/orders", { waitUntil: "networkidle" });
-    await expect(page.getByText(/Placed from Lahore/)).toBeVisible();
-    await expect(page.getByText(/03019876543/)).toBeVisible();
+    await expect(page.getByText(/Placed from Lahore/).first()).toBeVisible();
+    await expect(page.getByText(/03019876543/).first()).toBeVisible();
   });
 });
