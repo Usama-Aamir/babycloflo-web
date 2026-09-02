@@ -80,15 +80,17 @@ export function ProductDetailView({
         <span aria-hidden="true">←</span> Back
       </Link>
 
-      <div className="mt-4 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+      <div className="mt-4 grid min-w-0 gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
         <section aria-label="Product photos">
           {images.length > 0 ? (
-            <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
-              {images.map((image, index) => (
-                <div className="relative aspect-square w-[85vw] max-w-md shrink-0 snap-center overflow-hidden rounded-2xl bg-brand-primary-light sm:w-[75vw] md:max-w-xl lg:w-full lg:max-w-none" key={`${image}-${index}`}>
-                  <Image alt={`${product.name}, photo ${index + 1}`} className="object-cover" fill priority={index === 0} sizes="(max-width: 1024px) 85vw, 55vw" src={image} unoptimized />
-                </div>
-              ))}
+            <div className="-mx-4 w-full min-w-0 snap-x snap-mandatory overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
+              <div className="flex w-full gap-3">
+                {images.map((image, index) => (
+                  <div className="relative aspect-square w-full max-w-md shrink-0 snap-center overflow-hidden rounded-2xl bg-brand-primary-light sm:w-3/4 lg:w-full lg:max-w-none" key={`${image}-${index}`}>
+                    <Image alt={`${product.name}, photo ${index + 1}`} className="object-cover" fill priority={index === 0} sizes="(max-width: 1024px) 100vw, 55vw" src={image} unoptimized />
+                  </div>
+                ))}
+              </div>
             </div>
           ) : (
             <div className="flex aspect-square items-center justify-center rounded-2xl bg-brand-primary-light text-brand-primary/40" aria-label="No product photo available">

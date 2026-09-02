@@ -20,7 +20,7 @@ export function CategoryProducts({ products }: { products: ProductSummary[] }) {
   return (
     <>
       {sizes.length > 1 ? (
-        <div className="mt-4 flex gap-2 overflow-x-auto pb-2 pt-1 -mx-4 px-4 sm:-mx-0 sm:px-0 sm:pt-0" aria-label="Filter by size">
+        <div className="mt-4 flex w-full min-w-0 snap-x gap-2 overflow-x-auto pb-2 pt-1 -mx-4 px-4 sm:-mx-0 sm:px-0 sm:pt-0" aria-label="Filter by size">
           <button
             className={`h-9 shrink-0 snap-start rounded-full px-4 text-sm font-medium transition ${selectedSize === "all" ? "bg-brand-primary text-white" : "border border-zinc-300 bg-white hover:border-zinc-400"}`}
             onClick={() => setSelectedSize("all")}
