@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Baby, Droplet, Scissors, Shirt, Puzzle, ShoppingBag, type LucideIcon } from "lucide-react";
+import { Baby, Droplet, Scissors, Shirt, Puzzle, ShoppingBag, Heart, Star, Baby as BabyIcon, type LucideIcon } from "lucide-react";
 
 import { ProductCard } from "./product-card";
 import type { CategoryTileData, ProductSummary } from "./storefront.types";
@@ -37,9 +37,14 @@ export function HomeContent({
 
   return (
     <div className="mx-auto w-full max-w-6xl py-6 sm:py-8">
-      <section className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-brand-primary to-brand-primary-light px-5 py-4 text-white sm:px-6 sm:py-5">
-        <p className="text-lg font-bold sm:text-xl">Now Open — Affordable Baby Feeders, Bottles &amp; More</p>
-        <p className="mt-1 text-sm font-medium text-white/90 sm:text-base">Quality baby essentials, delivered across Pakistan.</p>
+      <section className="relative mb-6 overflow-hidden rounded-2xl px-5 py-4 text-white sm:px-6 sm:py-5" style={{ background: "linear-gradient(135deg, #4FA9D1 0%, #E8779E 100%)" }}>
+        <BabyIcon className="pointer-events-none absolute -right-2 -top-2 text-white/15" size={64} strokeWidth={1.2} aria-hidden="true" />
+        <Heart className="pointer-events-none absolute right-12 bottom-1 text-white/15" size={28} strokeWidth={1.5} aria-hidden="true" />
+        <Star className="pointer-events-none absolute left-3 top-1 text-white/10" size={20} strokeWidth={1.5} aria-hidden="true" />
+        <div className="relative">
+          <p className="text-lg font-bold sm:text-xl">Now Open — Affordable Baby Feeders, Bottles &amp; More</p>
+          <p className="mt-1 text-sm font-medium text-white/90 sm:text-base">Quality baby essentials, delivered across Pakistan.</p>
+        </div>
       </section>
 
       <section>
@@ -64,16 +69,16 @@ export function HomeContent({
         <h1 className="text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
           Shop by category
         </h1>
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+        <div className="no-scrollbar mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto sm:gap-4">
           {categories.map((category) => (
             <Link
-              className="group overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:shadow-md focus:outline-none focus:ring-4 focus:ring-brand-primary-light"
+              className="group w-[42vw] shrink-0 snap-start overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:shadow-md focus:outline-none focus:ring-4 focus:ring-brand-primary-light sm:w-48"
               href={`/category/${category.slug}`}
               key={category.id}
             >
               <div className="relative aspect-[4/3] bg-brand-primary-light">
                 {category.image_url ? (
-                  <Image alt={category.name} className="object-cover transition duration-300 group-hover:scale-[1.03]" fill sizes="(max-width: 640px) 50vw, 25vw" src={category.image_url} unoptimized />
+                  <Image alt={category.name} className="object-cover transition duration-300 group-hover:scale-[1.03]" fill sizes="(max-width: 640px) 42vw, 192px" src={category.image_url} unoptimized />
                 ) : (
                   <div className="flex h-full items-center justify-center text-brand-primary/50" aria-hidden="true">
                     {(() => { const Icon = categoryIcon(category.slug); return <Icon size={40} strokeWidth={1.5} />; })()}

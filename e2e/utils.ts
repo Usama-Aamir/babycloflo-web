@@ -12,7 +12,7 @@ export async function getActiveCategory() {
     .select("slug")
     .order("sort_order")
     .limit(1)
-    .single();
+    .maybeSingle();
   if (error) throw error;
   return data;
 }
@@ -23,7 +23,7 @@ export async function getActiveProduct() {
     .select("id, name, base_images, product_variants(id, size, finish, price, stock_status, variant_colors(id, color_name, swatch_image_url))")
     .eq("status", "active")
     .limit(1)
-    .single();
+    .maybeSingle();
   if (error) throw error;
   return data;
 }

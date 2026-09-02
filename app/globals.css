@@ -33,4 +33,12 @@ body {
   .pb-safe {
     padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
   }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
