@@ -22,7 +22,6 @@ async function login(formData: FormData) {
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    console.error("Supabase sign-in error:", error);
     redirect("/admin/login?error=invalid");
   }
 
