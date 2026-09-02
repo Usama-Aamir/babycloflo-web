@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test:e2e": "playwright test",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
@@ -19,9 +20,11 @@
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@types/node": "^20",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
+    "dotenv": "^17.4.2",
     "eslint": "^9.39.5",
     "eslint-config-next": "^15.5.24",
     "postcss": "^8",
