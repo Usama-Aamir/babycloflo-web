@@ -10,6 +10,15 @@ test.describe("form validation", () => {
     await expect(page.getByText("Please enter a valid email address")).toBeVisible();
   });
 
+  test("signup with valid credentials shows confirmation message", async ({ page }) => {
+    const email = `e2e-confirm-${Date.now()}@example.com`;
+    await page.goto("/account/signup", { waitUntil: "networkidle" });
+    await page.fill('input[name="email"]', email);
+    await page.fill('input[name="password"]', "E2eTest123!");
+    await page.getByRole("button", { name: "Create account" }).click();
+    await expect(page.getByText("Account created. Please check your email and confirm it before logging in.")).toBeVisible();
+  });
+
   test("checkout shows error for invalid phone", async ({ page }) => {
     const product = await getActiveProduct();
     if (!product) throw new Error("No active product found in database");
@@ -17,8 +26,11 @@ test.describe("form validation", () => {
     const inStock = product.product_variants.find((v) => v.stock_status === "in_stock");
     if (!inStock) throw new Error("No in-stock product variant found for form validation test");
 
+    const variantLabel = [inStock.size, inStock.finish].filter(Boolean).join(" ");
+
     await page.goto(`/product/${product.id}`, { waitUntil: "networkidle" });
-    await page.getByRole("button", { name: inStock.size, exact: true }).first().click();
+    await page.getByRole("button", { name: variantLabel, exact: true }).first().click();
+    await page.waitForTimeout(500);
     await page.getByRole("button", { name: "Add to Cart" }).click();
     await expect(page.getByRole("status")).toContainText("Added to cart");
 

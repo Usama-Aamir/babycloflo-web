@@ -20,7 +20,7 @@ export async function getActiveCategory() {
 export async function getActiveProduct() {
   const { data, error } = await supabase
     .from("products")
-    .select("id, name, base_images, product_variants(id, size, price, stock_status, variant_colors(id, color_name, swatch_image_url))")
+    .select("id, name, base_images, product_variants(id, size, finish, price, stock_status, variant_colors(id, color_name, swatch_image_url))")
     .eq("status", "active")
     .limit(1)
     .single();
@@ -30,6 +30,9 @@ export async function getActiveProduct() {
 
 export const adminEmail = process.env.E2E_ADMIN_EMAIL;
 export const adminPassword = process.env.E2E_ADMIN_PASSWORD;
+
+export const customerEmail = process.env.E2E_CUSTOMER_EMAIL;
+export const customerPassword = process.env.E2E_CUSTOMER_PASSWORD;
 
 export function setupConsoleWatcher(page: Page) {
   const messages: { type: string; text: string }[] = [];
@@ -41,6 +44,8 @@ export function setupConsoleWatcher(page: Page) {
     messages.push({ type, text });
     if (type === "error" || (type === "warning" && text.toLowerCase().includes("hydrat"))) {
       errors.push({ type, text });
+      // print to terminal so we can see the actual error without opening DevTools
+      console.error(`[browser console ${type}]`, text);
     }
   });
 

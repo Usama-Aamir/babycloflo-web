@@ -1,19 +1,23 @@
 import { test, expect } from "@playwright/test";
-import { getActiveProduct, uniqueTestEmail, setupConsoleWatcher } from "./utils";
+import { getActiveProduct, customerEmail, customerPassword, setupConsoleWatcher } from "./utils";
 
-async function addFirstVariantToCart(page: import("@playwright/test").Page, product: { product_variants: { id: string; size: string; stock_status: string }[] }) {
+async function addFirstVariantToCart(page: import("@playwright/test").Page, product: { product_variants: { id: string; size: string; finish?: string; stock_status: string }[] }) {
   const inStock = product.product_variants.find((v) => v.stock_status === "in_stock");
   if (!inStock) throw new Error("No in-stock product variant found for checkout test");
 
+  const variantLabel = [inStock.size, inStock.finish].filter(Boolean).join(" ");
+
   await page.goto(`/product/${product.id}`, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: inStock.size, exact: true }).first().click();
+  await page.getByRole("button", { name: variantLabel, exact: true }).first().click();
+  await page.waitForTimeout(500);
   await page.getByRole("button", { name: "Add to Cart" }).click();
   await expect(page.getByRole("status")).toContainText("Added to cart");
   return inStock;
 }
 
 test.describe("checkout flow", () => {
-  let product: { id: string; product_variants: { id: string; size: string; stock_status: string }[] } | null = null;
+  test.setTimeout(120 * 1000);
+  let product: { id: string; product_variants: { id: string; size: string; finish?: string; stock_status: string }[] } | null = null;
 
   test.beforeAll(async () => {
     product = await getActiveProduct();
@@ -44,15 +48,15 @@ test.describe("checkout flow", () => {
 
   test("customer account + order flow", async ({ page }) => {
     if (!product) throw new Error("No active product found in database");
+    if (!customerEmail || !customerPassword) {
+      test.skip("pre-confirmed customer credentials not configured (E2E_CUSTOMER_EMAIL and E2E_CUSTOMER_PASSWORD)");
+      return;
+    }
 
-    const email = uniqueTestEmail();
-    const password = "E2eTest123!";
-
-    await page.goto("/account/signup", { waitUntil: "networkidle" });
-    await page.fill('input[name="email"]', email);
-    await page.fill('input[name="password"]', password);
-    await page.getByRole("button", { name: "Create account" }).click();
-
+    await page.goto("/account/login", { waitUntil: "networkidle" });
+    await page.fill('input[name="email"]', customerEmail);
+    await page.fill('input[name="password"]', customerPassword);
+    await page.getByRole("button", { name: "Log in" }).click();
     await page.waitForURL("/account/orders", { timeout: 15000 });
     await expect(page).toHaveURL("/account/orders");
 

@@ -1,7 +1,15 @@
 import { test, expect } from "@playwright/test";
 import fs from "fs";
 import path from "path";
-import { getActiveCategory, getActiveProduct, uniqueTestEmail, adminEmail, adminPassword } from "./utils";
+import {
+  getActiveCategory,
+  getActiveProduct,
+  uniqueTestEmail,
+  customerEmail,
+  customerPassword,
+  adminEmail,
+  adminPassword,
+} from "./utils";
 
 test.use({ launchOptions: { slowMo: 400 } });
 test.setTimeout(10 * 60 * 1000);
@@ -23,8 +31,10 @@ test("full visual walkthrough (customer + admin if credentials set)", async ({ p
   const inStock = product.product_variants.find((v) => v.stock_status === "in_stock");
   if (!inStock) throw new Error("Need at least one in-stock product variant");
 
-  const customerEmail = uniqueTestEmail();
-  const customerPassword = "E2eTest123!";
+  const variantLabel = [inStock.size, inStock.finish].filter(Boolean).join(" ");
+
+  const newSignupEmail = uniqueTestEmail();
+  const newSignupPassword = "E2eTest123!";
 
   // 1. HOMEPAGE
   await page.goto("/", { waitUntil: "networkidle" });
@@ -51,7 +61,7 @@ test("full visual walkthrough (customer + admin if credentials set)", async ({ p
   await page.goto(`/product/${product.id}`, { waitUntil: "networkidle" });
   await page.screenshot({ path: shotPath(5, "product-gallery") });
 
-  await page.getByRole("button", { name: inStock.size, exact: true }).first().click();
+  await page.getByRole("button", { name: variantLabel, exact: true }).first().click();
   await page.waitForTimeout(500);
   await page.screenshot({ path: shotPath(6, "product-size-selected") });
 
@@ -83,7 +93,7 @@ test("full visual walkthrough (customer + admin if credentials set)", async ({ p
 
   // Add the product back for checkout flow
   await page.goto(`/product/${product.id}`, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: inStock.size, exact: true }).first().click();
+  await page.getByRole("button", { name: variantLabel, exact: true }).first().click();
   if (inStock.variant_colors && inStock.variant_colors.length > 0) {
     await page.getByRole("button", { name: inStock.variant_colors[0].color_name }).first().click();
   }
@@ -109,31 +119,29 @@ test("full visual walkthrough (customer + admin if credentials set)", async ({ p
   // 6. SIGN UP
   await page.goto("/account/signup", { waitUntil: "networkidle" });
   await page.screenshot({ path: shotPath(16, "signup-form") });
-  await page.fill('input[name="email"]', customerEmail);
-  await page.fill('input[name="password"]', customerPassword);
+  await page.fill('input[name="email"]', newSignupEmail);
+  await page.fill('input[name="password"]', newSignupPassword);
   await page.screenshot({ path: shotPath(17, "signup-filled") });
   await page.getByRole("button", { name: "Create account" }).click();
-  await page.waitForURL("/account/orders", { timeout: 15000 });
-  await page.screenshot({ path: shotPath(18, "signup-welcome") });
+  await expect(page.getByText("Account created. Please check your email and confirm it before logging in.")).toBeVisible();
+  await page.screenshot({ path: shotPath(18, "signup-confirmation") });
 
-  // 7. LOG IN (log out first, then back in)
-  await page.goto("/account/orders", { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Log out" }).click();
-  await page.waitForTimeout(800);
-  await page.screenshot({ path: shotPath(19, "logged-out-header") });
-
+  // 7. LOG IN with pre-confirmed customer account
+  if (!customerEmail || !customerPassword) {
+    throw new Error("Pre-confirmed customer credentials not configured (E2E_CUSTOMER_EMAIL and E2E_CUSTOMER_PASSWORD)");
+  }
   await page.goto("/account/login", { waitUntil: "networkidle" });
-  await page.screenshot({ path: shotPath(20, "login-form") });
+  await page.screenshot({ path: shotPath(19, "login-form") });
   await page.fill('input[name="email"]', customerEmail);
   await page.fill('input[name="password"]', customerPassword);
-  await page.screenshot({ path: shotPath(21, "login-filled") });
+  await page.screenshot({ path: shotPath(20, "login-filled") });
   await page.getByRole("button", { name: "Log in" }).click();
   await page.waitForURL("/account/orders", { timeout: 15000 });
-  await page.screenshot({ path: shotPath(22, "logged-in-header") });
+  await page.screenshot({ path: shotPath(21, "logged-in-header") });
 
   // 8. LOGGED-IN CHECKOUT
   await page.goto(`/product/${product.id}`, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: inStock.size, exact: true }).first().click();
+  await page.getByRole("button", { name: variantLabel, exact: true }).first().click();
   if (inStock.variant_colors && inStock.variant_colors.length > 0) {
     await page.getByRole("button", { name: inStock.variant_colors[0].color_name }).first().click();
   }

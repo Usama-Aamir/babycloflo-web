@@ -1,34 +1,38 @@
 import { test, expect } from "@playwright/test";
-import { uniqueTestEmail, adminEmail, adminPassword } from "./utils";
+import { customerEmail, customerPassword, adminEmail, adminPassword } from "./utils";
 
 test.describe("admin security", () => {
   test("customer account is rejected at admin login", async ({ page }) => {
-    const email = uniqueTestEmail();
-    const password = "E2eTest123!";
+    if (!customerEmail || !customerPassword) {
+      test.skip("pre-confirmed customer credentials not configured (E2E_CUSTOMER_EMAIL and E2E_CUSTOMER_PASSWORD)");
+      return;
+    }
 
-    await page.goto("/account/signup", { waitUntil: "networkidle" });
-    await page.fill('input[name="email"]', email);
-    await page.fill('input[name="password"]', password);
-    await page.getByRole("button", { name: "Create account" }).click();
+    await page.goto("/account/login", { waitUntil: "networkidle" });
+    await page.fill('input[name="email"]', customerEmail);
+    await page.fill('input[name="password"]', customerPassword);
+    await page.getByRole("button", { name: "Log in" }).click();
     await page.waitForURL("/account/orders", { timeout: 15000 });
 
     await page.goto("/admin/login", { waitUntil: "networkidle" });
-    await page.fill('input[name="email"]', email);
-    await page.fill('input[name="password"]', password);
+    await page.fill('input[name="email"]', customerEmail);
+    await page.fill('input[name="password"]', customerPassword);
     await page.getByRole("button", { name: "Log in" }).click();
 
     await page.waitForURL(/\/admin\/login\?error=/, { timeout: 10000 });
     await expect(page).toHaveURL(/\/admin\/login\?error=/);
   });
 
-  test("logged-in customer is redirected away from /admin", async ({ page, context }) => {
-    const email = uniqueTestEmail();
-    const password = "E2eTest123!";
+  test("logged-in customer is redirected away from /admin", async ({ page }) => {
+    if (!customerEmail || !customerPassword) {
+      test.skip("pre-confirmed customer credentials not configured (E2E_CUSTOMER_EMAIL and E2E_CUSTOMER_PASSWORD)");
+      return;
+    }
 
-    await page.goto("/account/signup", { waitUntil: "networkidle" });
-    await page.fill('input[name="email"]', email);
-    await page.fill('input[name="password"]', password);
-    await page.getByRole("button", { name: "Create account" }).click();
+    await page.goto("/account/login", { waitUntil: "networkidle" });
+    await page.fill('input[name="email"]', customerEmail);
+    await page.fill('input[name="password"]', customerPassword);
+    await page.getByRole("button", { name: "Log in" }).click();
     await page.waitForURL("/account/orders", { timeout: 15000 });
 
     await page.goto("/admin", { waitUntil: "networkidle" });
