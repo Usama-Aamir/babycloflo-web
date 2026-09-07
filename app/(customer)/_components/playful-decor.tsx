@@ -11,6 +11,10 @@ const palette = {
   coral: "#F0997B",
 };
 
+// TEMPORARY DEBUG: high opacity + red outlines to confirm shapes render and are positioned.
+const DEBUG = true;
+const DEBUG_OPACITY = 0.4;
+
 type ShapeType = "icon" | "blob";
 
 interface ShapeConfig {
@@ -170,8 +174,9 @@ const PRESETS: Record<string, ShapeConfig[]> = {
 };
 
 function DecorativeShape({ shape }: { shape: ShapeConfig }) {
-  const commonClasses = `pointer-events-none absolute select-none ${shape.hideOnMobile ? "hidden sm:block" : ""}`;
+  const commonClasses = `pointer-events-none absolute select-none ${DEBUG ? "outline outline-2 outline-offset-2 outline-red-500" : ""} ${shape.hideOnMobile ? "hidden sm:block" : ""}`;
   const sizePx = shape.sizeRem * 16;
+  const opacity = DEBUG ? DEBUG_OPACITY : shape.opacity;
 
   if (shape.type === "blob") {
     return (
@@ -186,7 +191,7 @@ function DecorativeShape({ shape }: { shape: ShapeConfig }) {
           width: sizePx,
           height: sizePx,
           backgroundColor: shape.color,
-          opacity: shape.opacity,
+          opacity,
           transform: `rotate(${shape.rotate ?? 0}deg)`,
         }}
       />
@@ -205,7 +210,7 @@ function DecorativeShape({ shape }: { shape: ShapeConfig }) {
         bottom: shape.bottom,
         left: shape.left,
         right: shape.right,
-        opacity: shape.opacity,
+        opacity,
         transform: `rotate(${shape.rotate ?? 0}deg)`,
       }}
     >
@@ -222,7 +227,7 @@ export function PlayfulDecor({ preset }: { preset: keyof typeof PRESETS }) {
   const shapes = PRESETS[preset] ?? [];
 
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
       {shapes.map((shape, index) => (
         <DecorativeShape key={`${preset}-${index}`} shape={shape} />
       ))}

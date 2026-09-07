@@ -94,11 +94,12 @@ export function ProductDetailView({
   return (
     <div className="relative mx-auto w-full max-w-6xl py-6 sm:py-8">
       <PlayfulDecor preset="product" />
-      <Link className="relative z-10 inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-medium text-zinc-600 transition hover:bg-brand-primary-light active:scale-95" href="/">
-        <span aria-hidden="true">←</span> Back
-      </Link>
+      <div className="relative z-10">
+        <Link className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-medium text-zinc-600 transition hover:bg-brand-primary-light active:scale-95" href="/">
+          <span aria-hidden="true">←</span> Back
+        </Link>
 
-      <div className="mt-4 grid min-w-0 gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+        <div className="mt-4 grid min-w-0 gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
         <section aria-label="Product photos">
           {images.length > 0 ? (
             <div className="-mx-4 w-full min-w-0 snap-x snap-mandatory overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
@@ -252,12 +253,13 @@ export function ProductDetailView({
           </div>
         </section>
       </div>
-
-      {toast ? (
-        <div className="fixed bottom-6 left-1/2 z-30 -translate-x-1/2 rounded-full bg-zinc-950 px-6 py-3 text-sm font-semibold text-white shadow-lg" role="status">
-          {toast}
-        </div>
-      ) : null}
     </div>
-  );
+
+    {toast ? (
+      <div className="fixed bottom-6 left-1/2 z-30 -translate-x-1/2 rounded-full bg-zinc-950 px-6 py-3 text-sm font-semibold text-white shadow-lg" role="status">
+        {toast}
+      </div>
+    ) : null}
+  </div>
+);
 }

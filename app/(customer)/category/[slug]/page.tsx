@@ -52,20 +52,22 @@ export default async function CategoryPage({
   return (
     <div className="relative mx-auto w-full max-w-6xl py-6 sm:py-8">
       <PlayfulDecor preset="category" />
-      <Link
-        className="relative z-10 inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-medium text-zinc-600 transition hover:bg-brand-primary-light active:scale-95"
-        href="/"
-      >
-        <span aria-hidden="true">←</span> Back
-      </Link>
-      <h1 className="mt-3 text-2xl font-semibold tracking-tight text-zinc-900 sm:mt-4 sm:text-3xl">
-        {category.name}
-      </h1>
-      <CategoryProducts
-        categoryId={category.id}
-        initialProducts={products ?? []}
-        pageSize={PAGE_SIZE}
-      />
+      <div className="relative z-10">
+        <Link
+          className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-medium text-zinc-600 transition hover:bg-brand-primary-light active:scale-95"
+          href="/"
+        >
+          <span aria-hidden="true">←</span> Back
+        </Link>
+        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-zinc-900 sm:mt-4 sm:text-3xl">
+          {category.name}
+        </h1>
+        <CategoryProducts
+          categoryId={category.id}
+          initialProducts={products ?? []}
+          pageSize={PAGE_SIZE}
+        />
+      </div>
     </div>
   );
 }

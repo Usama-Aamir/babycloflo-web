@@ -109,7 +109,7 @@ export function HomeContent({
         <BabyIcon className="pointer-events-none absolute -right-3 -top-3 text-white/20" size={80} strokeWidth={1.2} aria-hidden="true" />
         <Heart className="pointer-events-none absolute right-14 bottom-2 text-white/25" size={34} strokeWidth={1.5} aria-hidden="true" />
         <Star className="pointer-events-none absolute left-4 top-2 text-white/20" size={26} strokeWidth={1.5} aria-hidden="true" />
-        <div className="relative">
+        <div className="relative z-10">
           <p className="text-lg font-bold sm:text-xl">Now Open — Affordable Baby Feeders, Bottles &amp; More</p>
           <p className="mt-1 text-sm font-medium text-white/90 sm:text-base">Quality baby essentials, delivered across Pakistan.</p>
         </div>
@@ -137,40 +137,42 @@ export function HomeContent({
 
       <section className="relative mt-8 overflow-hidden">
         <PlayfulDecor preset="home-categories" />
-        <h1 className="relative z-10 text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
-          Shop by category
-        </h1>
-        <div className="no-scrollbar mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto sm:gap-4">
-          {categories.map((category, index) => {
-            const color = categoryColor(index);
-            const Icon = categoryIcon(category.slug);
-            return (
-              <Link
-                className="group w-[42vw] shrink-0 snap-start overflow-hidden rounded-3xl border border-black/5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-brand-primary-light sm:w-48"
-                href={`/category/${category.slug}`}
-                key={category.id}
-                style={{ backgroundColor: color.bg }}
-              >
-                <div
-                  className="relative aspect-[4/3]"
+        <div className="relative z-10">
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
+            Shop by category
+          </h1>
+          <div className="no-scrollbar mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto sm:gap-4">
+            {categories.map((category, index) => {
+              const color = categoryColor(index);
+              const Icon = categoryIcon(category.slug);
+              return (
+                <Link
+                  className="group w-[42vw] shrink-0 snap-start overflow-hidden rounded-3xl border border-black/5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-brand-primary-light sm:w-48"
+                  href={`/category/${category.slug}`}
+                  key={category.id}
                   style={{ backgroundColor: color.bg }}
                 >
-                  {category.image_url ? (
-                    <Image alt={category.name} className="object-cover transition duration-300 group-hover:scale-[1.03]" fill sizes="(max-width: 640px) 42vw, 192px" src={category.image_url} unoptimized />
-                  ) : (
-                    <div className="flex h-full items-center justify-center" aria-hidden="true" style={{ color: color.text, opacity: 0.55 }}>
-                      <Icon size={44} strokeWidth={1.5} />
-                    </div>
-                  )}
-                </div>
-                <div className="px-3 py-3 text-center">
-                  <span className="text-sm font-semibold sm:text-base" style={{ color: color.text }}>
-                    {category.name}
-                  </span>
-                </div>
-              </Link>
-            );
-          })}
+                  <div
+                    className="relative aspect-[4/3]"
+                    style={{ backgroundColor: color.bg }}
+                  >
+                    {category.image_url ? (
+                      <Image alt={category.name} className="object-cover transition duration-300 group-hover:scale-[1.03]" fill sizes="(max-width: 640px) 42vw, 192px" src={category.image_url} unoptimized />
+                    ) : (
+                      <div className="flex h-full items-center justify-center" aria-hidden="true" style={{ color: color.text, opacity: 0.55 }}>
+                        <Icon size={44} strokeWidth={1.5} />
+                      </div>
+                    )}
+                  </div>
+                  <div className="px-3 py-3 text-center">
+                    <span className="text-sm font-semibold sm:text-base" style={{ color: color.text }}>
+                      {category.name}
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </section>
 
@@ -178,37 +180,39 @@ export function HomeContent({
 
       <section className="relative mt-10 overflow-hidden">
         <PlayfulDecor preset="home-products" />
-        <h2 className="relative z-10 text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
-          {trimmedSearch ? "Search results" : "Featured products"}
-        </h2>
-        {isSearching ? (
-          <p className="mt-4 text-base text-zinc-500">Searching…</p>
-        ) : displayProducts.length > 0 ? (
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-            {displayProducts.map((product, index) => (
-              <ProductCard key={product.id} product={product} index={index} />
-            ))}
-          </div>
-        ) : (
-          <div className="mt-6 rounded-3xl border border-dashed border-zinc-300 bg-white px-5 py-14 text-center sm:py-16">
-            <SearchX className="mx-auto h-10 w-10 text-zinc-400" strokeWidth={1.5} />
-            <p className="mt-3 text-base font-medium text-zinc-700 sm:text-lg">
-              {trimmedSearch ? "No products match your search" : "No products found"}
-            </p>
-            <p className="mt-1 text-sm text-zinc-500">
-              {trimmedSearch ? "Try a different keyword or browse categories instead." : "Check back soon — new arrivals are on the way!"}
-            </p>
-            {trimmedSearch ? (
-              <button
-                className="mt-5 inline-flex h-11 items-center justify-center rounded-full bg-brand-primary px-5 text-sm font-semibold text-white transition active:scale-95 hover:bg-brand-primary-dark sm:h-12 sm:text-base"
-                onClick={() => setSearch("")}
-                type="button"
-              >
-                Clear search
-              </button>
-            ) : null}
-          </div>
-        )}
+        <div className="relative z-10">
+          <h2 className="text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
+            {trimmedSearch ? "Search results" : "Featured products"}
+          </h2>
+          {isSearching ? (
+            <p className="mt-4 text-base text-zinc-500">Searching…</p>
+          ) : displayProducts.length > 0 ? (
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+              {displayProducts.map((product, index) => (
+                <ProductCard key={product.id} product={product} index={index} />
+              ))}
+            </div>
+          ) : (
+            <div className="mt-6 rounded-3xl border border-dashed border-zinc-300 bg-white px-5 py-14 text-center sm:py-16">
+              <SearchX className="mx-auto h-10 w-10 text-zinc-400" strokeWidth={1.5} />
+              <p className="mt-3 text-base font-medium text-zinc-700 sm:text-lg">
+                {trimmedSearch ? "No products match your search" : "No products found"}
+              </p>
+              <p className="mt-1 text-sm text-zinc-500">
+                {trimmedSearch ? "Try a different keyword or browse categories instead." : "Check back soon — new arrivals are on the way!"}
+              </p>
+              {trimmedSearch ? (
+                <button
+                  className="mt-5 inline-flex h-11 items-center justify-center rounded-full bg-brand-primary px-5 text-sm font-semibold text-white transition active:scale-95 hover:bg-brand-primary-dark sm:h-12 sm:text-base"
+                  onClick={() => setSearch("")}
+                  type="button"
+                >
+                  Clear search
+                </button>
+              ) : null}
+            </div>
+          )}
+        </div>
       </section>
     </div>
   );
