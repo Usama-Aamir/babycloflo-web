@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { ProductDetail } from "./storefront.types";
 import { useCart } from "./cart-context";
 import { hashColor } from "./playful-palette";
+import { PlayfulDecor } from "./playful-decor";
 
 const priceFormatter = new Intl.NumberFormat("en-PK", {
   maximumFractionDigits: 2,
@@ -91,8 +92,9 @@ export function ProductDetailView({
   const images = product.base_images ?? [];
 
   return (
-    <div className="mx-auto w-full max-w-6xl py-6 sm:py-8">
-      <Link className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-medium text-zinc-600 transition hover:bg-brand-primary-light" href="/">
+    <div className="relative mx-auto w-full max-w-6xl py-6 sm:py-8">
+      <PlayfulDecor preset="product" />
+      <Link className="relative z-10 inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-medium text-zinc-600 transition hover:bg-brand-primary-light active:scale-95" href="/">
         <span aria-hidden="true">←</span> Back
       </Link>
 

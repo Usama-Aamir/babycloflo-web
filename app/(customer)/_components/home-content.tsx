@@ -9,6 +9,7 @@ import { createClient } from "@/lib/supabase/client";
 import { ProductCard } from "./product-card";
 import type { CategoryTileData, ProductSummary } from "./storefront.types";
 import { categoryColor, BANNER_PINK } from "./playful-palette";
+import { PlayfulDecor } from "./playful-decor";
 
 const SEARCH_LIMIT = 20;
 
@@ -86,6 +87,8 @@ export function HomeContent({
         className="relative mb-6 overflow-hidden rounded-3xl px-5 py-5 text-white sm:px-6 sm:py-6"
         style={{ backgroundColor: BANNER_PINK }}
       >
+        <PlayfulDecor preset="home-banner" />
+
         {/* Soft floating blobs */}
         <span
           aria-hidden="true"
@@ -132,8 +135,9 @@ export function HomeContent({
         </label>
       </section>
 
-      <section className="mt-8">
-        <h1 className="text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
+      <section className="relative mt-8 overflow-hidden">
+        <PlayfulDecor preset="home-categories" />
+        <h1 className="relative z-10 text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
           Shop by category
         </h1>
         <div className="no-scrollbar mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto sm:gap-4">
@@ -172,8 +176,9 @@ export function HomeContent({
 
       <WaveDivider flip />
 
-      <section className="mt-10">
-        <h2 className="text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
+      <section className="relative mt-10 overflow-hidden">
+        <PlayfulDecor preset="home-products" />
+        <h2 className="relative z-10 text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
           {trimmedSearch ? "Search results" : "Featured products"}
         </h2>
         {isSearching ? (
