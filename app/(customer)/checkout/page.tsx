@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { ShoppingBag } from "lucide-react";
 
 import { createClient } from "@/lib/supabase/client";
 import { isValidPakistaniPhone } from "@/lib/validation";
@@ -159,13 +160,17 @@ export default function CheckoutPage() {
     return (
       <div className="mx-auto max-w-2xl py-16 text-center">
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Checkout</h1>
-        <p className="mt-4 text-zinc-600">Your cart is empty.</p>
-        <Link
-          className="mt-6 inline-flex min-h-12 items-center justify-center rounded-xl bg-brand-primary px-6 font-semibold text-white hover:bg-brand-primary-dark"
-          href="/"
-        >
-          Continue shopping
-        </Link>
+        <div className="mt-8 rounded-3xl bg-white px-6 py-14 text-center shadow-sm sm:mt-10 sm:py-16">
+          <ShoppingBag className="mx-auto h-11 w-11 text-zinc-400" strokeWidth={1.4} />
+          <p className="mt-3 text-lg font-medium text-zinc-700">Your cart&apos;s feeling a little empty!</p>
+          <p className="mt-1 text-zinc-500">Add a few goodies before checking out.</p>
+          <Link
+            className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-brand-primary px-6 font-semibold text-white transition hover:bg-brand-primary-dark active:scale-95"
+            href="/"
+          >
+            Continue shopping
+          </Link>
+        </div>
       </div>
     );
   }
@@ -303,8 +308,9 @@ export default function CheckoutPage() {
         ) : null}
 
         <button
-          className="h-14 w-full rounded-2xl bg-brand-primary px-5 text-base font-bold text-white transition hover:bg-brand-primary-dark disabled:cursor-not-allowed disabled:opacity-60 sm:h-16 sm:text-lg"
+          className="h-14 w-full rounded-full px-5 text-base font-bold transition hover:opacity-90 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60 sm:h-16 sm:text-lg"
           disabled={isBusy}
+          style={{ backgroundColor: "#D4537E", color: "#4B1528" }}
           type="submit"
         >
           {isBusy ? "Placing order…" : `Place order — ${priceFormatter.format(total)}`}

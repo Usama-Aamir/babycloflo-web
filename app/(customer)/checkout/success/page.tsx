@@ -38,13 +38,13 @@ function CheckoutSuccessContent() {
 
         <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <Link
-            className="inline-flex h-11 min-w-[10rem] items-center justify-center rounded-xl bg-brand-primary px-6 text-sm font-semibold text-white transition hover:bg-brand-primary-dark sm:h-12 sm:text-base"
+            className="inline-flex h-11 min-w-[10rem] items-center justify-center rounded-full bg-brand-primary px-6 text-sm font-semibold text-white transition hover:bg-brand-primary-dark active:scale-95 sm:h-12 sm:text-base"
             href="/"
           >
             Continue shopping
           </Link>
           <Link
-            className="inline-flex h-11 min-w-[10rem] items-center justify-center rounded-xl border border-zinc-200 px-6 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50 sm:h-12 sm:text-base"
+            className="inline-flex h-11 min-w-[10rem] items-center justify-center rounded-full border border-zinc-200 px-6 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50 active:scale-95 sm:h-12 sm:text-base"
             href="/account/orders"
           >
             View my orders

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { PackageOpen } from "lucide-react";
 
 import { createClient } from "@/lib/supabase/client";
 import type { Database } from "@/lib/supabase/database.types";
@@ -81,7 +82,7 @@ export default function OrdersPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">My orders</h1>
         <button
-          className="rounded-xl px-3 py-2 text-sm font-medium text-zinc-600 transition hover:bg-zinc-100"
+          className="rounded-xl px-3 py-2 text-sm font-medium text-zinc-600 transition hover:bg-zinc-100 active:scale-95"
           onClick={handleLogout}
           type="button"
         >
@@ -91,9 +92,11 @@ export default function OrdersPage() {
 
       {orders.length === 0 ? (
         <div className="mt-8 rounded-3xl bg-white px-5 py-14 text-center shadow-sm sm:mt-10 sm:py-16">
-          <p className="text-base text-zinc-600 sm:text-lg">You haven’t placed any orders yet.</p>
+          <PackageOpen className="mx-auto h-10 w-10 text-zinc-400" strokeWidth={1.4} />
+          <p className="mt-3 text-base font-medium text-zinc-700 sm:text-lg">No orders yet — your first delivery is waiting!</p>
+          <p className="mt-1 text-sm text-zinc-500">Explore our categories and find something lovely.</p>
           <Link
-            className="mt-4 inline-flex h-11 items-center justify-center rounded-xl bg-brand-primary px-6 text-sm font-semibold text-white transition hover:bg-brand-primary-dark sm:h-12 sm:text-base"
+            className="mt-5 inline-flex h-11 items-center justify-center rounded-full bg-brand-primary px-6 text-sm font-semibold text-white transition hover:bg-brand-primary-dark active:scale-95 sm:h-12 sm:text-base"
             href="/"
           >
             Start shopping

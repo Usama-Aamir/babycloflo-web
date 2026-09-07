@@ -18,7 +18,7 @@ export default async function HomePage() {
       .order("sort_order"),
     supabase
       .from("products")
-      .select("id, name, base_images, product_variants(price, size)")
+      .select("id, name, base_images, created_at, product_variants(id, price, size)")
       .eq("status", "active")
       .order("created_at", { ascending: false })
       .limit(8),

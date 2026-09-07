@@ -22,16 +22,16 @@ export async function SiteFooter() {
     .order("sort_order");
 
   return (
-    <footer className="mt-auto bg-[#2E7FA3] text-[#CFE8F2]">
+    <footer className="mt-auto" style={{ backgroundColor: "#4FA9D1", color: "#042C53" }}>
       <div className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-6 sm:py-12">
         <div className="grid gap-8 sm:grid-cols-[1.3fr_1fr_1fr]">
           {/* Column 1: Wordmark + tagline */}
           <div>
             <span className="inline-flex items-baseline text-2xl font-bold tracking-tight">
               <span className="text-white">baby</span>
-              <span className="text-[#F7B6CE]">cloflo</span>
+              <span style={{ color: "#F7B6CE" }}>cloflo</span>
             </span>
-            <p className="mt-3 max-w-xs text-sm leading-6 text-[#CFE8F2]">
+            <p className="mt-3 max-w-xs text-sm leading-6" style={{ color: "#042C53" }}>
               Quality baby essentials, delivered across Pakistan. Cash on delivery, always.
             </p>
           </div>
@@ -43,8 +43,9 @@ export async function SiteFooter() {
               {(categories ?? []).map((category) => (
                 <li key={category.id}>
                   <Link
-                    className="text-sm text-[#CFE8F2] transition hover:text-white"
+                    className="text-sm transition hover:text-white"
                     href={`/category/${category.slug}`}
+                    style={{ color: "#042C53" }}
                   >
                     {category.name}
                   </Link>
@@ -59,9 +60,10 @@ export async function SiteFooter() {
             <ul className="mt-4 space-y-3">
               <li>
                 <a
-                  className="inline-flex items-center gap-2.5 text-sm text-[#CFE8F2] transition hover:text-white"
+                  className="inline-flex items-center gap-2.5 text-sm transition hover:text-white"
                   href={`https://wa.me/${WHATSAPP_NUMBER}`}
                   rel="noreferrer"
+                  style={{ color: "#042C53" }}
                   target="_blank"
                 >
                   <WhatsAppIcon size={18} />
@@ -69,7 +71,7 @@ export async function SiteFooter() {
                 </a>
               </li>
               <li>
-                <span className="inline-flex items-center gap-2.5 text-sm text-[#CFE8F2]">
+                <span className="inline-flex items-center gap-2.5 text-sm" style={{ color: "#042C53" }}>
                   <MapPin size={18} strokeWidth={1.8} />
                   Lahore, Pakistan
                 </span>
@@ -80,12 +82,12 @@ export async function SiteFooter() {
 
         {/* Bottom bar */}
         <div className="mt-10 flex flex-col gap-4 border-t border-white/20 pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-[#CFE8F2]">
+          <p className="text-xs" style={{ color: "#042C53" }}>
             &copy; 2026 babycloflo. All rights reserved. Built by{" "}
             <span className="text-white">edecode</span>
-            <span className="text-[#4FA9D1]">.</span>
+            <span style={{ color: "#F7B6CE" }}>.</span>
           </p>
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-medium text-white">
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-xs font-medium text-white">
             <Truck size={16} strokeWidth={1.8} />
             Cash on delivery available nationwide
           </span>

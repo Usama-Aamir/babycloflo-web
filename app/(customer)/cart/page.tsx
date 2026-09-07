@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ShoppingBag } from "lucide-react";
 
 import { createClient } from "@/lib/supabase/client";
 import { useCart } from "../_components/cart-context";
@@ -52,7 +53,7 @@ function ProductCartRow({
           <div className="flex items-center overflow-hidden rounded-xl border border-zinc-200 bg-white">
             <button
               aria-label="Decrease quantity"
-              className="flex h-8 w-8 items-center justify-center text-base font-semibold hover:bg-zinc-50 sm:h-9 sm:w-9 sm:text-lg"
+              className="flex h-8 w-8 items-center justify-center text-base font-semibold transition hover:bg-zinc-50 active:scale-95 sm:h-9 sm:w-9 sm:text-lg"
               onClick={() => onUpdateQuantity(item.variant_id, item.color_id, item.quantity - 1)}
               type="button"
             >
@@ -63,7 +64,7 @@ function ProductCartRow({
             </span>
             <button
               aria-label="Increase quantity"
-              className="flex h-8 w-8 items-center justify-center text-base font-semibold hover:bg-zinc-50 sm:h-9 sm:w-9 sm:text-lg"
+              className="flex h-8 w-8 items-center justify-center text-base font-semibold transition hover:bg-zinc-50 active:scale-95 sm:h-9 sm:w-9 sm:text-lg"
               onClick={() => onUpdateQuantity(item.variant_id, item.color_id, item.quantity + 1)}
               type="button"
             >
@@ -75,7 +76,7 @@ function ProductCartRow({
             <p className="text-sm font-semibold text-zinc-900 sm:text-base">{priceFormatter.format(item.price * item.quantity)}</p>
             <button
               aria-label={`Remove ${item.product_name}`}
-              className="text-sm font-medium text-brand-accent hover:text-brand-accent-dark"
+              className="text-sm font-medium text-brand-accent transition hover:text-brand-accent-dark active:scale-95"
               onClick={() => onRemove(key)}
               type="button"
             >
@@ -122,10 +123,11 @@ export default function CartPage() {
 
       {items.length === 0 ? (
         <div className="mt-8 rounded-3xl bg-white px-6 py-14 text-center shadow-sm sm:mt-10 sm:py-16">
-          <p className="text-lg text-zinc-600">Your cart is empty.</p>
-          <p className="mt-2 text-zinc-500">Browse products and add something you love.</p>
+          <ShoppingBag className="mx-auto h-11 w-11 text-zinc-400" strokeWidth={1.4} />
+          <p className="mt-3 text-lg font-medium text-zinc-700">Your cart&apos;s feeling a little empty!</p>
+          <p className="mt-1 text-zinc-500">Browse products and add something you love.</p>
           <Link
-            className="mt-6 inline-flex min-h-12 items-center justify-center rounded-xl bg-brand-primary px-6 font-semibold text-white hover:bg-brand-primary-dark"
+            className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-brand-primary px-6 font-semibold text-white transition hover:bg-brand-primary-dark active:scale-95"
             href="/"
           >
             Continue shopping
@@ -164,7 +166,7 @@ export default function CartPage() {
             </div>
 
             <button
-              className="mt-6 min-h-12 w-full rounded-xl bg-brand-primary px-5 text-base font-bold text-white hover:bg-brand-primary-dark disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-14 sm:text-lg"
+              className="mt-6 min-h-12 w-full rounded-full bg-brand-primary px-5 text-base font-bold text-white transition hover:bg-brand-primary-dark active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-14 sm:text-lg"
               disabled={items.length === 0}
               onClick={() => router.push("/checkout")}
               type="button"
@@ -173,7 +175,7 @@ export default function CartPage() {
             </button>
 
             <Link
-              className="mt-3 inline-flex min-h-10 w-full items-center justify-center rounded-xl border border-zinc-200 px-4 text-sm font-medium text-zinc-700 hover:bg-zinc-50 sm:text-base"
+              className="mt-3 inline-flex min-h-10 w-full items-center justify-center rounded-full border border-zinc-200 px-4 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 active:scale-95 sm:text-base"
               href="/"
             >
               Continue shopping

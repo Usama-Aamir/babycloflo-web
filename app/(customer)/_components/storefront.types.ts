@@ -2,7 +2,9 @@ export type ProductSummary = {
   id: string;
   name: string;
   base_images: string[] | null;
+  created_at: string;
   product_variants: {
+    id: string;
     price: number;
     size: string;
   }[];

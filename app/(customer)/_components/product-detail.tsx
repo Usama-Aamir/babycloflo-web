@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import type { ProductDetail } from "./storefront.types";
 import { useCart } from "./cart-context";
+import { hashColor } from "./playful-palette";
 
 const priceFormatter = new Intl.NumberFormat("en-PK", {
   maximumFractionDigits: 2,
@@ -121,7 +122,7 @@ export function ProductDetailView({
 
         <section className="lg:sticky lg:top-24">
           <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">{product.name}</h1>
-          <p className="mt-3 text-2xl font-semibold text-brand-primary-dark sm:text-3xl">
+          <p className="mt-3 text-2xl font-bold text-[#D4537E] sm:text-3xl">
             {selectedVariant
               ? `Rs ${priceFormatter.format(Number(selectedVariant.price))}`
               : "Choose a size"}
@@ -229,18 +230,19 @@ export function ProductDetailView({
 
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             {whatsappUrl ? (
-              <a className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-green-600 px-5 text-center text-base font-bold text-white hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-200" href={whatsappUrl} rel="noreferrer" target="_blank">
+              <a className="inline-flex min-h-14 items-center justify-center rounded-full bg-green-600 px-5 text-center text-base font-bold text-white transition hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-200 active:scale-95" href={whatsappUrl} rel="noreferrer" target="_blank">
                 Order via WhatsApp
               </a>
             ) : (
-              <button className="min-h-14 rounded-2xl bg-green-600 px-5 text-base font-bold text-white opacity-45" disabled type="button">
+              <button className="min-h-14 rounded-full bg-green-600 px-5 text-base font-bold text-white opacity-45" disabled type="button">
                 Order via WhatsApp
               </button>
             )}
             <button
-              className="min-h-14 rounded-2xl bg-brand-primary px-5 text-base font-bold text-white hover:bg-brand-primary-dark focus:outline-none focus:ring-4 focus:ring-brand-primary-light disabled:cursor-not-allowed disabled:opacity-45"
+              className="min-h-14 rounded-full px-5 text-base font-bold transition hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-brand-primary-light disabled:cursor-not-allowed disabled:opacity-45 active:scale-95"
               disabled={!selectedVariant}
               onClick={handleAddToCart}
+              style={{ backgroundColor: hashColor(product.id).bg, color: hashColor(product.id).text }}
               type="button"
             >
               Add to Cart

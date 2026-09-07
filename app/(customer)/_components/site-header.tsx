@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
 import { Wordmark } from "@/app/_components/wordmark";
@@ -27,13 +27,27 @@ function MenuIcon({ open }: { open: boolean }) {
 }
 
 function CartIcon({ count }: { count: number }) {
+  const [popping, setPopping] = useState(false);
+  const previousCount = useRef(count);
+
+  useEffect(() => {
+    if (count > previousCount.current) {
+      setPopping(true);
+      const timeout = window.setTimeout(() => setPopping(false), 220);
+      return () => window.clearTimeout(timeout);
+    }
+    previousCount.current = count;
+  }, [count]);
+
   return (
-    <Link aria-label={`Cart ${count > 0 ? `(${count} item${count === 1 ? "" : "s"})` : ""}`} className="relative flex h-10 w-10 items-center justify-center rounded-xl text-zinc-700 transition hover:bg-brand-primary-light" href="/cart">
+    <Link aria-label={`Cart ${count > 0 ? `(${count} item${count === 1 ? "" : "s"})` : ""}`} className="relative flex h-10 w-10 items-center justify-center rounded-xl text-zinc-700 transition hover:bg-brand-primary-light active:scale-95" href="/cart">
       <svg aria-hidden="true" fill="none" height="23" viewBox="0 0 24 24" width="23">
         <path d="M3 4h2l2 11h11l2-8H6m3 12h.01M17 19h.01" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
       </svg>
       {count > 0 ? (
-        <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-accent px-1 text-[10px] font-bold text-white">
+        <span
+          className={`absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-accent px-1 text-[10px] font-bold text-white transition-transform duration-200 ${popping ? "scale-150" : "scale-100"}`}
+        >
           {count > 99 ? "99+" : count}
         </span>
       ) : null}
@@ -137,7 +151,7 @@ export function SiteHeader() {
                     Log in
                   </Link>
                   <Link
-                    className="rounded-lg bg-brand-primary-light px-3 py-2 text-sm font-medium text-brand-primary-dark transition hover:bg-brand-primary/10"
+                    className="rounded-lg bg-brand-primary-light px-3 py-2 text-sm font-medium text-brand-primary-dark transition hover:bg-brand-primary/10 active:scale-95"
                     href="/account/signup"
                   >
                     Sign up
@@ -199,7 +213,7 @@ export function SiteHeader() {
                 ) : (
                   <div className="space-y-3">
                     <Link
-                      className="block rounded-xl bg-brand-primary px-4 py-3 text-center text-base font-semibold text-white transition hover:bg-brand-primary-dark"
+                      className="block rounded-xl bg-brand-primary px-4 py-3 text-center text-base font-semibold text-white transition hover:bg-brand-primary-dark active:scale-95"
                       href="/account/signup"
                       onClick={() => setMenuOpen(false)}
                     >
