@@ -1,4 +1,5 @@
 import { CartProvider } from "./_components/cart-context";
+import { CustomerBackground } from "./_components/page-background";
 import { SiteFooter } from "./_components/site-footer";
 import { SiteHeader } from "./_components/site-header";
 
@@ -9,7 +10,8 @@ export default function CustomerLayout({
 }>) {
   return (
     <CartProvider>
-      <div className="flex min-h-screen flex-col bg-[#fffaf7] text-zinc-950">
+      <div className="relative z-10 flex min-h-screen flex-col text-zinc-950">
+        <CustomerBackground />
         <SiteHeader />
         <main className="flex-1 px-4 pb-safe sm:px-6">{children}</main>
         <SiteFooter />
