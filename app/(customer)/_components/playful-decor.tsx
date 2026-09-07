@@ -1,6 +1,6 @@
 "use client";
 
-import { Baby, Droplet, Heart, Shirt, Star, type LucideIcon } from "lucide-react";
+import { Baby, Droplet, Heart, Star, type LucideIcon } from "lucide-react";
 
 const palette = {
   blue: "#4FA9D1",
@@ -30,179 +30,94 @@ interface ShapeConfig {
 }
 
 const PRESETS: Record<string, ShapeConfig[]> = {
-  "home-banner": [
+  // Home: sparse corner decorations in the page margins around the centered content column
+  home: [
     {
       type: "blob",
-      color: palette.blue,
-      sizeRem: 16,
-      top: "-18%",
-      right: "-8%",
+      color: palette.purple,
+      sizeRem: 8,
+      top: "5rem",
+      left: "1rem",
       blur: true,
+      hideOnMobile: true,
+    },
+    {
+      type: "blob",
+      color: palette.coral,
+      sizeRem: 8,
+      bottom: "5rem",
+      right: "1rem",
+      blur: true,
+      hideOnMobile: true,
     },
     {
       type: "icon",
       icon: Star,
       color: palette.amber,
-      sizeRem: 8,
-      bottom: "12%",
-      left: "4%",
-      rotate: -12,
-    },
-    {
-      type: "icon",
-      icon: Heart,
-      color: palette.pink,
       sizeRem: 6,
-      top: "18%",
-      right: "22%",
+      top: "8rem",
+      right: "3rem",
       rotate: 15,
       hideOnMobile: true,
     },
   ],
-  "home-categories": [
-    {
-      type: "blob",
-      color: palette.purple,
-      sizeRem: 14,
-      top: "-10%",
-      left: "-6%",
-      blur: true,
-    },
-    {
-      type: "icon",
-      icon: Droplet,
-      color: palette.coral,
-      sizeRem: 7,
-      bottom: "10%",
-      right: "6%",
-      rotate: 20,
-    },
-    {
-      type: "icon",
-      icon: Baby,
-      color: palette.blue,
-      sizeRem: 6,
-      top: "20%",
-      right: "18%",
-      rotate: -8,
-      hideOnMobile: true,
-    },
-  ],
-  "home-products": [
-    {
-      type: "blob",
-      color: palette.coral,
-      sizeRem: 16,
-      bottom: "-12%",
-      left: "-8%",
-      blur: true,
-    },
-    {
-      type: "icon",
-      icon: Star,
-      color: palette.teal,
-      sizeRem: 8,
-      top: "8%",
-      right: "5%",
-      rotate: 18,
-    },
-    {
-      type: "icon",
-      icon: Shirt,
-      color: palette.purple,
-      sizeRem: 7,
-      top: "35%",
-      left: "3%",
-      rotate: -15,
-    },
-  ],
-  category: [
-    {
-      type: "blob",
-      color: palette.blue,
-      sizeRem: 14,
-      top: "-8%",
-      right: "-6%",
-      blur: true,
-    },
-    {
-      type: "icon",
-      icon: Heart,
-      color: palette.pink,
-      sizeRem: 7,
-      bottom: "8%",
-      left: "4%",
-      rotate: 12,
-      hideOnMobile: true,
-    },
-  ],
-  product: [
-    {
-      type: "blob",
-      color: palette.teal,
-      sizeRem: 14,
-      top: "-6%",
-      left: "-8%",
-      blur: true,
-    },
-    {
-      type: "icon",
-      icon: Star,
-      color: palette.amber,
-      sizeRem: 7,
-      bottom: "12%",
-      right: "5%",
-      rotate: -10,
-    },
-  ],
+  // Category and Product pages are dense grids/details; no decor so shapes aren't buried behind content
+  category: [],
+  product: [],
+  // Cart/Checkout: single subtle blob in a corner margin, away from forms and lists
   cart: [
     {
       type: "blob",
       color: palette.coral,
-      sizeRem: 12,
-      top: "-10%",
-      right: "-8%",
+      sizeRem: 7,
+      top: "5rem",
+      right: "1rem",
       blur: true,
+      hideOnMobile: true,
     },
   ],
   checkout: [
     {
       type: "blob",
       color: palette.blue,
-      sizeRem: 12,
-      bottom: "-8%",
-      left: "-6%",
+      sizeRem: 7,
+      top: "5rem",
+      left: "1rem",
       blur: true,
+      hideOnMobile: true,
     },
   ],
+  // Checkout success: sparse centered card, one icon in a corner
   "checkout-success": [
     {
       type: "icon",
       icon: Star,
       color: palette.amber,
-      sizeRem: 8,
-      top: "10%",
-      right: "8%",
+      sizeRem: 7,
+      top: "6rem",
+      right: "2rem",
       rotate: 15,
       hideOnMobile: true,
     },
   ],
+  // Account pages: sparse forms/lists, one blob + one icon in opposite corners
   login: [
     {
       type: "blob",
       color: palette.purple,
-      sizeRem: 11,
-      top: "-8%",
-      left: "-8%",
+      sizeRem: 7,
+      top: "5rem",
+      left: "1rem",
       blur: true,
+      hideOnMobile: true,
     },
     {
       type: "icon",
       icon: Heart,
       color: palette.pink,
-      sizeRem: 6,
-      bottom: "12%",
-      right: "8%",
+      sizeRem: 5,
+      bottom: "4rem",
+      right: "2rem",
       rotate: -10,
       hideOnMobile: true,
     },
@@ -211,18 +126,19 @@ const PRESETS: Record<string, ShapeConfig[]> = {
     {
       type: "blob",
       color: palette.teal,
-      sizeRem: 11,
-      top: "-8%",
-      right: "-8%",
+      sizeRem: 7,
+      top: "5rem",
+      right: "1rem",
       blur: true,
+      hideOnMobile: true,
     },
     {
       type: "icon",
       icon: Baby,
       color: palette.amber,
-      sizeRem: 6,
-      bottom: "12%",
-      left: "8%",
+      sizeRem: 5,
+      bottom: "4rem",
+      left: "2rem",
       rotate: 8,
       hideOnMobile: true,
     },
@@ -231,18 +147,19 @@ const PRESETS: Record<string, ShapeConfig[]> = {
     {
       type: "blob",
       color: palette.pink,
-      sizeRem: 11,
-      top: "-8%",
-      right: "-8%",
+      sizeRem: 7,
+      top: "5rem",
+      right: "1rem",
       blur: true,
+      hideOnMobile: true,
     },
     {
       type: "icon",
       icon: Droplet,
       color: palette.blue,
-      sizeRem: 6,
-      bottom: "12%",
-      left: "8%",
+      sizeRem: 5,
+      bottom: "4rem",
+      left: "2rem",
       rotate: -5,
       hideOnMobile: true,
     },
@@ -257,7 +174,7 @@ function DecorativeShape({ shape }: { shape: ShapeConfig }) {
     return (
       <span
         aria-hidden="true"
-        className={`${commonClasses} ${shape.blur ? "blur-3xl" : "rounded-full"}`}
+        className={`${commonClasses} rounded-full blur-3xl`}
         style={{
           top: shape.top,
           bottom: shape.bottom,
@@ -267,6 +184,8 @@ function DecorativeShape({ shape }: { shape: ShapeConfig }) {
           height: sizePx,
           backgroundColor: shape.color,
           opacity: OPACITY,
+          borderRadius: "50%",
+          filter: "blur(40px)",
           transform: `rotate(${shape.rotate ?? 0}deg)`,
         }}
       />

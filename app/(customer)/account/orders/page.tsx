@@ -79,9 +79,9 @@ export default function OrdersPage() {
   }
 
   return (
-    <div className="relative mx-auto max-w-3xl py-6 sm:py-8">
+    <div className="relative">
       <PlayfulDecor preset="orders" />
-      <div className="relative z-10">
+      <div className="relative z-10 mx-auto max-w-3xl py-6 sm:py-8">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">My orders</h1>
         <button

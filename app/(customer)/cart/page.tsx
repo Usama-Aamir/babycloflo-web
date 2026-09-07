@@ -119,9 +119,9 @@ export default function CartPage() {
   const total = subtotal + deliveryCharge;
 
   return (
-    <div className="relative mx-auto max-w-4xl py-6 sm:py-8">
+    <div className="relative">
       <PlayfulDecor preset="cart" />
-      <div className="relative z-10">
+      <div className="relative z-10 mx-auto max-w-4xl py-6 sm:py-8">
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Your cart</h1>
 
         {items.length === 0 ? (

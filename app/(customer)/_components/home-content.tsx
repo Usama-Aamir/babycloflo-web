@@ -82,14 +82,14 @@ export function HomeContent({
   const displayProducts = searchResults ?? products;
 
   return (
-    <div className="mx-auto w-full max-w-6xl py-6 sm:py-8">
-      <section
-        className="relative mb-6 overflow-hidden rounded-3xl px-5 py-5 text-white sm:px-6 sm:py-6"
-        style={{ backgroundColor: BANNER_PINK }}
-      >
-        <PlayfulDecor preset="home-banner" />
-
-        {/* Soft floating blobs */}
+    <div className="relative">
+      <PlayfulDecor preset="home" />
+      <div className="relative z-10 mx-auto w-full max-w-6xl py-6 sm:py-8">
+        <section
+          className="relative mb-6 overflow-hidden rounded-3xl px-5 py-5 text-white sm:px-6 sm:py-6"
+          style={{ backgroundColor: BANNER_PINK }}
+        >
+          {/* Soft floating blobs */}
         <span
           aria-hidden="true"
           className="pointer-events-none absolute -left-8 -top-8 h-32 w-32 rounded-full opacity-25 sm:h-44 sm:w-44"
@@ -135,8 +135,7 @@ export function HomeContent({
         </label>
       </section>
 
-      <section className="relative mt-8 overflow-hidden">
-        <PlayfulDecor preset="home-categories" />
+      <section className="relative mt-8">
         <div className="relative z-10">
           <h1 className="text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
             Shop by category
@@ -178,8 +177,7 @@ export function HomeContent({
 
       <WaveDivider flip />
 
-      <section className="relative mt-10 overflow-hidden">
-        <PlayfulDecor preset="home-products" />
+      <section className="relative mt-10">
         <div className="relative z-10">
           <h2 className="text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
             {trimmedSearch ? "Search results" : "Featured products"}
@@ -214,6 +212,7 @@ export function HomeContent({
           )}
         </div>
       </section>
+    </div>
     </div>
   );
 }

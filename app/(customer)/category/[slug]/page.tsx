@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
 import { CategoryProducts } from "../../_components/category-products";
-import { PlayfulDecor } from "../../_components/playful-decor";
 
 const PAGE_SIZE = 20;
 
@@ -50,10 +49,8 @@ export default async function CategoryPage({
     .range(0, PAGE_SIZE - 1);
 
   return (
-    <div className="relative mx-auto w-full max-w-6xl py-6 sm:py-8">
-      <PlayfulDecor preset="category" />
-      <div className="relative z-10">
-        <Link
+    <div className="mx-auto w-full max-w-6xl py-6 sm:py-8">
+      <Link
           className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-medium text-zinc-600 transition hover:bg-brand-primary-light active:scale-95"
           href="/"
         >
@@ -67,7 +64,6 @@ export default async function CategoryPage({
           initialProducts={products ?? []}
           pageSize={PAGE_SIZE}
         />
-      </div>
     </div>
   );
 }

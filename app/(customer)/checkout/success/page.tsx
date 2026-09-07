@@ -19,9 +19,9 @@ function CheckoutSuccessContent() {
   const total = rawTotal ? Number(rawTotal) : 0;
 
   return (
-    <div className="relative mx-auto max-w-2xl py-12 text-center sm:py-16">
+    <div className="relative">
       <PlayfulDecor preset="checkout-success" />
-      <div className="relative z-10">
+      <div className="relative z-10 mx-auto max-w-2xl py-12 text-center sm:py-16">
         <div className="rounded-3xl bg-white px-5 py-12 shadow-sm sm:px-6 sm:py-14">
         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-green-100 text-green-700 sm:h-16 sm:w-16">
           <svg aria-hidden="true" fill="none" height="28" viewBox="0 0 24 24" width="28">
@@ -55,7 +55,7 @@ function CheckoutSuccessContent() {
           </Link>
         </div>
       </div>
-      </div>
+    </div>
     </div>
   );
 }

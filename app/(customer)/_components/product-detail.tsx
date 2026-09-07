@@ -7,7 +7,6 @@ import { useEffect, useMemo, useState } from "react";
 import type { ProductDetail } from "./storefront.types";
 import { useCart } from "./cart-context";
 import { hashColor } from "./playful-palette";
-import { PlayfulDecor } from "./playful-decor";
 
 const priceFormatter = new Intl.NumberFormat("en-PK", {
   maximumFractionDigits: 2,
@@ -92,10 +91,8 @@ export function ProductDetailView({
   const images = product.base_images ?? [];
 
   return (
-    <div className="relative mx-auto w-full max-w-6xl py-6 sm:py-8">
-      <PlayfulDecor preset="product" />
-      <div className="relative z-10">
-        <Link className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-medium text-zinc-600 transition hover:bg-brand-primary-light active:scale-95" href="/">
+    <div className="mx-auto w-full max-w-6xl py-6 sm:py-8">
+      <Link className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-medium text-zinc-600 transition hover:bg-brand-primary-light active:scale-95" href="/">
           <span aria-hidden="true">←</span> Back
         </Link>
 
@@ -252,14 +249,13 @@ export function ProductDetailView({
             </button>
           </div>
         </section>
+
+        {toast ? (
+          <div className="fixed bottom-6 left-1/2 z-30 -translate-x-1/2 rounded-full bg-zinc-950 px-6 py-3 text-sm font-semibold text-white shadow-lg" role="status">
+            {toast}
+          </div>
+        ) : null}
       </div>
     </div>
-
-    {toast ? (
-      <div className="fixed bottom-6 left-1/2 z-30 -translate-x-1/2 rounded-full bg-zinc-950 px-6 py-3 text-sm font-semibold text-white shadow-lg" role="status">
-        {toast}
-      </div>
-    ) : null}
-  </div>
 );
 }

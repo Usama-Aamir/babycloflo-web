@@ -72,10 +72,11 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="relative mx-auto flex min-h-[60vh] max-w-md items-center py-12">
+    <div className="relative">
       <PlayfulDecor preset="signup" />
-      <div className="relative z-10 w-full">
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Create account</h1>
+      <div className="relative z-10 mx-auto flex min-h-[60vh] max-w-md items-center py-12">
+        <div className="w-full">
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Create account</h1>
         <p className="mt-2 text-sm text-zinc-600 sm:text-base">
           Optional — you can also check out as a guest.
         </p>
@@ -150,6 +151,7 @@ export default function SignUpPage() {
           </Link>
         </p>
       </div>
+    </div>
     </div>
   );
 }

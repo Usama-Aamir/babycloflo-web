@@ -159,9 +159,9 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="relative mx-auto max-w-2xl py-16 text-center">
+      <div className="relative">
         <PlayfulDecor preset="checkout" />
-        <div className="relative z-10">
+        <div className="relative z-10 mx-auto max-w-2xl py-16 text-center">
           <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Checkout</h1>
           <div className="mt-8 rounded-3xl bg-white px-6 py-14 text-center shadow-sm sm:mt-10 sm:py-16">
             <ShoppingBag className="mx-auto h-11 w-11 text-zinc-400" strokeWidth={1.4} />
@@ -180,9 +180,9 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="relative mx-auto max-w-3xl py-6 sm:py-8">
+    <div className="relative">
       <PlayfulDecor preset="checkout" />
-      <div className="relative z-10">
+      <div className="relative z-10 mx-auto max-w-3xl py-6 sm:py-8">
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Checkout</h1>
 
         {!session ? (
