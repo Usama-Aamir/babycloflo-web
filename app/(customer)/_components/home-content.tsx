@@ -25,23 +25,6 @@ function categoryIcon(slug: string): LucideIcon {
   return CATEGORY_ICONS[slug] ?? ShoppingBag;
 }
 
-function WaveDivider({ flip = false, color = "#fffaf7" }: { flip?: boolean; color?: string }) {
-  return (
-    <svg
-      aria-hidden="true"
-      className="pointer-events-none -mt-1 h-6 w-full sm:h-8"
-      preserveAspectRatio="none"
-      style={{ transform: flip ? "rotate(180deg)" : undefined }}
-      viewBox="0 0 1440 48"
-    >
-      <path
-        d="M0,24 C120,40 240,8 360,24 C480,40 600,8 720,24 C840,40 960,8 1080,24 C1200,40 1320,8 1440,24 L1440,48 L0,48 Z"
-        fill={color}
-      />
-    </svg>
-  );
-}
-
 export function HomeContent({
   categories,
   products,
@@ -115,9 +98,7 @@ export function HomeContent({
         </div>
       </section>
 
-      <WaveDivider />
-
-      <section>
+      <section className="mt-6">
         <label className="relative block" htmlFor="product-search">
           <span className="sr-only">Search products</span>
           <svg className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" aria-hidden="true" fill="none" height="22" viewBox="0 0 24 24" width="22">
@@ -174,8 +155,6 @@ export function HomeContent({
           </div>
         </div>
       </section>
-
-      <WaveDivider flip />
 
       <section className="relative mt-10">
         <div className="relative z-10">

@@ -12,9 +12,11 @@ export default function CustomerLayout({
     <CartProvider>
       <div className="relative z-10 flex min-h-screen flex-col text-zinc-950">
         <CustomerBackground />
-        <SiteHeader />
-        <main className="flex-1 px-4 pb-safe sm:px-6">{children}</main>
-        <SiteFooter />
+        <div className="relative z-10 flex flex-1 flex-col">
+          <SiteHeader />
+          <main className="flex-1 px-4 pb-safe sm:px-6">{children}</main>
+          <SiteFooter />
+        </div>
       </div>
     </CartProvider>
   );

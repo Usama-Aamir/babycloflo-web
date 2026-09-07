@@ -15,7 +15,7 @@ export function CustomerBackground() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-0"
+      className="pointer-events-none absolute inset-0 z-0"
       style={{
         background: "linear-gradient(135deg, #EAF6FB 0%, #FBEAF0 100%)",
       }}
