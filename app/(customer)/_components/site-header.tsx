@@ -40,7 +40,7 @@ function CartIcon({ count }: { count: number }) {
   }, [count]);
 
   return (
-    <Link aria-label={`Cart ${count > 0 ? `(${count} item${count === 1 ? "" : "s"})` : ""}`} className="relative flex h-10 w-10 items-center justify-center rounded-xl text-zinc-700 transition hover:bg-brand-primary-light active:scale-95" href="/cart">
+    <Link aria-label={`Cart ${count > 0 ? `(${count} item${count === 1 ? "" : "s"})` : ""}`} className="relative flex h-10 w-10 items-center justify-center rounded-xl text-white transition hover:bg-white/10 active:scale-95" href="/cart">
       <svg aria-hidden="true" fill="none" height="23" viewBox="0 0 24 24" width="23">
         <path d="M3 4h2l2 11h11l2-8H6m3 12h.01M17 19h.01" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
       </svg>
@@ -101,9 +101,9 @@ export function SiteHeader() {
   ];
 
   return (
-    <header className="sticky top-0 z-30 border-b border-brand-primary-light bg-white/95 shadow-sm backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-white/10 bg-[#2E7FA3] shadow-sm">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
-        <Wordmark href="/" />
+        <Wordmark href="/" firstClassName="text-[#F5F5F0]" secondClassName="text-[#F7B6CE]" />
 
         <div className="flex items-center gap-1">
           <div className="sm:hidden">
@@ -114,7 +114,7 @@ export function SiteHeader() {
             aria-controls="mobile-menu"
             aria-expanded={menuOpen}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
-            className="flex h-10 w-10 items-center justify-center rounded-xl text-zinc-700 transition hover:bg-brand-primary-light sm:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-xl text-white transition hover:bg-white/10 sm:hidden"
             onClick={() => setMenuOpen((s) => !s)}
             type="button"
           >
@@ -122,10 +122,10 @@ export function SiteHeader() {
           </button>
 
           <nav className="hidden items-center gap-1 sm:flex" aria-label="Store navigation">
-            <Link className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 transition hover:bg-brand-primary-light" href="/">
+            <Link className="rounded-lg px-3 py-2 text-sm font-medium text-[#CFE8F2] transition hover:bg-white/10 hover:text-white" href="/">
               Home
             </Link>
-            <Link className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 transition hover:bg-brand-primary-light" href="/cart">
+            <Link className="rounded-lg px-3 py-2 text-sm font-medium text-[#CFE8F2] transition hover:bg-white/10 hover:text-white" href="/cart">
               Cart
             </Link>
           </nav>
@@ -134,11 +134,11 @@ export function SiteHeader() {
             {!loading ? (
               user ? (
                 <>
-                  <Link className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 transition hover:bg-brand-primary-light" href="/account/orders">
+                  <Link className="rounded-lg px-3 py-2 text-sm font-medium text-[#CFE8F2] transition hover:bg-white/10 hover:text-white" href="/account/orders">
                     My Orders
                   </Link>
                   <button
-                    className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-600 transition hover:bg-zinc-100"
+                    className="rounded-lg px-3 py-2 text-sm font-medium text-[#CFE8F2] transition hover:bg-white/10 hover:text-white"
                     onClick={handleLogout}
                     type="button"
                   >
@@ -147,11 +147,11 @@ export function SiteHeader() {
                 </>
               ) : (
                 <>
-                  <Link className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 transition hover:bg-brand-primary-light" href="/account/login">
+                  <Link className="rounded-lg px-3 py-2 text-sm font-medium text-[#CFE8F2] transition hover:bg-white/10 hover:text-white" href="/account/login">
                     Log in
                   </Link>
                   <Link
-                    className="rounded-lg bg-brand-primary-light px-3 py-2 text-sm font-medium text-brand-primary-dark transition hover:bg-brand-primary/10 active:scale-95"
+                    className="rounded-lg bg-white/15 px-3 py-2 text-sm font-medium text-white transition hover:bg-white/25 active:scale-95"
                     href="/account/signup"
                   >
                     Sign up
@@ -165,18 +165,18 @@ export function SiteHeader() {
 
       {menuOpen ? (
         <div
-          className="fixed inset-0 top-16 z-20 bg-black/20 sm:hidden"
+          className="fixed inset-0 top-16 z-20 bg-black/40 sm:hidden"
           id="mobile-menu"
           onClick={() => setMenuOpen(false)}
         >
           <div
-            className="absolute right-0 top-0 h-[calc(100dvh-4rem)] w-72 max-w-[80vw] overflow-y-auto border-l border-brand-primary-light bg-white px-5 py-6 shadow-xl"
+            className="absolute right-0 top-0 h-[calc(100dvh-4rem)] w-72 max-w-[80vw] overflow-y-auto border-l border-white/10 bg-[#2E7FA3] px-5 py-6 shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <nav className="space-y-1" aria-label="Mobile navigation">
               {menuLinks.map((link) => (
                 <Link
-                  className="flex items-center justify-between rounded-xl px-3 py-3 text-base font-medium text-zinc-800 transition hover:bg-brand-primary-light"
+                  className="flex items-center justify-between rounded-xl px-3 py-3 text-base font-medium text-[#CFE8F2] transition hover:bg-white/10 hover:text-white"
                   href={link.href}
                   key={link.href}
                   onClick={() => setMenuOpen(false)}
@@ -196,14 +196,14 @@ export function SiteHeader() {
                 user ? (
                   <div className="space-y-1">
                     <Link
-                      className="block rounded-xl px-3 py-3 text-base font-medium text-zinc-800 transition hover:bg-brand-primary-light"
+                      className="block rounded-xl px-3 py-3 text-base font-medium text-[#CFE8F2] transition hover:bg-white/10 hover:text-white"
                       href="/account/orders"
                       onClick={() => setMenuOpen(false)}
                     >
                       My Orders
                     </Link>
                     <button
-                      className="block w-full rounded-xl px-3 py-3 text-left text-base font-medium text-zinc-600 transition hover:bg-zinc-100"
+                      className="block w-full rounded-xl px-3 py-3 text-left text-base font-medium text-[#CFE8F2] transition hover:bg-white/10 hover:text-white"
                       onClick={handleLogout}
                       type="button"
                     >
@@ -213,14 +213,14 @@ export function SiteHeader() {
                 ) : (
                   <div className="space-y-3">
                     <Link
-                      className="block rounded-xl bg-brand-primary px-4 py-3 text-center text-base font-semibold text-white transition hover:bg-brand-primary-dark active:scale-95"
+                      className="block rounded-xl bg-white/15 px-4 py-3 text-center text-base font-semibold text-white transition hover:bg-white/25 active:scale-95"
                       href="/account/signup"
                       onClick={() => setMenuOpen(false)}
                     >
                       Sign up
                     </Link>
                     <Link
-                      className="block rounded-xl px-4 py-3 text-center text-base font-medium text-zinc-700 transition hover:bg-brand-primary-light"
+                      className="block rounded-xl px-4 py-3 text-center text-base font-medium text-[#CFE8F2] transition hover:bg-white/10 hover:text-white"
                       href="/account/login"
                       onClick={() => setMenuOpen(false)}
                     >

@@ -9,16 +9,20 @@ const nunito = Nunito({
 export function Wordmark({
   className = "",
   href,
+  firstClassName = "text-zinc-900",
+  secondClassName = "text-brand-accent",
 }: {
   className?: string;
   href?: string;
+  firstClassName?: string;
+  secondClassName?: string;
 }) {
   const inner = (
     <span
       className={`${nunito.className} inline-flex items-baseline text-2xl font-bold tracking-tight ${className}`}
     >
-      <span className="text-zinc-900">baby</span>
-      <span className="text-brand-accent">cloflo</span>
+      <span className={firstClassName}>baby</span>
+      <span className={secondClassName}>cloflo</span>
     </span>
   );
 

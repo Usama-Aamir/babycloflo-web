@@ -141,7 +141,7 @@ export function HomeContent({
           <h1 className="text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
             Shop by category
           </h1>
-          <div className="no-scrollbar mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto sm:gap-4">
+          <div className="no-scrollbar mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto sm:justify-center sm:gap-4">
             {categories.map((category, index) => {
               const color = categoryColor(index);
               const Icon = categoryIcon(category.slug);

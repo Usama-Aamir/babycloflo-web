@@ -8,6 +8,7 @@ import { ShoppingBag } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { isValidPakistaniPhone } from "@/lib/validation";
 import { useCart } from "../_components/cart-context";
+import { PlayfulDecor } from "../_components/playful-decor";
 
 const priceFormatter = new Intl.NumberFormat("en-PK", {
   style: "currency",
@@ -158,28 +159,33 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="mx-auto max-w-2xl py-16 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Checkout</h1>
-        <div className="mt-8 rounded-3xl bg-white px-6 py-14 text-center shadow-sm sm:mt-10 sm:py-16">
-          <ShoppingBag className="mx-auto h-11 w-11 text-zinc-400" strokeWidth={1.4} />
-          <p className="mt-3 text-lg font-medium text-zinc-700">Your cart&apos;s feeling a little empty!</p>
-          <p className="mt-1 text-zinc-500">Add a few goodies before checking out.</p>
-          <Link
-            className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-brand-primary px-6 font-semibold text-white transition hover:bg-brand-primary-dark active:scale-95"
-            href="/"
-          >
-            Continue shopping
-          </Link>
+      <div className="relative mx-auto max-w-2xl py-16 text-center">
+        <PlayfulDecor preset="checkout" />
+        <div className="relative z-10">
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Checkout</h1>
+          <div className="mt-8 rounded-3xl bg-white px-6 py-14 text-center shadow-sm sm:mt-10 sm:py-16">
+            <ShoppingBag className="mx-auto h-11 w-11 text-zinc-400" strokeWidth={1.4} />
+            <p className="mt-3 text-lg font-medium text-zinc-700">Your cart&apos;s feeling a little empty!</p>
+            <p className="mt-1 text-zinc-500">Add a few goodies before checking out.</p>
+            <Link
+              className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-brand-primary px-6 font-semibold text-white transition hover:bg-brand-primary-dark active:scale-95"
+              href="/"
+            >
+              Continue shopping
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-3xl py-6 sm:py-8">
-      <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Checkout</h1>
+    <div className="relative mx-auto max-w-3xl py-6 sm:py-8">
+      <PlayfulDecor preset="checkout" />
+      <div className="relative z-10">
+        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Checkout</h1>
 
-      {!session ? (
+        {!session ? (
         <div className="mt-4 rounded-xl bg-zinc-50 px-4 py-3 text-sm text-zinc-700">
           Checking out as a guest.{" "}
           <Link className="font-semibold text-brand-primary-dark hover:underline" href="/account/login?redirect=/checkout">
@@ -320,6 +326,7 @@ export default function CheckoutPage() {
           By placing this order you agree to our terms. No account required.
         </p>
       </form>
+      </div>
     </div>
   );
 }

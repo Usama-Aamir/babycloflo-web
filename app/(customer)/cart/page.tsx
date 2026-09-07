@@ -9,6 +9,7 @@ import { ShoppingBag } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useCart } from "../_components/cart-context";
 import type { ProductCartItem } from "../_components/cart-context";
+import { PlayfulDecor } from "../_components/playful-decor";
 
 const priceFormatter = new Intl.NumberFormat("en-PK", {
   style: "currency",
@@ -118,10 +119,12 @@ export default function CartPage() {
   const total = subtotal + deliveryCharge;
 
   return (
-    <div className="mx-auto max-w-4xl py-6 sm:py-8">
-      <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Your cart</h1>
+    <div className="relative mx-auto max-w-4xl py-6 sm:py-8">
+      <PlayfulDecor preset="cart" />
+      <div className="relative z-10">
+        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Your cart</h1>
 
-      {items.length === 0 ? (
+        {items.length === 0 ? (
         <div className="mt-8 rounded-3xl bg-white px-6 py-14 text-center shadow-sm sm:mt-10 sm:py-16">
           <ShoppingBag className="mx-auto h-11 w-11 text-zinc-400" strokeWidth={1.4} />
           <p className="mt-3 text-lg font-medium text-zinc-700">Your cart&apos;s feeling a little empty!</p>
@@ -183,6 +186,7 @@ export default function CartPage() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { PackageOpen } from "lucide-react";
 
 import { createClient } from "@/lib/supabase/client";
+import { PlayfulDecor } from "../../_components/playful-decor";
 import type { Database } from "@/lib/supabase/database.types";
 
 type Order = Database["public"]["Tables"]["orders"]["Row"];
@@ -78,9 +79,11 @@ export default function OrdersPage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl py-6 sm:py-8">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">My orders</h1>
+    <div className="relative mx-auto max-w-3xl py-6 sm:py-8">
+      <PlayfulDecor preset="orders" />
+      <div className="relative z-10">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">My orders</h1>
         <button
           className="rounded-xl px-3 py-2 text-sm font-medium text-zinc-600 transition hover:bg-zinc-100 active:scale-95"
           onClick={handleLogout}
@@ -130,6 +133,7 @@ export default function OrdersPage() {
           ))}
         </ul>
       )}
+      </div>
     </div>
   );
 }

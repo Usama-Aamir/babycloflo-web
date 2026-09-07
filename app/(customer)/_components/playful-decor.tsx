@@ -11,9 +11,7 @@ const palette = {
   coral: "#F0997B",
 };
 
-// TEMPORARY DEBUG: high opacity + red outlines to confirm shapes render and are positioned.
-const DEBUG = true;
-const DEBUG_OPACITY = 0.4;
+const OPACITY = 0.18;
 
 type ShapeType = "icon" | "blob";
 
@@ -26,7 +24,6 @@ interface ShapeConfig {
   bottom?: string;
   left?: string;
   right?: string;
-  opacity: number;
   rotate?: number;
   blur?: boolean;
   hideOnMobile?: boolean;
@@ -40,7 +37,6 @@ const PRESETS: Record<string, ShapeConfig[]> = {
       sizeRem: 16,
       top: "-18%",
       right: "-8%",
-      opacity: 0.09,
       blur: true,
     },
     {
@@ -50,7 +46,6 @@ const PRESETS: Record<string, ShapeConfig[]> = {
       sizeRem: 8,
       bottom: "12%",
       left: "4%",
-      opacity: 0.08,
       rotate: -12,
     },
     {
@@ -60,7 +55,6 @@ const PRESETS: Record<string, ShapeConfig[]> = {
       sizeRem: 6,
       top: "18%",
       right: "22%",
-      opacity: 0.08,
       rotate: 15,
       hideOnMobile: true,
     },
@@ -72,7 +66,6 @@ const PRESETS: Record<string, ShapeConfig[]> = {
       sizeRem: 14,
       top: "-10%",
       left: "-6%",
-      opacity: 0.08,
       blur: true,
     },
     {
@@ -82,7 +75,6 @@ const PRESETS: Record<string, ShapeConfig[]> = {
       sizeRem: 7,
       bottom: "10%",
       right: "6%",
-      opacity: 0.07,
       rotate: 20,
     },
     {
@@ -92,7 +84,6 @@ const PRESETS: Record<string, ShapeConfig[]> = {
       sizeRem: 6,
       top: "20%",
       right: "18%",
-      opacity: 0.06,
       rotate: -8,
       hideOnMobile: true,
     },
@@ -104,7 +95,6 @@ const PRESETS: Record<string, ShapeConfig[]> = {
       sizeRem: 16,
       bottom: "-12%",
       left: "-8%",
-      opacity: 0.07,
       blur: true,
     },
     {
@@ -114,7 +104,6 @@ const PRESETS: Record<string, ShapeConfig[]> = {
       sizeRem: 8,
       top: "8%",
       right: "5%",
-      opacity: 0.06,
       rotate: 18,
     },
     {
@@ -124,7 +113,6 @@ const PRESETS: Record<string, ShapeConfig[]> = {
       sizeRem: 7,
       top: "35%",
       left: "3%",
-      opacity: 0.07,
       rotate: -15,
     },
   ],
@@ -135,7 +123,6 @@ const PRESETS: Record<string, ShapeConfig[]> = {
       sizeRem: 14,
       top: "-8%",
       right: "-6%",
-      opacity: 0.08,
       blur: true,
     },
     {
@@ -145,7 +132,6 @@ const PRESETS: Record<string, ShapeConfig[]> = {
       sizeRem: 7,
       bottom: "8%",
       left: "4%",
-      opacity: 0.06,
       rotate: 12,
       hideOnMobile: true,
     },
@@ -157,7 +143,6 @@ const PRESETS: Record<string, ShapeConfig[]> = {
       sizeRem: 14,
       top: "-6%",
       left: "-8%",
-      opacity: 0.08,
       blur: true,
     },
     {
@@ -167,16 +152,106 @@ const PRESETS: Record<string, ShapeConfig[]> = {
       sizeRem: 7,
       bottom: "12%",
       right: "5%",
-      opacity: 0.06,
       rotate: -10,
+    },
+  ],
+  cart: [
+    {
+      type: "blob",
+      color: palette.coral,
+      sizeRem: 12,
+      top: "-10%",
+      right: "-8%",
+      blur: true,
+    },
+  ],
+  checkout: [
+    {
+      type: "blob",
+      color: palette.blue,
+      sizeRem: 12,
+      bottom: "-8%",
+      left: "-6%",
+      blur: true,
+    },
+  ],
+  "checkout-success": [
+    {
+      type: "icon",
+      icon: Star,
+      color: palette.amber,
+      sizeRem: 8,
+      top: "10%",
+      right: "8%",
+      rotate: 15,
+      hideOnMobile: true,
+    },
+  ],
+  login: [
+    {
+      type: "blob",
+      color: palette.purple,
+      sizeRem: 11,
+      top: "-8%",
+      left: "-8%",
+      blur: true,
+    },
+    {
+      type: "icon",
+      icon: Heart,
+      color: palette.pink,
+      sizeRem: 6,
+      bottom: "12%",
+      right: "8%",
+      rotate: -10,
+      hideOnMobile: true,
+    },
+  ],
+  signup: [
+    {
+      type: "blob",
+      color: palette.teal,
+      sizeRem: 11,
+      top: "-8%",
+      right: "-8%",
+      blur: true,
+    },
+    {
+      type: "icon",
+      icon: Baby,
+      color: palette.amber,
+      sizeRem: 6,
+      bottom: "12%",
+      left: "8%",
+      rotate: 8,
+      hideOnMobile: true,
+    },
+  ],
+  orders: [
+    {
+      type: "blob",
+      color: palette.pink,
+      sizeRem: 11,
+      top: "-8%",
+      right: "-8%",
+      blur: true,
+    },
+    {
+      type: "icon",
+      icon: Droplet,
+      color: palette.blue,
+      sizeRem: 6,
+      bottom: "12%",
+      left: "8%",
+      rotate: -5,
+      hideOnMobile: true,
     },
   ],
 };
 
 function DecorativeShape({ shape }: { shape: ShapeConfig }) {
-  const commonClasses = `pointer-events-none absolute select-none ${DEBUG ? "outline outline-2 outline-offset-2 outline-red-500" : ""} ${shape.hideOnMobile ? "hidden sm:block" : ""}`;
+  const commonClasses = `pointer-events-none absolute select-none ${shape.hideOnMobile ? "hidden sm:block" : ""}`;
   const sizePx = shape.sizeRem * 16;
-  const opacity = DEBUG ? DEBUG_OPACITY : shape.opacity;
 
   if (shape.type === "blob") {
     return (
@@ -191,7 +266,7 @@ function DecorativeShape({ shape }: { shape: ShapeConfig }) {
           width: sizePx,
           height: sizePx,
           backgroundColor: shape.color,
-          opacity,
+          opacity: OPACITY,
           transform: `rotate(${shape.rotate ?? 0}deg)`,
         }}
       />
@@ -210,7 +285,7 @@ function DecorativeShape({ shape }: { shape: ShapeConfig }) {
         bottom: shape.bottom,
         left: shape.left,
         right: shape.right,
-        opacity,
+        opacity: OPACITY,
         transform: `rotate(${shape.rotate ?? 0}deg)`,
       }}
     >
