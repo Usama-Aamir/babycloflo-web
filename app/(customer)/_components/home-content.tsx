@@ -75,41 +75,41 @@ export function HomeContent({
         <section
           aria-labelledby="hero-heading"
           className="relative mb-6 overflow-hidden rounded-3xl px-5 py-12 text-center sm:px-8 sm:py-16"
-          style={{ background: "linear-gradient(135deg, #EAF6FB 0%, #FBEAF0 100%)" }}
+          style={{ background: "linear-gradient(135deg, #4FA9D1 0%, #D4537E 100%)" }}
         >
           {/* Floating background icons — full product range, low opacity, gentle bob */}
-          <span aria-hidden="true" className="hero-float pointer-events-none absolute left-[6%] top-[12%] text-[#4FA9D1] opacity-[0.15]" style={{ animationDelay: "0s" }}>
+          <span aria-hidden="true" className="hero-float pointer-events-none absolute left-[6%] top-[12%] text-white opacity-[0.28]" style={{ animationDelay: "0s" }}>
             <Baby size={56} strokeWidth={1.2} />
           </span>
-          <span aria-hidden="true" className="hero-float pointer-events-none absolute left-[12%] bottom-[10%] text-[#5DCAA5] opacity-[0.15]" style={{ animationDelay: "0.8s" }}>
+          <span aria-hidden="true" className="hero-float pointer-events-none absolute left-[12%] bottom-[10%] text-white opacity-[0.28]" style={{ animationDelay: "0.8s" }}>
             <Droplet size={48} strokeWidth={1.2} />
           </span>
-          <span aria-hidden="true" className="hero-float pointer-events-none absolute right-[8%] top-[14%] text-[#F0997B] opacity-[0.15]" style={{ animationDelay: "1.2s" }}>
+          <span aria-hidden="true" className="hero-float pointer-events-none absolute right-[8%] top-[14%] text-white opacity-[0.28]" style={{ animationDelay: "1.2s" }}>
             <Shirt size={52} strokeWidth={1.2} />
           </span>
-          <span aria-hidden="true" className="hero-float pointer-events-none absolute right-[6%] bottom-[12%] text-[#7F77DD] opacity-[0.15]" style={{ animationDelay: "0.4s" }}>
+          <span aria-hidden="true" className="hero-float pointer-events-none absolute right-[6%] bottom-[12%] text-white opacity-[0.28]" style={{ animationDelay: "0.4s" }}>
             <Puzzle size={56} strokeWidth={1.2} />
           </span>
-          <span aria-hidden="true" className="hero-float pointer-events-none absolute left-[40%] top-[6%] text-[#EF9F27] opacity-[0.12]" style={{ animationDelay: "1.6s" }}>
+          <span aria-hidden="true" className="hero-float pointer-events-none absolute left-[40%] top-[6%] text-white opacity-[0.26]" style={{ animationDelay: "1.6s" }}>
             <Scissors size={40} strokeWidth={1.2} />
           </span>
-          <span aria-hidden="true" className="hero-float pointer-events-none absolute right-[38%] bottom-[6%] text-[#D4537E] opacity-[0.12]" style={{ animationDelay: "2s" }}>
+          <span aria-hidden="true" className="hero-float pointer-events-none absolute right-[38%] bottom-[6%] text-white opacity-[0.26]" style={{ animationDelay: "2s" }}>
             <ShoppingBag size={44} strokeWidth={1.2} />
           </span>
-          <span aria-hidden="true" className="hero-float pointer-events-none absolute left-[44%] bottom-[16%] hidden text-[#4FA9D1] opacity-[0.10] sm:block" style={{ animationDelay: "2.4s" }}>
+          <span aria-hidden="true" className="hero-float pointer-events-none absolute left-[44%] bottom-[16%] hidden text-white opacity-[0.26] sm:block" style={{ animationDelay: "2.4s" }}>
             <Baby size={64} strokeWidth={1} />
           </span>
 
           <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#D4537E] sm:text-sm">Now open in Pakistan</p>
-            <h1 className="mt-3 text-[28px] font-bold leading-tight tracking-tight text-[#1E3A45] sm:text-[32px]" id="hero-heading">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#FDE4EC] sm:text-sm">Now open in Pakistan</p>
+            <h1 className="mt-3 text-[28px] font-bold leading-tight tracking-tight text-white sm:text-[32px]" id="hero-heading" style={{ textShadow: "0 2px 8px rgba(0,0,0,0.15)" }}>
               Everything Your Little One Needs
             </h1>
-            <p className="mt-3 max-w-xl text-sm text-[#4A6C77] sm:text-base">
-              Feeders, clothing, toys, hair &amp; bath care — delivered across Pakistan, cash on delivery
+            <p className="mt-3 max-w-xl text-sm text-[#FCEFF4] sm:text-base">
+              Feeders, clothing, toys, hair & bath care — delivered across Pakistan, cash on delivery
             </p>
             <button
-              className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-[#D4537E] px-8 text-sm font-semibold text-white shadow-sm transition hover:bg-[#C2426D] active:scale-95 focus:outline-none focus:ring-4 focus:ring-[#D4537E]/30 sm:h-14 sm:text-base"
+              className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-white px-8 text-sm font-bold text-[#D4537E] shadow-sm transition hover:bg-zinc-50 active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/40 sm:h-14 sm:text-base"
               onClick={scrollToCategories}
               type="button"
             >
