@@ -3,12 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Baby, Droplet, Scissors, Shirt, Puzzle, ShoppingBag, Heart, Star, Baby as BabyIcon, SearchX, type LucideIcon } from "lucide-react";
+import { Baby, Droplet, Scissors, Shirt, Puzzle, ShoppingBag, SearchX, type LucideIcon } from "lucide-react";
 
 import { createClient } from "@/lib/supabase/client";
 import { ProductCard } from "./product-card";
 import type { CategoryTileData, ProductSummary } from "./storefront.types";
-import { categoryColor, BANNER_PINK } from "./playful-palette";
+import { categoryColor } from "./playful-palette";
 import { PlayfulDecor } from "./playful-decor";
 
 const SEARCH_LIMIT = 20;
@@ -64,39 +64,60 @@ export function HomeContent({
 
   const displayProducts = searchResults ?? products;
 
+  function scrollToCategories() {
+    document.getElementById("shop-by-category")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   return (
     <div className="relative">
       <PlayfulDecor preset="home" />
       <div className="relative z-10 mx-auto w-full max-w-6xl py-6 sm:py-8">
         <section
-          className="relative mb-6 overflow-hidden rounded-3xl px-5 py-5 text-white sm:px-6 sm:py-6"
-          style={{ backgroundColor: BANNER_PINK }}
+          aria-labelledby="hero-heading"
+          className="relative mb-6 overflow-hidden rounded-3xl bg-[#EAF6FB] px-5 py-12 text-center sm:px-8 sm:py-16"
         >
-          {/* Soft floating blobs */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute -left-8 -top-8 h-32 w-32 rounded-full opacity-25 sm:h-44 sm:w-44"
-          style={{ backgroundColor: "#F0997B" }}
-        />
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-6 bottom-6 h-24 w-24 rounded-full opacity-20 sm:h-32 sm:w-32"
-          style={{ backgroundColor: "#F7B6CE" }}
-        />
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute right-1/4 top-2 h-16 w-16 rounded-full opacity-20 sm:h-20 sm:w-20"
-          style={{ backgroundColor: "#FCE8EE" }}
-        />
+          <Baby aria-hidden="true" className="pointer-events-none absolute -left-4 -top-4 h-14 w-14 text-[#4FA9D1] opacity-15 sm:h-[120px] sm:w-[120px]" strokeWidth={1.2} />
+          <Puzzle aria-hidden="true" className="pointer-events-none absolute -bottom-4 -right-4 h-14 w-14 text-[#7F77DD] opacity-15 sm:h-[120px] sm:w-[120px]" strokeWidth={1.2} />
+          <Shirt aria-hidden="true" className="pointer-events-none absolute -right-5 -top-5 hidden text-[#F0997B] opacity-15 sm:block" size={96} strokeWidth={1.2} />
 
-        <BabyIcon className="pointer-events-none absolute -right-3 -top-3 text-white/20" size={80} strokeWidth={1.2} aria-hidden="true" />
-        <Heart className="pointer-events-none absolute right-14 bottom-2 text-white/25" size={34} strokeWidth={1.5} aria-hidden="true" />
-        <Star className="pointer-events-none absolute left-4 top-2 text-white/20" size={26} strokeWidth={1.5} aria-hidden="true" />
-        <div className="relative z-10">
-          <p className="text-lg font-bold sm:text-xl">Now Open — Affordable Baby Feeders, Bottles &amp; More</p>
-          <p className="mt-1 text-sm font-medium text-white/90 sm:text-base">Quality baby essentials, delivered across Pakistan.</p>
-        </div>
-      </section>
+          <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#D4537E] sm:text-sm">Now open in Pakistan</p>
+            <h1 className="mt-3 text-[28px] font-bold leading-tight tracking-tight text-[#1E3A45] sm:text-[32px]" id="hero-heading">
+              Everything Your Little One Needs
+            </h1>
+            <p className="mt-3 max-w-xl text-sm text-[#4A6C77] sm:text-base">
+              Feeders, clothing, toys, hair &amp; bath care — delivered across Pakistan, cash on delivery
+            </p>
+            <button
+              className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-[#D4537E] px-8 text-sm font-semibold text-white shadow-sm transition hover:bg-[#C2426D] active:scale-95 focus:outline-none focus:ring-4 focus:ring-[#D4537E]/30 sm:h-14 sm:text-base"
+              onClick={scrollToCategories}
+              type="button"
+            >
+              Shop Now
+            </button>
+            {categories.length > 0 ? (
+              <ul aria-label="Categories" className="mt-6 flex flex-wrap justify-center gap-2.5">
+                {categories.map((category, index) => {
+                  const color = categoryColor(index);
+                  const Icon = categoryIcon(category.slug);
+                  return (
+                    <li key={category.id}>
+                      <Link
+                        aria-label={category.name}
+                        className="flex h-[38px] w-[38px] items-center justify-center rounded-xl shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-brand-primary-light"
+                        href={`/category/${category.slug}`}
+                        style={{ backgroundColor: color.bg, color: color.text }}
+                        title={category.name}
+                      >
+                        <Icon size={20} strokeWidth={1.8} />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
+          </div>
+        </section>
 
       <section className="mt-6">
         <label className="relative block" htmlFor="product-search">
@@ -116,11 +137,11 @@ export function HomeContent({
         </label>
       </section>
 
-      <section className="relative mt-8">
+      <section className="relative mt-8 scroll-mt-24" id="shop-by-category">
         <div className="relative z-10">
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
+          <h2 className="text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
             Shop by category
-          </h1>
+          </h2>
           <div className="no-scrollbar mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto sm:justify-center sm:gap-4">
             {categories.map((category, index) => {
               const color = categoryColor(index);
