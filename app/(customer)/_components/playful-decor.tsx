@@ -34,15 +34,6 @@ const PRESETS: Record<string, ShapeConfig[]> = {
   home: [
     {
       type: "blob",
-      color: palette.purple,
-      sizeRem: 8,
-      top: "5rem",
-      left: "1rem",
-      blur: true,
-      hideOnMobile: true,
-    },
-    {
-      type: "blob",
       color: palette.coral,
       sizeRem: 8,
       bottom: "5rem",

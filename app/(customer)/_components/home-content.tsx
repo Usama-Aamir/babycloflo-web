@@ -74,11 +74,31 @@ export function HomeContent({
       <div className="relative z-10 mx-auto w-full max-w-6xl py-6 sm:py-8">
         <section
           aria-labelledby="hero-heading"
-          className="relative mb-6 overflow-hidden rounded-3xl bg-[#EAF6FB] px-5 py-12 text-center sm:px-8 sm:py-16"
+          className="relative mb-6 overflow-hidden rounded-3xl px-5 py-12 text-center sm:px-8 sm:py-16"
+          style={{ background: "linear-gradient(135deg, #EAF6FB 0%, #FBEAF0 100%)" }}
         >
-          <Baby aria-hidden="true" className="pointer-events-none absolute -left-4 -top-4 h-14 w-14 text-[#4FA9D1] opacity-15 sm:h-[120px] sm:w-[120px]" strokeWidth={1.2} />
-          <Puzzle aria-hidden="true" className="pointer-events-none absolute -bottom-4 -right-4 h-14 w-14 text-[#7F77DD] opacity-15 sm:h-[120px] sm:w-[120px]" strokeWidth={1.2} />
-          <Shirt aria-hidden="true" className="pointer-events-none absolute -right-5 -top-5 hidden text-[#F0997B] opacity-15 sm:block" size={96} strokeWidth={1.2} />
+          {/* Floating background icons — full product range, low opacity, gentle bob */}
+          <span aria-hidden="true" className="hero-float pointer-events-none absolute left-[6%] top-[12%] text-[#4FA9D1] opacity-[0.15]" style={{ animationDelay: "0s" }}>
+            <Baby size={56} strokeWidth={1.2} />
+          </span>
+          <span aria-hidden="true" className="hero-float pointer-events-none absolute left-[12%] bottom-[10%] text-[#5DCAA5] opacity-[0.15]" style={{ animationDelay: "0.8s" }}>
+            <Droplet size={48} strokeWidth={1.2} />
+          </span>
+          <span aria-hidden="true" className="hero-float pointer-events-none absolute right-[8%] top-[14%] text-[#F0997B] opacity-[0.15]" style={{ animationDelay: "1.2s" }}>
+            <Shirt size={52} strokeWidth={1.2} />
+          </span>
+          <span aria-hidden="true" className="hero-float pointer-events-none absolute right-[6%] bottom-[12%] text-[#7F77DD] opacity-[0.15]" style={{ animationDelay: "0.4s" }}>
+            <Puzzle size={56} strokeWidth={1.2} />
+          </span>
+          <span aria-hidden="true" className="hero-float pointer-events-none absolute left-[40%] top-[6%] text-[#EF9F27] opacity-[0.12]" style={{ animationDelay: "1.6s" }}>
+            <Scissors size={40} strokeWidth={1.2} />
+          </span>
+          <span aria-hidden="true" className="hero-float pointer-events-none absolute right-[38%] bottom-[6%] text-[#D4537E] opacity-[0.12]" style={{ animationDelay: "2s" }}>
+            <ShoppingBag size={44} strokeWidth={1.2} />
+          </span>
+          <span aria-hidden="true" className="hero-float pointer-events-none absolute left-[44%] bottom-[16%] hidden text-[#4FA9D1] opacity-[0.10] sm:block" style={{ animationDelay: "2.4s" }}>
+            <Baby size={64} strokeWidth={1} />
+          </span>
 
           <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#D4537E] sm:text-sm">Now open in Pakistan</p>
